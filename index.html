@@ -1,0 +1,354 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mechanics Formula Hub</title>
+<style>
+:root {
+  --navy:#14254a;
+  --blue:#285be8;
+  --bg:#f3f6fc;
+  --white:#fff;
+  --text:#18243b;
+  --muted:#64748b;
+  --line:#e1e7f0;
+}
+* { box-sizing:border-box; }
+body {
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+}
+header {
+  background:var(--navy);
+  color:white;
+  padding:22px 18px;
+}
+header h1 { font-size:23px; margin:0 0 8px; }
+header p { margin:0; color:#d5def5; line-height:1.5; }
+main { max-width:760px; margin:auto; padding:18px; }
+button, input, select { font:inherit; }
+button { cursor:pointer; }
+.back {
+  border:0; background:transparent; color:var(--blue);
+  padding:8px 0; font-weight:bold;
+}
+h2 { font-size:22px; margin:15px 0 8px; }
+.subtitle { color:var(--muted); line-height:1.5; }
+.grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:13px; margin-top:20px;
+}
+.tile {
+  background:white; border:1px solid var(--line);
+  border-radius:15px; padding:20px; text-align:left;
+  color:var(--text); min-height:135px; width:100%;
+}
+.tile:active { transform:scale(.99); }
+.tile .emoji { font-size:28px; display:block; margin-bottom:12px; }
+.tile strong { display:block; font-size:18px; margin-bottom:7px; }
+.tile small { color:var(--muted); line-height:1.5; }
+.card {
+  background:white; border:1px solid var(--line);
+  border-radius:13px; padding:16px; margin:12px 0;
+}
+.tag {
+  font-size:12px; color:var(--blue);
+  text-transform:uppercase; font-weight:bold;
+}
+.equation { font-size:24px; font-weight:bold; margin:14px 0; }
+p { line-height:1.55; }
+.muted { color:var(--muted); }
+.primary {
+  background:var(--blue); color:white; border:0;
+  padding:13px 16px; border-radius:10px; width:100%;
+  margin-top:12px; font-weight:bold;
+}
+.secondary {
+  background:#e9efff; color:#2148b5; border:0;
+  padding:11px 14px; border-radius:9px; margin:4px 4px 4px 0;
+}
+input, select {
+  width:100%; padding:12px; border:1px solid var(--line);
+  border-radius:9px; background:white; margin-top:6px;
+}
+label { display:block; margin-top:13px; font-size:14px; }
+.result {
+  background:#eaf8ef; border-radius:10px;
+  padding:14px; margin-top:15px; overflow-wrap:anywhere;
+}
+.step { padding:9px 0; border-bottom:1px solid var(--line); }
+.diagram {
+  background:#f8fafc; border-radius:10px;
+  padding:14px; text-align:center; overflow:hidden;
+}
+svg { max-width:100%; height:auto; }
+footer { text-align:center; padding:25px 10px; color:var(--muted); font-size:12px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>⚙ Mechanics Formula Hub</h1>
+  <p>Learn the formula. Understand the concept. Solve the problem.</p>
+</header>
+
+<main id="app"></main>
+<footer>Mechanics Formula Hub · Learning prototype</footer>
+
+<script>
+const formulas = [
+  {
+    id:"equilibrium", subject:"Statics", topic:"Force Systems",
+    name:"Equilibrium of a Particle", equation:"ΣF = 0",
+    meaning:"A particle is in equilibrium when the resultant force acting on it is zero.",
+    derivation:"Resolve every force into components. For equilibrium in a 2D system, both the horizontal and vertical force sums must be zero.",
+    example:"If a 10 N force acts to the right, a 10 N force to the left balances it, provided there are no other forces.",
+    graph:"forces"
+  },
+  {
+    id:"resultant", subject:"Statics", topic:"Force Systems",
+    name:"Resultant of Perpendicular Forces", equation:"R = √(Fx² + Fy²)",
+    meaning:"Finds the magnitude of the resultant when two force components are perpendicular.",
+    derivation:"By the Pythagorean theorem, R² = Fx² + Fy². Taking the square root gives the formula.",
+    example:"For Fx = 3 N and Fy = 4 N, R = √(9 + 16) = 5 N.",
+    graph:"forces"
+  },
+  {
+    id:"moment", subject:"Statics", topic:"Moments",
+    name:"Moment of a Force", equation:"M = F × d⊥",
+    meaning:"The moment measures the turning effect of a force about a point.",
+    derivation:"Moment magnitude equals the force multiplied by the perpendicular distance from the point to the force's line of action.",
+    example:"A 10 N force acting with a perpendicular distance of 0.5 m produces a moment of 5 N·m.",
+    graph:"moment"
+  },
+  {
+    id:"velocity", subject:"Dynamics", topic:"Kinematics",
+    name:"Final Velocity", equation:"v = u + at",
+    meaning:"Relates initial velocity, final velocity, constant acceleration and elapsed time.",
+    derivation:"Acceleration a = (v − u)/t. Multiplying by t and rearranging gives v = u + at.",
+    example:"For u = 5 m/s, a = 2 m/s² and t = 3 s, v = 5 + 2 × 3 = 11 m/s.",
+    graph:"motion"
+  },
+  {
+    id:"displacement", subject:"Dynamics", topic:"Kinematics",
+    name:"Displacement", equation:"s = ut + ½at²",
+    meaning:"Gives displacement under constant acceleration over a specified time.",
+    derivation:"Use average velocity s/t = (u + v)/2 and substitute v = u + at.",
+    example:"For u = 0, a = 2 m/s² and t = 4 s, s = ½ × 2 × 16 = 16 m.",
+    graph:"motion"
+  },
+  {
+    id:"newton", subject:"Dynamics", topic:"Force and Motion",
+    name:"Newton's Second Law", equation:"ΣF = ma",
+    meaning:"The net force on an object equals its mass multiplied by its acceleration.",
+    derivation:"For constant mass, the net force equals the rate of change of momentum, giving ΣF = ma.",
+    example:"A net force of 10 N on a 2 kg object gives a = 10/2 = 5 m/s².",
+    graph:"forces"
+  }
+];
+
+const app = document.getElementById("app");
+let page = "home";
+let section = "";
+let subject = "";
+let chosen = null;
+let previousPage = "topics";
+
+function tile(icon,title,description,action) {
+  return `<button class="tile" onclick="${action}">
+    <span class="emoji">${icon}</span>
+    <strong>${title}</strong><small>${description}</small>
+  </button>`;
+}
+function goHome() {
+  page = "home";
+  render();
+}
+function chooseSection(value) {
+  section = value;
+  page = "subjects";
+  render();
+}
+function chooseSubject(value) {
+  subject = value;
+  page = "topics";
+  render();
+}
+function openFormula(id) {
+  chosen = formulas.find(f => f.id === id);
+  previousPage = "topics";
+  page = "detail";
+  render();
+}
+function openWork(id) {
+  chosen = formulas.find(f => f.id === id);
+  page = "solver";
+  render();
+}
+function goBack() {
+  if (page === "subjects") page = "home";
+  else if (page === "topics") page = "subjects";
+  else if (page === "detail") page = "topics";
+  else if (page === "solver") page = "topics";
+  render();
+}
+function heading(title,description) {
+  return `<button class="back" onclick="goBack()">← Back</button>
+  <h2>${title}</h2><p class="subtitle">${description}</p>`;
+}
+function render() {
+  if (page === "home") {
+    app.innerHTML = `
+      <h2>Welcome!</h2>
+      <p class="subtitle">Your Engineering Mechanics study and problem-solving space.</p>
+      <div class="grid">
+        ${tile("📚","Formula List","Explore formulas, theorems, derivations and examples.","chooseSection('learn')")}
+        ${tile("🧮","Work Area","Enter values and calculate answers with steps.","chooseSection('work')")}
+      </div>
+      <div class="card"><strong>Our approach</strong>
+      <p class="muted">First understand the formula. Then apply it to a problem. Visual explanations will be available wherever useful.</p></div>`;
+  }
+  if (page === "subjects") {
+    app.innerHTML = heading(section === "learn" ? "Formula List" : "Work Area",
+      section === "learn" ? "Choose a subject to study." : "Choose a subject to solve problems.")
+      + `<div class="grid">
+      ${tile("⚖️","Statics","Equilibrium, force systems and moments.","chooseSubject('Statics')")}
+      ${tile("🚀","Dynamics","Kinematics, forces and motion.","chooseSubject('Dynamics')")}
+      </div>`;
+  }
+  if (page === "topics") {
+    const list = formulas.filter(f => f.subject === subject);
+    const topics = [...new Set(list.map(f => f.topic))];
+    app.innerHTML = heading(subject, "Choose a topic, then select a formula.")
+      + topics.map(topic => `
+        <h3>${topic}</h3>
+        ${list.filter(f => f.topic === topic).map(f => `
+          <div class="card">
+            <div class="tag">${f.subject} · ${f.topic}</div>
+            <h3>${f.name}</h3><div class="equation">${f.equation}</div>
+            <p class="muted">${f.meaning}</p>
+            <button class="secondary" onclick="openFormula('${f.id}')">Learn formula</button>
+            <button class="secondary" onclick="openWork('${f.id}')">Solve a problem</button>
+          </div>`).join("")}`).join("");
+  }
+  if (page === "detail" && chosen) {
+    app.innerHTML = heading(chosen.name, chosen.subject + " · " + chosen.topic)
+      + `<div class="card">
+      <div class="tag">Important formula</div>
+      <div class="equation">${chosen.equation}</div>
+      <h3>Meaning</h3><p>${chosen.meaning}</p>
+      <h3>Derivation / explanation</h3><p>${chosen.derivation}</p>
+      <h3>Worked example</h3><p>${chosen.example}</p>
+      <h3>Visual explanation</h3>${diagram(chosen.graph)}
+      <button class="primary" onclick="openWork('${chosen.id}')">Try in Work Area</button>
+      </div>`;
+  }
+  if (page === "solver" && chosen) renderSolver();
+}
+function diagram(type) {
+  if (type === "forces") return `
+    <div class="diagram"><svg viewBox="0 0 300 150" role="img" aria-label="Two perpendicular force components">
+      <defs><marker id="arrow" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#285be8"/></marker></defs>
+      <circle cx="65" cy="105" r="4" fill="#14254a"/>
+      <line x1="65" y1="105" x2="230" y2="105" stroke="#285be8" stroke-width="3" marker-end="url(#arrow)"/>
+      <line x1="65" y1="105" x2="65" y2="20" stroke="#16a085" stroke-width="3" marker-end="url(#arrow)"/>
+      <text x="140" y="95" font-size="12" fill="#285be8">Fx</text>
+      <text x="73" y="38" font-size="12" fill="#16a085">Fy</text>
+      <text x="75" y="125" font-size="12" fill="#14254a">Origin</text>
+    </svg><p class="muted">Force components along perpendicular axes.</p></div>`;
+  if (type === "moment") return `
+    <div class="diagram"><svg viewBox="0 0 300 130">
+      <defs><marker id="marr" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#285be8"/></marker></defs>
+      <circle cx="45" cy="90" r="5" fill="#14254a"/>
+      <line x1="45" y1="90" x2="245" y2="90" stroke="#64748b" stroke-width="4"/>
+      <line x1="180" y1="85" x2="180" y2="20" stroke="#285be8" stroke-width="3" marker-end="url(#marr)"/>
+      <text x="190" y="35" font-size="13" fill="#285be8">F</text>
+      <text x="105" y="110" font-size="13" fill="#14254a">Perpendicular distance</text>
+    </svg><p class="muted">Moment magnitude = force × perpendicular distance.</p></div>`;
+  return `<div class="diagram"><svg viewBox="0 0 300 130">
+    <line x1="35" y1="105" x2="270" y2="105" stroke="#64748b" stroke-width="2"/>
+    <line x1="35" y1="105" x2="35" y2="15" stroke="#64748b" stroke-width="2"/>
+    <line x1="35" y1="105" x2="245" y2="25" stroke="#285be8" stroke-width="3"/>
+    <text x="145" y="58" font-size="13" fill="#285be8">Velocity changes</text>
+    <text x="140" y="123" font-size="12" fill="#64748b">Time →</text>
+  </svg><p class="muted">Illustrative motion graph. Actual values depend on the problem.</p></div>`;
+}
+function renderSolver() {
+  let fields = [];
+  let note = "";
+  if (chosen.id === "velocity") {
+    fields = [["u","Initial velocity u (m/s)"],["a","Acceleration a (m/s²)"],["t","Time t (s)"]];
+    note = "v = u + at";
+  } else if (chosen.id === "displacement") {
+    fields = [["u","Initial velocity u (m/s)"],["a","Acceleration a (m/s²)"],["t","Time t (s)"]];
+    note = "s = ut + ½at²";
+  } else if (chosen.id === "newton") {
+    fields = [["m","Mass m (kg)"],["a","Acceleration a (m/s²)"]];
+    note = "F = ma";
+  } else if (chosen.id === "moment") {
+    fields = [["F","Force F (N)"],["d","Perpendicular distance d (m)"]];
+    note = "M = Fd";
+  } else if (chosen.id === "equilibrium") {
+    fields = [["Fx","Horizontal force sum ΣFx (N)"],["Fy","Vertical force sum ΣFy (N)"]];
+    note = "R = √(ΣFx² + ΣFy²)";
+  } else {
+    fields = [["Fx","Horizontal force Fx (N)"],["Fy","Vertical force Fy (N)"]];
+    note = "R = √(Fx² + Fy²)";
+  }
+  app.innerHTML = heading("Work Area", chosen.name)
+    + `<div class="card"><div class="tag">${chosen.subject}</div>
+    <div class="equation">${note}</div>
+    <p class="muted">Enter the known values. Use consistent SI units.</p>
+    ${fields.map(([id,label])=>`<label for="v-${id}">${label}</label>
+    <input id="v-${id}" type="number" step="any" placeholder="Enter value">`).join("")}
+    <button class="primary" onclick="calculate()">Calculate solution</button>
+    <div id="answer" aria-live="polite"></div>
+    </div>`;
+}
+function calculate() {
+  const ids = [...document.querySelectorAll('input[id^="v-"]')];
+  const vals = {};
+  for (const input of ids) {
+    if (input.value.trim() === "" || !Number.isFinite(Number(input.value))) {
+      document.getElementById("answer").innerHTML =
+        '<div class="result">Please enter a valid number in every field.</div>';
+      return;
+    }
+    vals[input.id.slice(2)] = Number(input.value);
+  }
+  let result, unit, steps = [];
+  if (chosen.id === "velocity") {
+    result = vals.u + vals.a * vals.t; unit = "m/s";
+    steps = [`v = u + at`,`v = ${vals.u} + (${vals.a} × ${vals.t})`,`v = ${result} m/s`];
+  } else if (chosen.id === "displacement") {
+    result = vals.u * vals.t + 0.5 * vals.a * vals.t ** 2; unit = "m";
+    steps = [`s = ut + ½at²`,`s = (${vals.u} × ${vals.t}) + (½ × ${vals.a} × ${vals.t}²)`,`s = ${result} m`];
+  } else if (chosen.id === "newton") {
+    result = vals.m * vals.a; unit = "N";
+    steps = [`F = ma`,`F = ${vals.m} × ${vals.a}`,`F = ${result} N`];
+  } else if (chosen.id === "moment") {
+    result = vals.F * vals.d; unit = "N·m";
+    steps = [`M = Fd`,`M = ${vals.F} × ${vals.d}`,`M = ${result} N·m`];
+  } else {
+    result = Math.hypot(vals.Fx, vals.Fy);
+    unit = "N";
+    steps = [`R = √(Fx² + Fy²)`,`R = √(${vals.Fx}² + ${vals.Fy}²)`,`R = ${result} N`];
+    if (chosen.id === "equilibrium") {
+      steps.unshift("This calculates the resultant of the entered force sums.");
+      steps.push(result < 1e-9 ? "Resultant is approximately zero: equilibrium condition is satisfied for the entered components." : "The entered components do not sum to zero.");
+    }
+  }
+  const fmt = n => Number(n.toFixed(4)).toString();
+  document.getElementById("answer").innerHTML =
+    `<div class="result"><h3>Solution</h3>${steps.map(s=>`<div class="step">${s.replace(/-?\d+(\.\d+)?/g, match=>match)}</div>`).join("")}
+    <h3>Final answer: ${fmt(result)} ${unit}</h3>
+    <p class="muted">Check the formula, units and assumptions before using the result.</p></div>`;
+}
+render();
+</script>
+</body>
+</html>
