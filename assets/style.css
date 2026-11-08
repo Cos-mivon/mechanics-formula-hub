@@ -332,12 +332,17 @@ footer {
         padding: 16px;
     }
 }
-
-a {
-  text-decoration: none;
-  color: inherit;
+a.card,
+a.card:link,
+a.card:visited,
+a.card:hover,
+a.card:active {
+    text-decoration: none !important;
+    color: inherit !important;
+    border-bottom: none !important;
 }
 
-.card {
-  text-decoration: none;
+a.card h3,
+a.card p {
+    text-decoration: none !important;
 }
