@@ -1,38 +1,334 @@
+
+/* =================================
+   MECHANICS FORMULA HUB
+   ORIGINAL SHARED DESIGN
+================================= */
+
 * {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
 }
 
 body {
-    font-family: Arial, sans-serif;
     background: #081426;
-    color: white;
-    padding: 25px;
+    color: #edf4ff;
+    font-family: Arial, sans-serif;
+    min-height: 100vh;
+}
+
+header {
+    background: #10213b;
+    padding: 20px;
+    border-bottom: 1px solid #294463;
+}
+
+.logo {
+    color: #55b5ff;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.tagline {
+    color: #9eb2cb;
+    font-size: 13px;
+    margin-top: 5px;
+}
+
+main {
+    max-width: 950px;
+    margin: auto;
+    padding: 25px 18px;
 }
 
 h1 {
-    color: #38bdf8;
+    font-size: 29px;
+    margin-bottom: 12px;
+}
+
+h2 {
+    color: #70bdff;
+    font-size: 23px;
     margin-bottom: 15px;
 }
 
-.container {
-    max-width: 950px;
-    margin: auto;
+h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+p {
+    color: #bdcde0;
+    line-height: 1.7;
+    margin-bottom: 12px;
+}
+
+.subtitle {
+    color: #91a8c2;
+    margin-bottom: 25px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+    margin: 20px 0;
 }
 
 .card {
-    background: #13243b;
-    padding: 20px;
-    border-radius: 12px;
-    margin: 15px 0;
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 23px;
+    background: #142944;
+    color: white;
+    border: 1px solid #294968;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.card:hover {
+    background: #1c3a5e;
+    border-color: #55b5ff;
+}
+
+.card-icon {
+    font-size: 32px;
+    margin-bottom: 15px;
+}
+
+.card h3 {
+    margin-bottom: 8px;
+}
+
+.card p {
+    font-size: 14px;
+    margin: 0;
 }
 
 button {
-    background: #0284c7;
+    font-family: Arial, sans-serif;
+}
+
+.primary {
+    background: #1684e8;
     color: white;
     border: none;
-    padding: 12px 20px;
-    border-radius: 8px;
+    border-radius: 9px;
+    padding: 12px 18px;
+    margin: 5px 5px 5px 0;
     cursor: pointer;
+    font-size: 15px;
+}
+
+.primary:hover {
+    background: #329cff;
+}
+
+.back {
+    background: #203650;
+    color: #d5e9ff;
+    border: 1px solid #45617f;
+    border-radius: 8px;
+    padding: 10px 15px;
+    margin-bottom: 22px;
+    cursor: pointer;
+}
+
+.panel {
+    background: #142944;
+    border: 1px solid #294968;
+    border-radius: 13px;
+    padding: 20px;
+    margin: 16px 0;
+}
+
+.formula {
+    background: #09203c;
+    border-left: 4px solid #35a5ff;
+    color: #80c6ff;
+    padding: 16px;
+    margin: 13px 0;
+    border-radius: 6px;
+    font-size: 18px;
+    overflow-wrap: anywhere;
+}
+
+ul {
+    color: #bdcde0;
+    padding-left: 22px;
+    line-height: 1.9;
+}
+
+label {
+    display: block;
+    color: #bdcde0;
+    margin: 12px 0 6px;
+}
+
+input {
+    width: 100%;
+    padding: 13px;
+    background: #091a2e;
+    color: white;
+    border: 1px solid #45617f;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+.result {
+    background: #0c3150;
+    border: 1px solid #2386c8;
+    border-radius: 9px;
+    padding: 16px;
+    margin-top: 15px;
+    line-height: 1.8;
+    overflow-wrap: anywhere;
+}
+
+.small {
+    font-size: 13px;
+    color: #91a8c2;
+}
+
+footer {
+    text-align: center;
+    color: #71869f;
+    padding: 25px;
+    font-size: 13px;
+}
+
+/* =================================
+   COPLANAR CONCURRENT MODEL
+================================= */
+
+.coplanar-model {
+    background: #12243b;
+    color: #eaf2ff;
+    padding: 20px;
+    border-radius: 15px;
+    border: 1px solid #254365;
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+}
+
+.coplanar-model h2 {
+    color: #62c8ff;
+    margin-bottom: 8px;
+}
+
+.coplanar-model h3 {
+    color: #d7eaff;
+    margin-bottom: 12px;
+}
+
+.coplanar-model p {
+    color: #c5d4e5;
+    margin: 8px 0;
+}
+
+.coplanar-inputs {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    margin: 18px 0;
+}
+
+.coplanar-model label {
+    display: block;
+    color: #b9d6ee;
+    margin-bottom: 6px;
+    font-size: 14px;
+}
+
+.coplanar-model input {
+    width: 100%;
+    min-width: 0;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #41648b;
+    background: #091a2d;
+    color: white;
+    font-size: 16px;
+}
+
+.coplanar-diagram {
+    background: #f3f7fc;
+    border-radius: 12px;
+    padding: 8px;
+    overflow: hidden;
+}
+
+.coplanar-diagram svg {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.coplanar-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px;
+    margin: 12px 0;
+    color: #c5d4e5;
+}
+
+.coplanar-results {
+    background: #0b1a2c;
+    padding: 16px;
+    border-radius: 10px;
+    margin-top: 15px;
+}
+
+.coplanar-results strong {
+    color: #70d8ff;
+}
+
+.coplanar-model button {
+    background: #168bd0;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    padding: 11px 18px;
+    cursor: pointer;
+    margin-top: 12px;
+}
+
+.coplanar-model button:hover {
+    background: #0874b8;
+}
+
+.coplanar-note {
+    font-size: 12px;
+    color: #91a9c2 !important;
+    margin-top: 12px !important;
+}
+
+/* =================================
+   MOBILE RESPONSIVENESS
+================================= */
+
+@media(max-width: 550px) {
+    .coplanar-inputs {
+        grid-template-columns: 1fr;
+    }
+
+    .coplanar-model {
+        padding: 14px;
+    }
+}
+
+@media(max-width: 500px) {
+    h1 {
+        font-size: 25px;
+    }
+
+    main {
+        padding: 20px 14px;
+    }
+
+    .panel {
+        padding: 16px;
+    }
 }
