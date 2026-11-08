@@ -332,3 +332,12 @@ footer {
         padding: 16px;
     }
 }
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.card {
+  text-decoration: none;
+}
