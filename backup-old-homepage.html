@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mechanics Formula Hub</title>
+
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: #081426;
+  color: #edf4ff;
+  font-family: Arial, sans-serif;
+  min-height: 100vh;
+}
+
+header {
+  background: #10213b;
+  padding: 20px;
+  border-bottom: 1px solid #294463;
+}
+
+.logo {
+  color: #55b5ff;
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.tagline {
+  color: #9eb2cb;
+  font-size: 13px;
+  margin-top: 5px;
+}
+
+main {
+  max-width: 950px;
+  margin: auto;
+  padding: 25px 18px;
+}
+
+h1 {
+  font-size: 29px;
+  margin-bottom: 12px;
+}
+
+h2 {
+  color: #70bdff;
+  font-size: 23px;
+  margin-bottom: 15px;
+}
+
+h3 {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+p {
+  color: #bdcde0;
+  line-height: 1.7;
+  margin-bottom: 12px;
+}
+
+.subtitle {
+  color: #91a8c2;
+  margin-bottom: 25px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  margin: 20px 0;
+}
+
+.card {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 23px;
+  background: #142944;
+  color: white;
+  border: 1px solid #294968;
+  border-radius: 15px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.card:hover {
+  background: #1c3a5e;
+  border-color: #55b5ff;
+}
+
+.card-icon {
+  font-size: 32px;
+  margin-bottom: 15px;
+}
+
+.card h3 {
+  margin-bottom: 8px;
+}
+
+.card p {
+  font-size: 14px;
+  margin: 0;
+}
+
+button {
+  font-family: Arial, sans-serif;
+}
+
+.primary {
+  background: #1684e8;
+  color: white;
+  border: none;
+  border-radius: 9px;
+  padding: 12px 18px;
+  margin: 5px 5px 5px 0;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.primary:hover {
+  background: #329cff;
+}
+
+.back {
+  background: #203650;
+  color: #d5e9ff;
+  border: 1px solid #45617f;
+  border-radius: 8px;
+  padding: 10px 15px;
+  margin-bottom: 22px;
+  cursor: pointer;
+}
+
+.panel {
+  background: #142944;
+  border: 1px solid #294968;
+  border-radius: 13px;
+  padding: 20px;
+  margin: 16px 0;
+}
+
+.formula {
+  background: #09203c;
+  border-left: 4px solid #35a5ff;
+  color: #80c6ff;
+  padding: 16px;
+  margin: 13px 0;
+  border-radius: 6px;
+  font-size: 18px;
+  overflow-wrap: anywhere;
+}
+
+ul {
+  color: #bdcde0;
+  padding-left: 22px;
+  line-height: 1.9;
+}
+
+label {
+  display: block;
+  color: #bdcde0;
+  margin: 12px 0 6px;
+}
+
+input {
+  width: 100%;
+  padding: 13px;
+  background: #091a2e;
+  color: white;
+  border: 1px solid #45617f;
+  border-radius: 8px;
+  font-size: 16px;
+}
+
+.result {
+  background: #0c3150;
+  border: 1px solid #2386c8;
+  border-radius: 9px;
+  padding: 16px;
+  margin-top: 15px;
+  line-height: 1.8;
+  overflow-wrap: anywhere;
+}
+
+.small {
+  font-size: 13px;
+  color: #91a8c2;
+}
+
+footer {
+  text-align: center;
+  color: #71869f;
+  padding: 25px;
+  font-size: 13px;
+}
+
+@media(max-width: 500px) {
+  h1 { font-size: 25px; }
+  main { padding: 20px 14px; }
+  .panel { padding: 16px; }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">⚙ Mechanics Formula Hub</div>
+  <div class="tagline">Engineering Mechanics Learning Platform</div>
+</header>
+
+<main>
+
+<!-- HOME PAGE: OPTIONS ARE DIRECTLY IN HTML -->
+
+<section id="home">
+
+  <h1>Welcome to Mechanics Formula Hub</h1>
+
+  <p class="subtitle">
+    Learn concepts. Understand formulas. Practise numerical problems.
+  </p>
+
+  <div class="grid">
+
+    <button class="card" onclick="openSection('formula')">
+      <div class="card-icon">📘</div>
+      <h3>Formula Sheet</h3>
+      <p>
+        Explore engineering mechanics concepts, statements,
+        formulas, derivations and examples.
+      </p>
+    </button>
+
+    <button class="card" onclick="openSection('workspace')">
+      <div class="card-icon">🧮</div>
+      <h3>Workspace</h3>
+      <p>
+        Use interactive calculators to solve engineering
+        mechanics numerical problems.
+      </p>
+    </button>
+
+  </div>
+
+  <div class="panel">
+    <h3>About the Hub</h3>
+    <p>
+      Mechanics Formula Hub is designed to make Engineering
+      Mechanics easier through structured theory, formulas
+      and numerical practice.
+    </p>
+  </div>
+
+</section>
+
+
+<!-- DYNAMIC PAGES APPEAR HERE -->
+
+<section id="page" style="display:none;"></section>
+
+</main>
+
+<footer>
+Mechanics Formula Hub | Engineering Mechanics
+</footer>
+
+
+<script>
+
+// --------------------------------
+// NAVIGATION SYSTEM
+// --------------------------------
+
+var currentSection = "";
+var currentSubject = "Statics";
+
+function showPage(html) {
+  document.getElementById("home").style.display = "none";
+
+  var page = document.getElementById("page");
+  page.style.display = "block";
+  page.innerHTML = html;
+
+  window.scrollTo(0, 0);
+}
+
+function goHome() {
+  document.getElementById("page").style.display = "none";
+  document.getElementById("home").style.display = "block";
+  window.scrollTo(0, 0);
+}
+
+function openSection(section) {
+  currentSection = section;
+
+  var title = section === "formula"
+    ? "Formula Sheet"
+    : "Workspace";
+
+  showPage(
+    '<button class="back" onclick="goHome()">← Home</button>' +
+    '<h1>' + title + '</h1>' +
+    '<p class="subtitle">Select your subject.</p>' +
+
+    '<div class="grid">' +
+
+      '<button class="card" onclick="openSubject(\'Statics\')">' +
+        '<div class="card-icon">⚖️</div>' +
+        '<h3>Statics</h3>' +
+        '<p>Forces and equilibrium of bodies.</p>' +
+      '</button>' +
+
+      '<button class="card" onclick="openSubject(\'Dynamics\')">' +
+        '<div class="card-icon">🚀</div>' +
+        '<h3>Dynamics</h3>' +
+        '<p>Motion and forces acting on bodies.</p>' +
+      '</button>' +
+
+    '</div>'
+  );
+}
+
+
+// --------------------------------
+// SUBJECT SELECTION
+// --------------------------------
+
+function openSubject(subject) {
+  currentSubject = subject;
+
+  if (subject === "Dynamics") {
+    showPage(
+      '<button class="back" onclick="openSection(currentSection)">← Subjects</button>' +
+      '<h1>Dynamics</h1>' +
+      '<div class="panel">' +
+      '<h3>Coming Soon</h3>' +
+      '<p>Dynamics content will be added after completing Statics.</p>' +
+      '</div>'
+    );
+    return;
+  }
+
+  showPage(
+    '<button class="back" onclick="openSection(currentSection)">← Subjects</button>' +
+    '<h1>Statics</h1>' +
+    '<p class="subtitle">Select a chapter.</p>' +
+
+    '<div class="grid">' +
+      '<button class="card" onclick="openEquilibrium()">' +
+        '<div class="card-icon">📐</div>' +
+        '<h3>Chapter 1: Equilibrium</h3>' +
+        '<p>Equilibrium conditions, types of loads and Lami’s theorem.</p>' +
+      '</button>' +
+    '</div>'
+  );
+}
+
+
+// --------------------------------
+// EQUILIBRIUM TOPICS
+// --------------------------------
+
+function openEquilibrium() {
+
+  var topics = [
+    "Coplanar Concurrent Equilibrium",
+    "Non-Coplanar Non-Concurrent Equilibrium",
+    "Types of Loads",
+    "Lami's Theorem"
+  ];
+
+  var html =
+    '<button class="back" onclick="openSubject(\'Statics\')">← Chapters</button>' +
+    '<h1>Chapter 1: Equilibrium</h1>' +
+    '<p class="subtitle">Choose a topic.</p>' +
+    '<div class="grid">';
+
+  for (var i = 0; i < topics.length; i++) {
+
+    var action = currentSection === "formula"
+      ? 'openTheory(' + i + ')'
+      : 'openWorkspaceTopic(' + i + ')';
+
+    html +=
+      '<button class="card" onclick="' + action + '">' +
+        '<div class="card-icon">' +
+          ['⚖️', '📏', '📊', '🔺'][i] +
+        '</div>' +
+        '<h3>' + topics[i] + '</h3>' +
+        '<p>' +
+          (currentSection === "formula"
+            ? 'Explore theory and formulas.'
+            : 'Open numerical workspace.') +
+        '</p>' +
+      '</button>';
+  }
+
+  html += '</div>';
+
+  showPage(html);
+}
+
+
+// --------------------------------
+// FORMULA SHEET
+// --------------------------------
+
+function openTheory(index) {
+
+  var content = [
+
+    '<h2>Coplanar Concurrent Equilibrium</h2>' +
+
+    '<div class="panel">' +
+      '<h3>Introduction</h3>' +
+      '<p>A system of concurrent coplanar forces in equilibrium consists of forces that lie within a single flat plane and whose lines of action all intersect at one single point. When such a system is in equilibrium, the forces balance each other out perfectly, resulting in no net change in the translational motion of the body. Because all forces pass through the same point, they cannot cause the object to rotate around that point, simplifying the structural and physical analysis of the system.</p>' +
+
+      '<h3>Introduction</h3>' +
+      '<p>The law of equilibrium for concurrent coplanar forces states that if a body is acted upon by a system of forces lying in the same plane and passing through a common point, the body will remain in a state of rest or uniform motion if the vector sum of all these forces is equal to zero. If following condition is met, the resultant force acting on the body is zero, meaning the object experiences zero linear acceleration.</p>' +
+
+      '<h3>Statement</h3>' +
+      '<p>For a concurrent coplanar force system to achieve complete static or dynamic equilibrium, specific mathematical conditions must be satisfied. These can be broken down analytically and graphically:</p>' +
+    
+     '<p>1. Analytical Conditions (Resolution of Forces)Because the forces exist in a two-dimensional plane (typically defined by the X and Y axes), the vector equation \(ΣFx = 0) is split into two independent algebraic scalar equations: </p>'+
+     '<p>• Horizontal Equilibrium: The algebraic sum of the horizontal components (or components along the X-axis) must equal zero.</p>'+
+      '<div class="formula">ΣFx = 0</div>' +
+      '<p>•Vertical Equilibrium: The algebraic sum of the vertical components (or components along the Y-axis) must equal zero.</p>'+
+      '<div class="formula">ΣFy = 0</div>' +
+    '<p>(Note: Because the forces are concurrent, the moment arm about their point of intersection is zero. Therefore, the rotational equilibrium condition, \(\sum M = 0\), is automatically satisfied and does not need to be calculated independently).</p>'+
+
+      '<h3>Applications</h3>' +
+      '<p>The principles of concurrent coplanar equilibrium are widely used in engineering, physics, and architecture to analyze structures where components meet at a single joint or node.</p>'+
+     '<p>• Structural Truss Analysis: In civil engineering, the joints of pin-connected trusses (like those in bridges and roof supports) are modeled as concurrent coplanar force systems. Engineers use the equations of equilibrium at each individual joint to calculate the internal tensile or compressive forces within the structural members.</p>'+
+'<p>• Guy Wires and Suspension Cables: When securing tall structures like radio towers, utility poles, or suspension bridges, multiple cables meet at a single anchoring point. Designing these systems requires calculating the exact tension each wire must bear to keep the anchor point in perfect equilibrium under wind loads and gravity.</p>'+
+'<p>• Cranes and Rigging Systems: In material handling, when a heavy load is lifted by a crane using a multi-leg sling, the cables meet at a single hook or ring. The forces (tensions in the slings and the weight of the load) form a concurrent coplanar system. Resolving these forces ensures the cables chosen are strong enough not to snap.</p>'+
+'<p>• Biomechanical Joint Analysis: In sports science and orthopedics, the human joints (like the hip or shoulder during specific movements) are analyzed by treating tendons, muscles, and external loads as concurrent forces acting on the joint center to determine the stresses placed on bones and cartilage.</p>'+
+
+<!-- COPLANAR CONCURRENT EQUILIBRIUM MODEL -->
+
+<div id="coplanar-model" class="coplanar-model">
+
+    <h2>Interactive Force Model</h2>
+        <p>Change the force values and observe the balancing force.</p>
+
+            <div class="coplanar-inputs">
+                    <div>
+                                <label for="coplanar-fx">Horizontal Force F₁ (N)</label>
+                                            <input type="number" id="coplanar-fx" value="100"
+                                                               min="0" max="10000" step="1">
+                                                                       </div>
+
+                                                                               <div>
+                                                                                           <label for="coplanar-fy">Vertical Force F₂ (N)</label>
+                                                                                                       <input type="number" id="coplanar-fy" value="80"
+                                                                                                                          min="0" max="10000" step="1">
+                                                                                                                                  </div>
+                                                                                                                                      </div>
+
+                                                                                                                                          <div class="coplanar-diagram">
+                                                                                                                                                  <svg id="coplanar-svg" viewBox="0 0 600 430"
+                                                                                                                                                               role="img" aria-label="Three concurrent forces in equilibrium">
+
+                                                                                                                                                                           <defs>
+                                                                                                                                                                                           <marker id="cp-axis-arrow" markerWidth="8"
+                                                                                                                                                                                                                   markerHeight="8" refX="6" refY="3"
+                                                                                                                                                                                                                                           orient="auto">
+                                                                                                                                                                                                                                                               <path d="M0,0 L0,6 L6,3 Z" fill="#555"/>
+                                                                                                                                                                                                                                                                               </marker>
+
+                                                                                                                                                                                                                                                                                               <marker id="cp-red-arrow" markerWidth="8"
+                                                                                                                                                                                                                                                                                                                       markerHeight="8" refX="6" refY="3"
+                                                                                                                                                                                                                                                                                                                                               orient="auto">
+                                                                                                                                                                                                                                                                                                                                                                   <path d="M0,0 L0,6 L6,3 Z" fill="#e53935"/>
+                                                                                                                                                                                                                                                                                                                                                                                   </marker>
+
+                                                                                                                                                                                                                                                                                                                                                                                                   <marker id="cp-green-arrow" markerWidth="8"
+                                                                                                                                                                                                                                                                                                                                                                                                                           markerHeight="8" refX="6" refY="3"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                   orient="auto">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                       <path d="M0,0 L0,6 L6,3 Z" fill="#159447"/>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       </marker>
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       <marker id="cp-blue-arrow" markerWidth="8"
+                                                                                                                                                                                                                                                                                  
