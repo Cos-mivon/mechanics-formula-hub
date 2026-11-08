@@ -1,0 +1,38 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #081426;
+    color: white;
+    padding: 25px;
+}
+
+h1 {
+    color: #38bdf8;
+    margin-bottom: 15px;
+}
+
+.container {
+    max-width: 950px;
+    margin: auto;
+}
+
+.card {
+    background: #13243b;
+    padding: 20px;
+    border-radius: 12px;
+    margin: 15px 0;
+}
+
+button {
+    background: #0284c7;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+}
