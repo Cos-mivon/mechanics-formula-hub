@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Non-Coplanar Non-Concurrent Equilibrium</title>
+
+<link rel="stylesheet" href="../../../../assets/style.css">
+
+<style>
+*{box-sizing:border-box}
+
+body{
+    margin:0;
+    background:#071426;
+    color:#eaf2ff;
+    font-family:Arial,sans-serif;
+}
+
+.container{
+    max-width:1100px;
+    margin:auto;
+    padding:22px;
+}
+
+.back{
+    background:#193b61;
+    color:white;
+    border:0;
+    padding:11px 17px;
+    border-radius:8px;
+    cursor:pointer;
+    margin-bottom:20px;
+}
+
+h1{color:#63b3ff;margin-bottom:8px}
+h2{color:#63b3ff;margin-top:0}
+h3{color:#a9d8ff}
+
+.subtitle{color:#a8bbd2;margin-bottom:25px}
+
+.section{
+    background:#10243d;
+    border:1px solid #25486d;
+    border-radius:13px;
+    padding:22px;
+    margin:20px 0;
+}
+
+.formula{
+    background:#071a30;
+    border-left:4px solid #42a5f5;
+    padding:15px;
+    margin:12px 0;
+    border-radius:5px;
+    line-height:1.9;
+    overflow-wrap:anywhere;
+}
+
+.model-layout{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:18px;
+}
+
+#model-container{
+    width:100%;
+    height:420px;
+    background:#07101e;
+    border:1px solid #315779;
+    border-radius:12px;
+    overflow:hidden;
+    position:relative;
+}
+
+#model-container canvas{
+    display:block;
+    width:100%;
+    height:100%;
+}
+
+.model-help{
+    color:#b8cce2;
+    font-size:13px;
+    line-height:1.6;
+    margin-top:10px;
+}
+
+.force-card{
+    background:#0a1b30;
+    border:1px solid #294b6c;
+    border-radius:10px;
+    padding:14px;
+    margin-bottom:12px;
+}
+
+.force-card h3{margin:0 0 12px}
+
+.input-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:9px;
+}
+
+.input-group label{
+    display:block;
+    font-size:12px;
+    color:#a9c5df;
+    margin-bottom:5px;
+}
+
+.input-group input{
+    width:100%;
+    min-width:0;
+    padding:9px 5px;
+    background:#152c46;
+    border:1px solid #456789;
+    border-radius:6px;
+    color:white;
+    font-size:14px;
+}
+
+.input-group input:focus{
+    outline:2px solid #42a5f5;
+}
+
+.subheading{
+    color:#75bdff;
+    font-size:13px;
+    margin:12px 0 8px;
+}
+
+.result-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:10px;
+}
+
+.result-box{
+    background:#071a30;
+    border:1px solid #294b6c;
+    border-radius:9px;
+    padding:13px;
+    overflow-wrap:anywhere;
+}
+
+.result-box small{
+    color:#9bb5ce;
+    display:block;
+    margin-bottom:7px;
+}
+
+.result-box strong{
+    color:#70c4ff;
+    font-size:17px;
+}
+
+.check{
+    padding:12px;
+    border-radius:8px;
+    margin:8px 0;
+    background:#263449;
+    border:1px solid #53677e;
+}
+
+.check.good{
+    background:#103b31;
+    border-color:#269c70;
+}
+
+.check.bad{
+    background:#46252b;
+    border-color:#bd5260;
+}
+
+button.action{
+    background:#1676c5;
+    color:white;
+    border:0;
+    padding:11px 16px;
+    border-radius:7px;
+    cursor:pointer;
+    margin-top:12px;
+}
+
+button.action:hover{background:#258fe4}
+
+.legend{
+    display:flex;
+    flex-wrap:wrap;
+    gap:12px;
+    font-size:13px;
+    color:#c3d5e8;
+    margin-top:12px;
+}
+
+.legend span{display:flex;align-items:center;gap:6px}
+
+.dot{
+    width:10px;height:10px;border-radius:50%;
+    display:inline-block;
+}
+
+.note{
+    color:#a9bfd6;
+    font-size:13px;
+    line-height:1.6;
+}
+
+@media(max-width:750px){
+    .model-layout{grid-template-columns:1fr}
+    #model-container{height:340px}
+    .container{padding:14px}
+    .section{padding:16px}
+}
+</style>
+
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
+</head>
+
+<body>
+<div class="container">
+
+<button class="back" onclick="window.location.href='../index.html'">
+← Equilibrium Topics
+</button>
+
+<h1>Non-Coplanar Non-Concurrent Equilibrium</h1>
+<p class="subtitle">
+Three-dimensional force systems acting at different points on a rigid body.
+</p>
+
+<section class="section">
+<h2>1. Introduction</h2>
+<p>
+In engineering mechanics, forces do not always act in the same plane or
+pass through a common point. When forces act in different directions and
+at different points in three-dimensional space, the system is studied
+as a non-coplanar non-concurrent force system.
+</p>
+<p>
+To maintain equilibrium, the body must have neither translational
+acceleration nor rotational acceleration.
+</p>
+</section>
+
+<section class="section">
+<h2>2. Statement</h2>
+<p>
+A rigid body subjected to a non-coplanar non-concurrent force system is
+in equilibrium when the resultant force and the resultant moment about
+any reference point are both zero.
+</p>
+</section>
+
+<section class="section">
+<h2>3. Conditions of Equilibrium</h2>
+<p>There are six independent scalar equilibrium conditions in three dimensions.</p>
+
+<div class="formula">
+<strong>Force equilibrium:</strong><br>
+ΣFx = 0<br>
+ΣFy = 0<br>
+ΣFz = 0
+</div>
+
+<div class="formula">
+<strong>Moment equilibrium:</strong><br>
+ΣMx = 0<br>
+ΣMy = 0<br>
+ΣMz = 0
+</div>
+</section>
+
+<section class="section">
+<h2>4. Mathematical Formulation</h2>
+<p>
+For a force F acting at position r relative to the chosen origin,
+its moment is calculated using the vector cross product:
+</p>
+
+<div class="formula">
+M = r × F
+</div>
+
+<p>In component form:</p>
+
+<div class="formula">
+Mx = yFz − zFy<br>
+My = zFx − xFz<br>
+Mz = xFy − yFx
+</div>
+
+<p>
+The total moment is the vector sum of the moments produced by all forces.
+</p>
+</section>
+
+<section class="section">
+<h2>5. Three-Dimensional Free Body Diagram</h2>
+<p>
+The diagram below represents a rigid body with forces acting at
+different application points in three-dimensional space.
+</p>
+
+<div id="model-container"></div>
+
+<div class="legend">
+<span><i class="dot" style="background:#ff5555"></i> X-axis</span>
+<span><i class="dot" style="background:#55dd88"></i> Y-axis</span>
+<span><i class="dot" style="background:#5599ff"></i> Z-axis</span>
+<span><i class="dot" style="background:#ffbb44"></i> Applied forces</span>
+</div>
+
+<p class="model-help">
+Drag to rotate the model. Use the scroll gesture to zoom.
+The force arrows are displayed from their respective application points.
+</p>
+</section>
+
+<section class="section">
+<h2>6. Derivation of Equilibrium Equations</h2>
+
+<p><strong>Step 1: Translational equilibrium</strong></p>
+<p>
+For no translational acceleration, Newton's second law gives:
+</p>
+<div class="formula">ΣF = ma = 0</div>
+<p>Resolving this vector equation along three axes:</p>
+<div class="formula">
+ΣFx = 0, &nbsp; ΣFy = 0, &nbsp; ΣFz = 0
+</div>
+
+<p><strong>Step 2: Rotational equilibrium</strong></p>
+<p>
+For no angular acceleration, the resultant moment must be zero:
+</p>
+<div class="formula">ΣM = 0</div>
+<p>Resolving along the three coordinate axes:</p>
+<div class="formula">
+ΣMx = 0, &nbsp; ΣMy = 0, &nbsp; ΣMz = 0
+</div>
+</section>
+
+<section class="section">
+<h2>7. Solved Example — Force and Moment Resultants</h2>
+<p>
+Consider a rigid body subjected to several forces at different
+three-dimensional positions. For each force, calculate its moment
+about the origin using:
+</p>
+<div class="formula">
+Mi = ri × Fi
+</div>
+<p>
+Add all force components to obtain the resultant force, and add all
+moment components to obtain the resultant moment. The body is in
+equilibrium only when all six resultant components are zero.
+</p>
+<p class="note">
+Use the interactive model below to experiment with different force
+components and application points.
+</p>
+</section>
+
+<section class="section">
+<h2>8. Engineering Applications</h2>
+<ul>
+<li>Analysis of three-dimensional structures and space frames.</li>
+<li>Forces acting on machine components.</li>
+<li>Structural supports and complex frameworks.</li>
+<li>Crane and lifting-system analysis.</li>
+<li>Mechanical systems subjected to forces in different directions.</li>
+</ul>
+</section>
+
+<section class="section">
+<h2>9. Interactive 3D Equilibrium Workspace</h2>
+<p>
+Change the force components and application-point coordinates.
+The resultant force and moment will be recalculated automatically.
+</p>
+
+<div id="force-inputs"></div>
+
+<button class="action" id="reset-button">Reset Values</button>
+
+<h3>Resultant Force</h3>
+<div class="result-grid">
+    <div class="result-box"><small>ΣFx</small><strong id="rx">0 N</strong></div>
+    <div class="result-box"><small>ΣFy</small><strong id="ry">0 N</strong></div>
+    <div class="result-box"><small>ΣFz</small><strong id="rz">0 N</strong></div>
+    <div class="result-box"><small>Resultant Force |R|</small><strong id="rmag">0 N</strong></div>
+</div>
+
+<h3>Resultant Moment About Origin</h3>
+<div class="result-grid">
+    <div class="result-box"><small>ΣMx</small><strong id="mx">0 Nm</strong></div>
+    <div class="result-box"><small>ΣMy</small><strong id="my">0 Nm</strong></div>
+    <div class="result-box"><small>ΣMz</small><strong id="mz">0 Nm</strong></div>
+    <div class="result-box"><small>Resultant Moment |M|</small><strong id="mmag">0 Nm</strong></div>
+</div>
+
+<h3>Equilibrium Check</h3>
+<p class="note">A component is considered balanced when its absolute value is below 0.01.</p>
+<div id="checks"></div>
+<div id="overall" class="check">Waiting for calculation...</div>
+
+<p class="note">
+All force inputs are in newtons (N). Application-point coordinates are
+in metres (m). The model calculates moments about the origin (0,0,0).
+</p>
+</section>
+
+</div>
+
+<script type="module">
+import * as THREE from "three";
+import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+
+/* --------------------------------
+   INITIAL FORCE DATA
+--------------------------------- */
+
+const initialForces = [
+    {fx:100, fy:20, fz:30, x:0, y:1, z:0},
+    {fx:-40, fy:80, fz:10, x:1, y:0, z:0},
+    {fx:20, fy:-30, fz:70, x:0, y:0, z:1},
+    {fx:-10, fy:15, fz:-25, x:-1, y:-1, z:-1}
+];
+
+let forces = initialForces.map(f => ({...f}));
+
+const inputContainer = document.getElementById("force-inputs");
+
+const fields = [
+    ["fx","Fx (N)"],["fy","Fy (N)"],["fz","Fz (N)"],
+    ["x","X (m)"],["y","Y (m)"],["z","Z (m)"]
+];
+
+forces.forEach((force,index)=>{
+    const card = document.createElement("div");
+    card.className = "force-card";
+
+    const title = document.createElement("h3");
+    title.textContent = "Force F" + (index+1);
+    card.appendChild(title);
+
+    const forceHeading = document.createElement("div");
+    forceHeading.className = "subheading";
+    forceHeading.textContent = "Force components";
+    card.appendChild(forceHeading);
+
+    const forceGrid = document.createElement("div");
+    forceGrid.className = "input-grid";
+
+    fields.slice(0,3).forEach(([key,label])=>{
+        forceGrid.appendChild(makeInput(index,key,label,force[key]));
+    });
+
+    card.appendChild(forceGrid);
+
+    const positionHeading = document.createElement("div");
+    positionHeading.className = "subheading";
+    positionHeading.textContent = "Application point coordinates";
+    card.appendChild(positionHeading);
+
+    const positionGrid = document.createElement("div");
+    positionGrid.className = "input-grid";
+
+    fields.slice(3).forEach(([key,label])=>{
+        positionGrid.appendChild(makeInput(index,key,label,force[key]));
+    });
+
+    card.appendChild(positionGrid);
+    inputContainer.appendChild(card);
+});
+
+function makeInput(index,key,label,value){
+    const wrapper = document.createElement("div");
+    wrapper.className = "input-group";
+
+    const lab = document.createElement("label");
+    lab.textContent = label;
+
+    const input = document.createElement("input");
+    input.type = "number";
+    input.step = "any";
+    input.value = value;
+    input.id = `f${index}_${key}`;
+
+    input.addEventListener("input",()=>{
+        const value = input.value.trim();
+        forces[index][key] = value === "" ? 0 : Number(value);
+        updateCalculations();
+    });
+
+    wrapper.append(lab,input);
+    return wrapper;
+}
+
+/* --------------------------------
+   THREE.JS 3D MODEL
+--------------------------------- */
+
+const container = document.getElementById("model-container");
+
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0x07101e);
+
+const camera = new THREE.PerspectiveCamera(
+    45,
+    container.clientWidth/container.clientHeight,
+    0.1,
+    100
+);
+
+camera.position.set(5,4,6);
+
+const renderer = new THREE.WebGLRenderer({antialias:true});
+renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
+renderer.setSize(container.clientWidth,container.clientHeight);
+container.appendChild(renderer.domElement);
+
+const controls = new OrbitControls(camera,renderer.domElement);
+controls.enableDamping = true;
+controls.target.set(0,0,0);
+
+/* Lighting */
+
+scene.add(new THREE.AmbientLight(0xffffff,1.2));
+
+const light = new THREE.DirectionalLight(0xffffff,2);
+light.position.set(5,8,6);
+scene.add(light);
+
+/* Body */
+
+const bodyGeometry = new THREE.BoxGeometry(2,2,2);
+const bodyMaterial = new THREE.MeshStandardMaterial({
+    color:0x245b88,
+    transparent:true,
+    opacity:0.20,
+    roughness:0.5
+});
+
+const body = new THREE.Mesh(bodyGeometry,bodyMaterial);
+scene.add(body);
+
+const edges = new THREE.EdgesGeometry(bodyGeometry);
+const outline = new THREE.LineSegments(
+    edges,
+    new THREE.LineBasicMaterial({color:0x68baff})
+);
+scene.add(outline);
+
+/* Coordinate axes */
+
+function addAxis(direction,color){
+    const arrow = new THREE.ArrowHelper(
+        direction,
+        new THREE.Vector3(0,0,0),
+        2.5,
+        color,
+        0.18,
+        0.10
+    );
+    scene.add(arrow);
+}
+
+addAxis(new THREE.Vector3(1,0,0),0xff5555);
+addAxis(new THREE.Vector3(0,1,0),0x55dd88);
+addAxis(new THREE.Vector3(0,0,1),0x5599ff);
+
+const grid = new THREE.GridHelper(6,12,0x31506e,0x20364d);
+grid.position.y = -1.15;
+scene.add(grid);
+
+/* Dynamic force arrows and points */
+
+const vectorGroup = new THREE.Group();
+scene.add(vectorGroup);
+
+function drawVectors(){
+    while(vectorGroup.children.length){
+        const child = vectorGroup.children[0];
+        vectorGroup.remove(child);
+        child.traverse(obj=>{
+            if(obj.geometry) obj.geometry.dispose();
+            if(obj.material){
+                if(Array.isArray(obj.material)){
+                    obj.material.forEach(m=>m.dispose());
+                }else{
+                    obj.material.dispose();
+                }
+            }
+        });
+    }
+
+    forces.forEach((f,index)=>{
+        const position = new THREE.Vector3(f.x,f.y,f.z);
+        const force = new THREE.Vector3(f.fx,f.fy,f.fz);
+
+        /* Application point */
+
+        const point = new THREE.Mesh(
+            new THREE.SphereGeometry(0.065,16,12),
+            new THREE.MeshStandardMaterial({color:0xffffff})
+        );
+
+        point.position.copy(position);
+        vectorGroup.add(point);
+
+        /* Force arrow */
+
+        const magnitude = force.length();
+
+        if(magnitude > 0.001){
+            const direction = force.clone().normalize();
+            const length = Math.min(magnitude*0.008,2.2);
+
+            const arrow = new THREE.ArrowHelper(
+                direction,
+                position,
+                length,
+                0xffbb44,
+                0.18,
+                0.10
+            );
+
+            vectorGroup.add(arrow);
+        }
+    });
+}
+
+/* --------------------------------
+   EQUILIBRIUM CALCULATIONS
+--------------------------------- */
+
+function updateCalculations(){
+
+    let rx=0, ry=0, rz=0;
+    let mx=0, my=0, mz=0;
+
+    forces.forEach(f=>{
+        rx += f.fx;
+        ry += f.fy;
+        rz += f.fz;
+
+        /* Moment = r cross F */
+
+        mx += f.y*f.fz - f.z*f.fy;
+        my += f.z*f.fx - f.x*f.fz;
+        mz += f.x*f.fy - f.y*f.fx;
+    });
+
+    const rmag = Math.sqrt(rx*rx + ry*ry + rz*rz);
+    const mmag = Math.sqrt(mx*mx + my*my + mz*mz);
+
+    const fmt = value => Number(value).toFixed(2);
+
+    document.getElementById("rx").textContent = fmt(rx)+" N";
+    document.getElementById("ry").textContent = fmt(ry)+" N";
+    document.getElementById("rz").textContent = fmt(rz)+" N";
+    document.getElementById("rmag").textContent = fmt(rmag)+" N";
+
+    document.getElementById("mx").textContent = fmt(mx)+" Nm";
+    document.getElementById("my").textContent = fmt(my)+" Nm";
+    document.getElementById("mz").textContent = fmt(mz)+" Nm";
+    document.getElementById("mmag").textContent = fmt(mmag)+" Nm";
+
+    const checks = [
+        ["ΣFx = 0",rx],
+        ["ΣFy = 0",ry],
+        ["ΣFz = 0",rz],
+        ["ΣMx = 0",mx],
+        ["ΣMy = 0",my],
+        ["ΣMz = 0",mz]
+    ];
+
+    const checkContainer = document.getElementById("checks");
+    checkContainer.innerHTML = "";
+
+    checks.forEach(([label,value])=>{
+        const balanced = Math.abs(value)<0.01;
+        const div = document.createElement("div");
+
+        div.className = "check "+(balanced?"good":"bad");
+        div.textContent = label+" : "+
+            (balanced?"Balanced":"Not balanced")+
+            " ("+fmt(value)+")";
+
+        checkContainer.appendChild(div);
+    });
+
+    const equilibrium = Math.abs(rx)<0.01 &&
+        Math.abs(ry)<0.01 &&
+        Math.abs(rz)<0.01 &&
+        Math.abs(mx)<0.01 &&
+        Math.abs(my)<0.01 &&
+        Math.abs(mz)<0.01;
+
+    const overall = document.getElementById("overall");
+
+    overall.className = "check "+(equilibrium?"good":"bad");
+    overall.textContent = equilibrium
+        ? "✓ The force system satisfies all six equilibrium conditions."
+        : "The force system is NOT in complete equilibrium.";
+
+    drawVectors();
+}
+
+/* Reset */
+
+document.getElementById("reset-button").addEventListener("click",()=>{
+    forces = initialForces.map(f=>({...f}));
+
+    forces.forEach((force,index)=>{
+        Object.keys(force).forEach(key=>{
+            document.getElementById(`f${index}_${key}`).value=force[key];
+        });
+    });
+
+    updateCalculations();
+});
+
+/* Responsive model */
+
+function resizeModel(){
+    const width = container.clientWidth;
+    const height = container.clientHeight;
+
+    camera.aspect = width/height;
+    camera.updateProjectionMatrix();
+
+    renderer.setSize(width,height);
+}
+
+window.addEventListener("resize",resizeModel);
+
+/* Animation */
+
+function animate(){
+    requestAnimationFrame(animate);
+    controls.update();
+    renderer.render(scene,camera);
+}
+
+updateCalculations();
+animate();
+
+</script>
+</body>
+</html>
