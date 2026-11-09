@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Coplanar Concurrent Equilibrium | Mechanics Formula Hub</title>
+
+  <link rel="stylesheet" href="../../../../assets/style.css">
+</head>
+
+<body>
+
+<header>
+  <div class="logo">⚙ Mechanics Formula Hub</div>
+  <div class="tagline">Engineering Mechanics Learning Platform</div>
+</header>
+
+<main>
+
+  <button class="back"
+    onclick="window.location.href='../index.html'">
+    ← Equilibrium Topics
+  </button>
+
+  <h1>Coplanar Concurrent Equilibrium</h1>
+
+  <p class="subtitle">
+    Understanding the equilibrium of forces acting in the same plane
+    and passing through a common point.
+  </p>
+
+
+  <!-- INTRODUCTION -->
+
+  <section class="panel">
+
+    <h2>1. Introduction</h2>
+
+    <p>
+      In engineering mechanics, equilibrium refers to a condition
+      in which a body remains at rest or continues moving with
+      constant velocity because the resultant external force
+      acting on it is zero.
+    </p>
+
+    <p>
+      A coplanar concurrent force system consists of forces
+      that satisfy two important conditions:
+    </p>
+
+    <ul>
+      <li>
+        <b>Coplanar:</b> All forces act in the same plane,
+        usually represented by the X-Y plane.
+      </li>
+
+      <li>
+        <b>Concurrent:</b> The lines of action of all forces
+        pass through one common point.
+      </li>
+    </ul>
+
+    <p>
+      When these forces balance one another, the particle
+      remains in equilibrium.
+    </p>
+
+  </section>
+
+
+  <!-- STATEMENT -->
+
+  <section class="panel">
+
+    <h2>2. Statement</h2>
+
+    <p>
+      For a coplanar concurrent force system to remain in
+      equilibrium, the algebraic sum of all horizontal
+      force components and the algebraic sum of all
+      vertical force components must each be zero.
+    </p>
+
+    <div class="formula">
+      ΣFx = 0
+    </div>
+
+    <div class="formula">
+      ΣFy = 0
+    </div>
+
+  </section>
+
+
+  <!-- CONDITIONS -->
+
+  <section class="panel">
+
+    <h2>3. Conditions of Equilibrium</h2>
+
+    <h3>A. Horizontal Equilibrium</h3>
+
+    <p>
+      The total force acting along the horizontal X-axis
+      must be zero.
+    </p>
+
+    <div class="formula">
+      ΣFx = 0
+    </div>
+
+    <h3>B. Vertical Equilibrium</h3>
+
+    <p>
+      The total force acting along the vertical Y-axis
+      must be zero.
+    </p>
+
+    <div class="formula">
+      ΣFy = 0
+    </div>
+
+    <h3>Important Note</h3>
+
+    <p>
+      Since all forces pass through the same point,
+      their moment arms about that common point are zero.
+      Therefore, no separate moment equation is required
+      for an ideal coplanar concurrent force system.
+    </p>
+
+  </section>
+
+
+  <!-- FORMULA -->
+
+  <section class="panel">
+
+    <h2>4. Mathematical Formulation</h2>
+
+    <p>
+      Consider a force F acting at an angle θ with the
+      positive horizontal X-axis.
+    </p>
+
+    <p>Its horizontal component is:</p>
+
+    <div class="formula">
+      Fx = F cos θ
+    </div>
+
+    <p>Its vertical component is:</p>
+
+    <div class="formula">
+      Fy = F sin θ
+    </div>
+
+    <p>
+      For a system containing multiple forces:
+    </p>
+
+    <div class="formula">
+      Σ(F cos θ) = 0
+    </div>
+
+    <div class="formula">
+      Σ(F sin θ) = 0
+    </div>
+
+    <p>
+      Remember: Use positive or negative signs according
+      to the chosen coordinate directions.
+    </p>
+
+  </section>
+
+
+  <!-- DIAGRAM -->
+
+  <section class="panel">
+
+    <h2>5. Free Body Diagram</h2>
+
+    <p>
+      A free-body diagram (FBD) represents a body or particle
+      isolated from its surroundings, showing all external
+      forces acting on it.
+    </p>
+
+    <p>
+      The following diagram shows three concurrent forces
+      acting at a common point.
+    </p>
+
+    <div class="coplanar-diagram">
+
+      <svg viewBox="0 0 500 350"
+           width="100%"
+           role="img"
+           aria-label="Three forces acting at a common point">
+
+        <defs>
+          <marker id="fbd-arrow"
+            markerWidth="10"
+            markerHeight="10"
+            refX="8"
+            refY="3"
+            orient="auto">
+            <path d="M0,0 L0,6 L9,3 Z" fill="#e53935"/>
+          </marker>
+
+          <marker id="fbd-arrow-green"
+            markerWidth="10"
+            markerHeight="10"
+            refX="8"
+            refY="3"
+            orient="auto">
+            <path d="M0,0 L0,6 L9,3 Z" fill="#159447"/>
+          </marker>
+
+          <marker id="fbd-arrow-blue"
+            markerWidth="10"
+            markerHeight="10"
+            refX="8"
+            refY="3"
+            orient="auto">
+            <path d="M0,0 L0,6 L9,3 Z" fill="#2368d8"/>
+          </marker>
+        </defs>
+
+        <!-- Coordinate axes -->
+
+        <line x1="35" y1="175" x2="465" y2="175"
+          stroke="#555" stroke-width="1.5"/>
+
+        <line x1="250" y1="325" x2="250" y2="25"
+          stroke="#555" stroke-width="1.5"/>
+
+        <text x="470" y="180" fill="#222">X</text>
+        <text x="260" y="25" fill="#222">Y</text>
+
+        <!-- Forces -->
+
+        <line x1="250" y1="175" x2="420" y2="175"
+          stroke="#e53935" stroke-width="4"
+          marker-end="url(#fbd-arrow)"/>
+
+        <line x1="250" y1="175" x2="250" y2="45"
+          stroke="#159447" stroke-width="4"
+          marker-end="url(#fbd-arrow-green)"/>
+
+        <line x1="250" y1="175" x2="105" y2="285"
+          stroke="#2368d8" stroke-width="4"
+          marker-end="url(#fbd-arrow-blue)"/>
+
+        <circle cx="250" cy="175" r="5" fill="#111"/>
+
+        <text x="355" y="155" fill="#c62828">F₁</text>
+        <text x="265" y="65" fill="#087b36">F₂</text>
+        <text x="110" y="305" fill="#174ca5">F₃</text>
+
+        <text x="265" y="195" fill="#222">O</text>
+
+      </svg>
+
+    </div>
+
+    <p>
+      All three forces pass through point O. Their directions
+      and magnitudes determine whether the particle is
+      in equilibrium.
+    </p>
+
+  </section>
+
+
+  <!-- DERIVATION -->
+
+  <section class="panel">
+
+    <h2>6. Derivation of Equilibrium Equations</h2>
+
+    <p>
+      Consider a particle subjected to several forces
+      F₁, F₂, F₃, ... acting in one plane.
+    </p>
+
+    <p>
+      According to Newton's second law:
+    </p>
+
+    <div class="formula">
+      ΣF = ma
+    </div>
+
+    <p>
+      For equilibrium, acceleration is zero.
+    </p>
+
+    <div class="formula">
+      a = 0
+    </div>
+
+    <p>Therefore:</p>
+
+    <div class="formula">
+      ΣF = 0
+    </div>
+
+    <p>
+      Resolving this vector equation along the X-axis:
+    </p>
+
+    <div class="formula">
+      ΣFx = 0
+    </div>
+
+    <p>
+      Resolving along the Y-axis:
+    </p>
+
+    <div class="formula">
+      ΣFy = 0
+    </div>
+
+    <p>
+      Hence, the two independent scalar equations
+      of equilibrium are obtained.
+    </p>
+
+  </section>
+
+
+  <!-- SOLVED EXAMPLE -->
+
+  <section class="panel">
+
+    <h2>7. Solved Numerical Example</h2>
+
+    <h3>Problem</h3>
+
+    <p>
+      Two perpendicular forces of 100 N and 80 N act
+      on a particle. Determine the magnitude and
+      direction of the force required to maintain
+      equilibrium.
+    </p>
+
+    <h3>Given Data</h3>
+
+    <ul>
+      <li>Horizontal force = 100 N</li>
+      <li>Vertical force = 80 N</li>
+    </ul>
+
+    <h3>Step 1: Resolve the forces</h3>
+
+    <p>Horizontal direction:</p>
+
+    <div class="formula">
+      ΣFx = 100 + F3x = 0
+    </div>
+
+    <div class="formula">
+      F3x = -100 N
+    </div>
+
+    <p>Vertical direction:</p>
+
+    <div class="formula">
+      ΣFy = 80 + F3y = 0
+    </div>
+
+    <div class="formula">
+      F3y = -80 N
+    </div>
+
+    <h3>Step 2: Calculate the magnitude</h3>
+
+    <div class="formula">
+      F3 = √(F3x² + F3y²)
+    </div>
+
+    <div class="formula">
+      F3 = √(100² + 80²)
+    </div>
+
+    <div class="formula">
+      F3 = 128.06 N
+    </div>
+
+    <h3>Step 3: Calculate the direction</h3>
+
+    <div class="formula">
+      θ = tan⁻¹(80 / 100)
+    </div>
+
+    <div class="formula">
+      θ = 38.66°
+    </div>
+
+    <h3>Final Answer</h3>
+
+    <div class="formula">
+      Balancing Force = 128.06 N
+    </div>
+
+    <p>
+      Its direction is 38.66° below the negative X-axis.
+    </p>
+
+  </section>
+
+
+  <!-- APPLICATIONS -->
+
+  <section class="panel">
+
+    <h2>8. Engineering Applications</h2>
+
+    <h3>1. Structural Trusses</h3>
+
+    <p>
+      Forces at pin-connected truss joints are often
+      analysed as concurrent force systems to determine
+      internal member forces.
+    </p>
+
+    <h3>2. Guy Wires and Cables</h3>
+
+    <p>
+      Multiple cables connected to a common point can
+      be analysed to determine the tension required
+      for equilibrium.
+    </p>
+
+    <h3>3. Cranes and Rigging Systems</h3>
+
+    <p>
+      When several sling cables meet at a common hook,
+      equilibrium equations help determine the forces
+      carried by each cable.
+    </p>
+
+    <h3>4. Biomechanical Joints</h3>
+
+    <p>
+      Muscle forces, tendon forces and external loads
+      acting around a joint can be studied using
+      concurrent force systems.
+    </p>
+
+  </section>
+
+
+  <!-- INTERACTIVE MODEL -->
+
+  <section class="panel">
+
+    <h2>9. Interactive Force Model</h2>
+
+    <p>
+      Change the horizontal and vertical force values
+      and observe how the balancing force changes.
+    </p>
+
+    <div id="coplanar-model" class="coplanar-model">
+
+      <h3>Three-Force Equilibrium Simulator</h3>
+
+      <div class="coplanar-inputs">
+
+        <div>
+          <label for="coplanar-fx">
+            Horizontal Force F₁ (N)
+          </label>
+
+          <input type="number"
+            id="coplanar-fx"
+            value="100"
+            min="0"
+            max="10000"
+            step="1">
+        </div>
+
+        <div>
+          <label for="coplanar-fy">
+            Vertical Force F₂ (N)
+          </label>
+
+          <input type="number"
+            id="coplanar-fy"
+            value="80"
+            min="0"
+            max="10000"
+            step="1">
+        </div>
+
+      </div>
+
+      <div class="coplanar-diagram">
+
+        <svg id="coplanar-svg"
+          viewBox="0 0 600 430"
+          role="img"
+          aria-label="Interactive three-force equilibrium diagram">
+
+          <defs>
+
+            <marker id="cp-axis-arrow"
+              markerWidth="8"
+              markerHeight="8"
+              refX="6"
+              refY="3"
+              orient="auto">
+              <path d="M0,0 L0,6 L6,3 Z" fill="#555"/>
+            </marker>
+
+            <marker id="cp-red-arrow"
+              markerWidth="8"
+              markerHeight="8"
+              refX="6"
+              refY="3"
+              orient="auto">
+              <path d="M0,0 L0,6 L6,3 Z" fill="#e53935"/>
+            </marker>
+
+            <marker id="cp-green-arrow"
+              markerWidth="8"
+              markerHeight="8"
+              refX="6"
+              refY="3"
+              orient="auto">
+              <path d="M0,0 L0,6 L6,3 Z" fill="#159447"/>
+            </marker>
+
+            <marker id="cp-blue-arrow"
+              markerWidth="8"
+              markerHeight="8"
+              refX="6"
+              refY="3"
+              orient="auto">
+              <path d="M0,0 L0,6 L6,3 Z" fill="#2368d8"/>
+            </marker>
+
+          </defs>
+
+          <line x1="35" y1="210" x2="565" y2="210"
+            stroke="#555" stroke-width="2"
+            marker-end="url(#cp-axis-arrow)"/>
+
+          <line x1="300" y1="390" x2="300" y2="25"
+            stroke="#555" stroke-width="2"
+            marker-end="url(#cp-axis-arrow)"/>
+
+          <text x="570" y="215" fill="#222">X</text>
+          <text x="310" y="25" fill="#222">Y</text>
+
+          <g id="coplanar-vectors"></g>
+
+          <circle cx="300" cy="210" r="5" fill="#111"/>
+
+          <text x="310" y="230" fill="#222">
+            O (Common point)
+          </text>
+
+        </svg>
+
+      </div>
+
+      <div class="coplanar-legend">
+        <span>🔴 F₁</span>
+        <span>🟢 F₂</span>
+        <span>🔵 F₃</span>
+      </div>
+
+      <div class="coplanar-results">
+
+        <h3>Calculated Results</h3>
+
+        <p>
+          F₃x:
+          <strong id="cp-out-x">-100 N</strong>
+        </p>
+
+        <p>
+          F₃y:
+          <strong id="cp-out-y">-80 N</strong>
+        </p>
+
+        <p>
+          Balancing Force:
+          <strong id="cp-magnitude">128.06 N</strong>
+        </p>
+
+        <p>
+          Direction:
+          <strong id="cp-angle">
+            38.66° below negative X-axis
+          </strong>
+        </p>
+
+        <p>
+          Net Resultant:
+          <strong id="cp-resultant">0 N</strong>
+        </p>
+
+        <button type="button" id="cp-reset">
+          Reset Values
+        </button>
+
+      </div>
+
+      <p class="coplanar-note">
+        Arrow lengths are scaled for visualization and
+        do not represent a fixed drawing scale.
+      </p>
+
+    </div>
+
+  </section>
+
+
+  <button class="back"
+    onclick="window.location.href='../index.html'">
+    ← Back to Equilibrium Topics
+  </button>
+
+</main>
+
+<footer>
+  Mechanics Formula Hub | Engineering Mechanics
+</footer>
+
+<script src="../../../../assets/coplanar.js"></script>
+
+</body>
+</html>
