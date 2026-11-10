@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Lami's Theorem | Mechanics Formula Hub</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #071426;
+    color: #eaf2ff;
+    line-height: 1.7;
+}
+
+header {
+    background: #10233e;
+    padding: 22px;
+    border-bottom: 1px solid #294866;
+}
+
+header h1 {
+    color: #50b5ff;
+    font-size: 1.8rem;
+}
+
+header p {
+    color: #a7bbd2;
+    margin-top: 5px;
+}
+
+.container {
+    max-width: 950px;
+    margin: auto;
+    padding: 25px 18px 50px;
+}
+
+.back-btn {
+    display: inline-block;
+    padding: 10px 18px;
+    background: #203954;
+    color: #dceaff;
+    text-decoration: none;
+    border: 1px solid #456483;
+    border-radius: 12px;
+    margin-bottom: 25px;
+}
+
+h2 {
+    font-size: 1.8rem;
+    margin-bottom: 12px;
+}
+
+.subtitle {
+    color: #9bb1ca;
+    margin-bottom: 30px;
+}
+
+.section {
+    background: #142943;
+    border: 1px solid #294966;
+    border-radius: 16px;
+    padding: 22px;
+    margin-bottom: 22px;
+}
+
+.section h3 {
+    color: #55baff;
+    font-size: 1.3rem;
+    margin-bottom: 12px;
+}
+
+.section p {
+    color: #c5d4e6;
+    margin-bottom: 12px;
+}
+
+.formula {
+    background: #091a30;
+    border: 1px solid #3675a7;
+    border-radius: 12px;
+    padding: 20px 10px;
+    text-align: center;
+    font-size: 1.35rem;
+    color: #65c5ff;
+    font-weight: bold;
+    margin: 15px 0;
+    overflow-wrap: anywhere;
+}
+
+.diagram {
+    background: #091a30;
+    padding: 15px;
+    border-radius: 12px;
+    margin-top: 15px;
+    text-align: center;
+}
+
+.diagram svg {
+    width: 100%;
+    max-width: 600px;
+    height: auto;
+}
+
+.diagram-note {
+    font-size: 0.9rem;
+    color: #9bb1ca;
+    margin-top: 10px;
+}
+
+.example {
+    background: #091a30;
+    border-left: 4px solid #50b5ff;
+    padding: 18px;
+    border-radius: 8px;
+    margin-top: 15px;
+}
+
+.example p {
+    margin-bottom: 10px;
+}
+
+.result {
+    color: #67dba0;
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+ul {
+    padding-left: 22px;
+    color: #c5d4e6;
+}
+
+li {
+    margin-bottom: 8px;
+}
+
+footer {
+    text-align: center;
+    color: #8098b3;
+    padding: 25px;
+}
+
+@media(max-width: 600px) {
+
+    header h1 {
+        font-size: 1.45rem;
+    }
+
+    h2 {
+        font-size: 1.5rem;
+    }
+
+    .section {
+        padding: 17px;
+    }
+
+    .formula {
+        font-size: 1.1rem;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>⚙ Mechanics Formula Hub</h1>
+    <p>Engineering Mechanics Learning Platform</p>
+</header>
+
+<main class="container">
+
+<a href="../index.html" class="back-btn">
+    ← Back to Equilibrium
+</a>
+
+<h2>Lami's Theorem</h2>
+
+<p class="subtitle">
+    Understand the equilibrium of three concurrent forces.
+</p>
+
+
+<!-- INTRODUCTION -->
+
+<section class="section">
+
+<h3>1. Introduction</h3>
+
+<p>
+Lami's Theorem is an important principle of engineering
+mechanics used to solve problems involving three forces
+acting at a common point.
+</p>
+
+<p>
+When three coplanar, concurrent and non-collinear forces
+keep a particle in equilibrium, the relationship between
+their magnitudes and the angles between them can be
+expressed using Lami's Theorem.
+</p>
+
+</section>
+
+
+<!-- STATEMENT -->
+
+<section class="section">
+
+<h3>2. Statement of Lami's Theorem</h3>
+
+<p>
+If a particle is in equilibrium under the action of
+three coplanar, concurrent and non-collinear forces,
+each force is proportional to the sine of the angle
+opposite to it.
+</p>
+
+</section>
+
+
+<!-- CONDITIONS -->
+
+<section class="section">
+
+<h3>3. Conditions for Application</h3>
+
+<ul>
+    <li>Exactly three forces must act on the particle.</li>
+    <li>All three forces must lie in the same plane.</li>
+    <li>Their lines of action must pass through one common point.</li>
+    <li>The forces must be in equilibrium.</li>
+    <li>The forces must not all act along the same straight line.</li>
+</ul>
+
+</section>
+
+
+<!-- FORMULA -->
+
+<section class="section">
+
+<h3>4. Mathematical Formulation</h3>
+
+<p>
+Let three forces F₁, F₂ and F₃ act at a common point.
+Let α, β and γ be the angles opposite to F₁, F₂ and F₃
+respectively in the triangle of forces.
+</p>
+
+<div class="formula">
+F₁ / sin α = F₂ / sin β = F₃ / sin γ
+</div>
+
+<p>
+Where:
+</p>
+
+<ul>
+    <li>F₁, F₂, F₃ = Magnitudes of the three forces.</li>
+    <li>α = Angle opposite to F₁.</li>
+    <li>β = Angle opposite to F₂.</li>
+    <li>γ = Angle opposite to F₃.</li>
+</ul>
+
+<p>
+For the triangle of forces:
+</p>
+
+<div class="formula">
+α + β + γ = 180°
+</div>
+
+</section>
+
+
+<!-- DIAGRAM -->
+
+<section class="section">
+
+<h3>5. Diagram – Triangle of Forces</h3>
+
+<p>
+The three forces can be represented by a closed triangle
+when drawn head-to-tail in their directions.
+</p>
+
+<div class="diagram">
+
+<svg viewBox="0 0 600 390"
+     xmlns="http://www.w3.org/2000/svg">
+
+    <polygon
+        points="100,300 500,300 300,70"
+        fill="#50b5ff"
+        fill-opacity="0.07"
+        stroke="#6bc8ff"
+        stroke-width="3"/>
+
+    <circle cx="100" cy="300" r="5" fill="#ffffff"/>
+    <circle cx="500" cy="300" r="5" fill="#ffffff"/>
+    <circle cx="300" cy="70" r="5" fill="#ffffff"/>
+
+    <text x="290" y="45"
+          fill="#67c7ff"
+          font-size="22"
+          font-weight="bold">F₁</text>
+
+    <text x="290" y="335"
+          fill="#67c7ff"
+          font-size="22"
+          font-weight="bold">F₂</text>
+
+    <text x="75" y="185"
+          fill="#67c7ff"
+          font-size="22"
+          font-weight="bold">F₃</text>
+
+    <text x="315" y="285"
+          fill="#ffd166"
+          font-size="20">α</text>
+
+    <text x="155" y="280"
+          fill="#ffd166"
+          font-size="20">β</text>
+
+    <text x="285" y="125"
+          fill="#ffd166"
+          font-size="20">γ</text>
+
+    <text x="300" y="375"
+          fill="#a7bbd2"
+          font-size="16"
+          text-anchor="middle">
+        Triangle of Forces (schematic)
+    </text>
+
+</svg>
+
+<p class="diagram-note">
+    Schematic illustration of the triangle of forces.
+    α, β and γ are the internal angles opposite their
+    respective forces.
+</p>
+
+</div>
+
+</section>
+
+
+<!-- DERIVATION -->
+
+<section class="section">
+
+<h3>6. Derivation of Lami's Theorem</h3>
+
+<p>
+Consider three forces F₁, F₂ and F₃ acting on a particle
+in equilibrium.
+</p>
+
+<p>
+Since the particle is in equilibrium, the vector sum
+of all three forces must be zero.
+</p>
+
+<div class="formula">
+F₁ + F₂ + F₃ = 0
+</div>
+
+<p>
+Therefore, the three forces can be represented by
+a closed triangle when drawn head-to-tail.
+</p>
+
+<p>
+Applying the sine rule to this triangle:
+</p>
+
+<div class="formula">
+F₁ / sin α = F₂ / sin β = F₃ / sin γ
+</div>
+
+<p>
+Hence, Lami's Theorem is obtained.
+</p>
+
+</section>
+
+
+<!-- SOLVED EXAMPLE -->
+
+<section class="section">
+
+<h3>7. Solved Numerical Example</h3>
+
+<p>
+Three forces keep a particle in equilibrium.
+If F₁ = 100 N, α = 30° and β = 60°,
+find F₂ and F₃.
+</p>
+
+<div class="example">
+
+<p><strong>Given:</strong></p>
+
+<p>
+F₁ = 100 N<br>
+α = 30°<br>
+β = 60°
+</p>
+
+<p><strong>Step 1: Find the third angle.</strong></p>
+
+<p>
+α + β + γ = 180°
+</p>
+
+<p>
+30° + 60° + γ = 180°
+</p>
+
+<p>
+γ = 90°
+</p>
+
+<p><strong>Step 2: Apply Lami's Theorem.</strong></p>
+
+<p>
+F₁ / sin α = F₂ / sin β = F₃ / sin γ
+</p>
+
+<p><strong>Step 3: Calculate F₂.</strong></p>
+
+<p>
+100 / sin 30° = F₂ / sin 60°
+</p>
+
+<p>
+F₂ = 100 × sin 60° / sin 30°
+</p>
+
+<p>
+F₂ = 100 × 0.866 / 0.5
+</p>
+
+<p class="result">
+F₂ = 173.2 N
+</p>
+
+<p><strong>Step 4: Calculate F₃.</strong></p>
+
+<p>
+100 / sin 30° = F₃ / sin 90°
+</p>
+
+<p>
+F₃ = 100 × 1 / 0.5
+</p>
+
+<p class="result">
+F₃ = 200 N
+</p>
+
+<p class="result">
+Final Answer: F₂ = 173.2 N and F₃ = 200 N
+</p>
+
+</div>
+
+</section>
+
+
+<!-- APPLICATIONS -->
+
+<section class="section">
+
+<h3>8. Engineering Applications</h3>
+
+<ul>
+    <li>Finding tension in cables supporting a suspended body.</li>
+    <li>Analysing forces at pin joints and connections.</li>
+    <li>Solving problems involving suspended weights.</li>
+    <li>Studying equilibrium of rings connected by strings.</li>
+    <li>Analysing simple structural and mechanical systems.</li>
+</ul>
+
+</section>
+
+
+</main>
+
+<footer>
+    Mechanics Formula Hub | Engineering Mechanics
+</footer>
+
+</body>
+  </html>
