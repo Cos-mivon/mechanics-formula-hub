@@ -346,3 +346,83 @@ a.card h3,
 a.card p {
     text-decoration: none !important;
 }
+/* =================================
+   FORMULA SHEET TOPIC PAGES
+================================= */
+
+.section {
+    background: #142944;
+    border: 1px solid #294968;
+    border-radius: 13px;
+    padding: 20px;
+    margin: 20px 0;
+}
+
+.section h3 {
+    color: #70bdff;
+    font-size: 20px;
+    margin-bottom: 12px;
+}
+
+.section h4 {
+    color: #ffd166;
+    margin: 18px 0 10px;
+}
+
+.diagram {
+    background: #091a2e;
+    padding: 15px;
+    border-radius: 12px;
+    margin: 15px 0;
+    text-align: center;
+    overflow: hidden;
+}
+
+.diagram svg {
+    display: block;
+    width: 100%;
+    max-width: 600px;
+    height: auto;
+    margin: auto;
+}
+
+.diagram-note {
+    color: #91a8c2;
+    font-size: 13px;
+    margin-top: 10px;
+}
+
+.example {
+    background: #091a2e;
+    border-left: 4px solid #35a5ff;
+    border-radius: 8px;
+    padding: 18px;
+    margin: 15px 0;
+}
+
+.example h3 {
+    color: #70bdff;
+}
+
+.example .result {
+    color: #67dba0;
+    font-weight: bold;
+}
+
+.formula {
+    text-align: center;
+}
+
+@media(max-width: 500px) {
+    .section {
+        padding: 16px;
+    }
+
+    .diagram {
+        padding: 8px;
+    }
+
+    .example {
+        padding: 14px;
+    }
+}
