@@ -288,76 +288,205 @@ For the triangle of forces:
 
 <!-- DIAGRAM -->
 
+<!-- TWO DIAGRAMS OF LAMI'S THEOREM -->
+
 <section class="section">
 
-<h3>5. Diagram – Triangle of Forces</h3>
+<h3>5. Diagrams – Understanding Lami's Theorem</h3>
 
 <p>
-The three forces can be represented by a closed triangle
-when drawn head-to-tail in their directions.
+Lami's Theorem can be understood using two different
+diagrams. Both represent the same three-force
+equilibrium system, but in different ways.
+</p>
+
+
+<!-- DIAGRAM 1 -->
+
+<h3>5.1 Concurrent Force Diagram</h3>
+
+<p>
+Three forces act at a common point O. The angles
+between the forces are measured opposite to their
+respective forces.
 </p>
 
 <div class="diagram">
 
-<svg viewBox="0 0 600 390"
+<svg viewBox="0 0 600 430"
      xmlns="http://www.w3.org/2000/svg">
 
-    <polygon
-        points="100,300 500,300 300,70"
-        fill="#50b5ff"
-        fill-opacity="0.07"
-        stroke="#6bc8ff"
-        stroke-width="3"/>
+<defs>
+    <marker id="forceArrow"
+    markerWidth="10" markerHeight="10"
+    refX="8" refY="3" orient="auto">
+        <path d="M0,0 L0,6 L9,3 Z"
+              fill="#65c5ff"/>
+    </marker>
+</defs>
 
-    <circle cx="100" cy="300" r="5" fill="#ffffff"/>
-    <circle cx="500" cy="300" r="5" fill="#ffffff"/>
-    <circle cx="300" cy="70" r="5" fill="#ffffff"/>
+<!-- Force arrows -->
+<line x1="300" y1="230"
+      x2="490" y2="65"
+      stroke="#65c5ff" stroke-width="4"
+      marker-end="url(#forceArrow)"/>
 
-    <text x="290" y="45"
-          fill="#67c7ff"
-          font-size="22"
-          font-weight="bold">F₁</text>
+<line x1="300" y1="230"
+      x2="110" y2="65"
+      stroke="#65c5ff" stroke-width="4"
+      marker-end="url(#forceArrow)"/>
 
-    <text x="290" y="335"
-          fill="#67c7ff"
-          font-size="22"
-          font-weight="bold">F₂</text>
+<line x1="300" y1="230"
+      x2="300" y2="400"
+      stroke="#65c5ff" stroke-width="4"
+      marker-end="url(#forceArrow)"/>
 
-    <text x="75" y="185"
-          fill="#67c7ff"
-          font-size="22"
-          font-weight="bold">F₃</text>
+<!-- Common point -->
+<circle cx="300" cy="230" r="7"
+        fill="white"/>
 
-    <text x="315" y="285"
-          fill="#ffd166"
-          font-size="20">α</text>
+<text x="315" y="250"
+      fill="white" font-size="20">O</text>
 
-    <text x="155" y="280"
-          fill="#ffd166"
-          font-size="20">β</text>
+<!-- Force labels -->
+<text x="475" y="55"
+      fill="#65c5ff" font-size="23">F₁</text>
 
-    <text x="285" y="125"
-          fill="#ffd166"
-          font-size="20">γ</text>
+<text x="75" y="55"
+      fill="#65c5ff" font-size="23">F₃</text>
 
-    <text x="300" y="375"
-          fill="#a7bbd2"
-          font-size="16"
-          text-anchor="middle">
-        Triangle of Forces (schematic)
-    </text>
+<text x="315" y="405"
+      fill="#65c5ff" font-size="23">F₂</text>
+
+<!-- Angle labels -->
+<text x="300" y="175"
+      fill="#ffd166" font-size="22">α</text>
+
+<text x="200" y="260"
+      fill="#ffd166" font-size="22">β</text>
+
+<text x="400" y="260"
+      fill="#ffd166" font-size="22">γ</text>
 
 </svg>
 
 <p class="diagram-note">
-    Schematic illustration of the triangle of forces.
-    α, β and γ are the internal angles opposite their
-    respective forces.
+Schematic representation of three concurrent forces.
+The angle α is between F₂ and F₃, β between F₃ and F₁,
+and γ between F₁ and F₂.
 </p>
 
 </div>
 
-</section>
+
+<!-- DIAGRAM 2 -->
+
+<h3>5.2 Triangle of Forces</h3>
+
+<p>
+The same three forces can be represented head-to-tail.
+For equilibrium, they form a closed triangle.
+</p>
+
+<div class="diagram">
+
+<svg viewBox="0 0 600 400"
+     xmlns="http://www.w3.org/2000/svg">
+
+<!-- Triangle -->
+<polygon points="100,310 500,310 300,70"
+         fill="#50b5ff"
+         fill-opacity="0.08"
+         stroke="#65c5ff"
+         stroke-width="3"/>
+
+<!-- Vertices -->
+<circle cx="100" cy="310" r="5" fill="white"/>
+<circle cx="500" cy="310" r="5" fill="white"/>
+<circle cx="300" cy="70" r="5" fill="white"/>
+
+<!-- Side labels -->
+<text x="165" y="175"
+      fill="#65c5ff" font-size="23"
+      font-weight="bold">F₁</text>
+
+<text x="425" y="175"
+      fill="#65c5ff" font-size="23"
+      font-weight="bold">F₂</text>
+
+<text x="285" y="345"
+      fill="#65c5ff" font-size="23"
+      font-weight="bold">F₃</text>
+
+<!-- Internal angles -->
+<text x="300" y="285"
+      fill="#ffd166" font-size="21">180° - α</text>
+
+<text x="145" y="290"
+      fill="#ffd166" font-size="21">180° - β</text>
+
+<text x="285" y="115"
+      fill="#ffd166" font-size="21">180° - γ</text>
+
+<text x="300" y="385"
+      fill="#a7bbd2"
+      font-size="16"
+      text-anchor="middle">
+Triangle of Forces
+</text>
+
+</svg>
+
+<p class="diagram-note">
+Schematic vector triangle. Its internal angles are
+supplementary to the corresponding angles in the
+concurrent force diagram.
+</p>
+
+</div>
+
+
+<!-- EXPLANATION -->
+
+<div class="example">
+
+<h3>Understanding the Difference</h3>
+
+<p><strong>Concurrent Force Diagram:</strong></p>
+
+<p>
+Shows the actual directions of the three forces
+acting at a common point.
+</p>
+
+<p><strong>Triangle of Forces:</strong></p>
+
+<p>
+Shows the vector addition of the forces. The
+head-to-tail arrangement forms a closed triangle
+because the resultant force is zero.
+</p>
+
+<p><strong>Why does Lami's formula work?</strong></p>
+
+<p>
+The internal angles of the force triangle are
+supplementary to the angles between the forces.
+However, their sine values are equal.
+</p>
+
+<div class="formula">
+sin(180° - θ) = sin θ
+</div>
+
+<p>
+Therefore, applying the sine rule to the force
+triangle gives Lami's Theorem.
+</p>
+
+</div>
+
+    </section>
 
 
 <!-- DERIVATION -->
