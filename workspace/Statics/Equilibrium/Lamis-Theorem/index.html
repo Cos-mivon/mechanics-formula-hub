@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Lami's Theorem Solver | Mechanics Formula Hub</title>
+
+    <link rel="stylesheet" href="../../../../assets/style.css">
+
+    <style>
+        .lami-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 12px;
+            margin-top: 18px;
+        }
+
+        .lami-input {
+            background: #10233e;
+            border: 1px solid #304765;
+            border-radius: 10px;
+            padding: 12px;
+            min-width: 0;
+        }
+
+        .lami-input label {
+            display: block;
+            margin-bottom: 7px;
+            font-weight: bold;
+        }
+
+        .lami-input input {
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .diagram-box {
+            width: 100%;
+            overflow-x: auto;
+            background: #091a30;
+            border-radius: 12px;
+            padding: 8px;
+            margin-top: 15px;
+        }
+
+        .diagram-box svg {
+            width: 100%;
+            min-width: 280px;
+            height: auto;
+            display: block;
+        }
+
+        .diagram-caption {
+            color: #9bb1ca;
+            font-size: 0.9rem;
+            margin-top: 10px;
+        }
+
+        .status {
+            padding: 12px;
+            border-radius: 10px;
+            background: #10233e;
+            margin-top: 12px;
+        }
+
+        .known-note {
+            color: #67dba0;
+            font-size: 0.85rem;
+            margin-top: 5px;
+        }
+
+        @media (max-width: 600px) {
+            .lami-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 360px) {
+            .lami-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+
+    <script src="../../../../assets/lamis-theorem.js?v=1" defer></script>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">MECHANICS FORMULA HUB</div>
+    <p class="tagline">Learn • Calculate • Understand</p>
+</header>
+
+<main>
+
+    <h1>Lami's Theorem Solver</h1>
+
+    <p class="subtitle">
+        Enter any three known values to calculate the remaining values.
+    </p>
+
+    <a class="back" href="../index.html">← Back to Equilibrium</a>
+
+    <!-- FORMULA SECTION -->
+
+    <section class="panel">
+
+        <h2>Lami's Theorem</h2>
+
+        <div class="formula">
+            F₁ / sin α = F₂ / sin β = F₃ / sin γ
+        </div>
+
+        <p>
+            For three coplanar, concurrent and non-collinear
+            forces in equilibrium:
+        </p>
+
+        <ul>
+            <li>F₁, F₂ and F₃ are the force magnitudes.</li>
+            <li>α, β and γ are the opposite angles in the triangle of forces.</li>
+        </ul>
+
+        <div class="formula">
+            α + β + γ = 180°
+        </div>
+
+        <p class="small">
+            The angles in the concurrent-force diagram are supplementary
+            to the corresponding triangle angles.
+        </p>
+
+    </section>
+
+    <!-- INPUT SECTION -->
+
+    <section class="panel">
+
+        <h2>Enter Known Values</h2>
+
+        <p class="small">
+            Fill any three fields. Leave the other three empty.
+            Force values must be in N and angles in degrees.
+        </p>
+
+        <div class="lami-grid">
+
+            <div class="lami-input">
+                <label for="f1">F₁ (N)</label>
+                <input type="number" id="f1"
+                       step="any" min="0"
+                       placeholder="Force 1">
+            </div>
+
+            <div class="lami-input">
+                <label for="f2">F₂ (N)</label>
+                <input type="number" id="f2"
+                       step="any" min="0"
+                       placeholder="Force 2">
+            </div>
+
+            <div class="lami-input">
+                <label for="f3">F₃ (N)</label>
+                <input type="number" id="f3"
+                       step="any" min="0"
+                       placeholder="Force 3">
+            </div>
+
+            <div class="lami-input">
+                <label for="alpha">α (degrees)</label>
+                <input type="number" id="alpha"
+                       step="any" min="0" max="180"
+                       placeholder="Angle α">
+            </div>
+
+            <div class="lami-input">
+                <label for="beta">β (degrees)</label>
+                <input type="number" id="beta"
+                       step="any" min="0" max="180"
+                       placeholder="Angle β">
+            </div>
+
+            <div class="lami-input">
+                <label for="gamma">γ (degrees)</label>
+                <input type="number" id="gamma"
+                       step="any" min="0" max="180"
+                       placeholder="Angle γ">
+            </div>
+
+        </div>
+
+        <p id="input-count" class="small">
+            Known values: 0 / 3
+        </p>
+
+        <button type="button" class="primary" id="calculate">
+            CALCULATE
+        </button>
+
+        <button type="button" class="back" id="reset">
+            RESET
+        </button>
+
+        <p id="input-message" class="small">
+            Enter exactly three known values to begin.
+        </p>
+
+    </section>
+
+    <!-- CALCULATED VALUES -->
+
+    <section class="panel">
+
+        <h2>Calculated Values</h2>
+
+        <div id="result-output">
+            <p>Enter three known values and calculate.</p>
+        </div>
+
+        <div id="equilibrium-status" class="status">
+            Equilibrium status: —
+        </div>
+
+    </section>
+
+    <!-- CONCURRENT FORCE DIAGRAM -->
+
+    <section class="panel">
+
+        <h2>Concurrent Force Diagram</h2>
+
+        <p class="small">
+            Three forces acting at a common point.
+        </p>
+
+        <div class="diagram-box">
+
+            <svg id="concurrent-diagram"
+                 viewBox="0 0 600 430"
+                 role="img"
+                 aria-label="Three concurrent forces diagram">
+
+                <g id="concurrent-group"></g>
+
+            </svg>
+
+        </div>
+
+        <p class="diagram-caption">
+            The angle between F₂ and F₃ is 180° − α;
+            between F₃ and F₁ is 180° − β;
+            and between F₁ and F₂ is 180° − γ.
+        </p>
+
+    </section>
+
+    <!-- TRIANGLE OF FORCES -->
+
+    <section class="panel">
+
+        <h2>Triangle of Forces</h2>
+
+        <p class="small">
+            The three force vectors are arranged head-to-tail.
+        </p>
+
+        <div class="diagram-box">
+
+            <svg id="triangle-diagram"
+                 viewBox="0 0 600 430"
+                 role="img"
+                 aria-label="Triangle of forces diagram">
+
+                <g id="triangle-group"></g>
+
+            </svg>
+
+        </div>
+
+        <p class="diagram-caption">
+            A closed triangle represents equilibrium.
+            Its internal angles are α, β and γ.
+        </p>
+
+    </section>
+
+    <!-- STEP BY STEP SOLUTION -->
+
+    <section class="panel">
+
+        <h2>Step-by-Step Solution</h2>
+
+        <div id="steps-output">
+            <p>Calculation steps will appear here.</p>
+        </div>
+
+    </section>
+
+</main>
+
+<footer>
+    Mechanics Formula Hub
+</footer>
+
+</body>
+  </html>
