@@ -1,0 +1,273 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>3D Equilibrium | Mechanics Formula Hub</title>
+
+    <link rel="stylesheet" href="../../../../assets/style.css">
+
+    <style>
+        .tool-card {
+            display: block;
+            text-decoration: none !important;
+            color: inherit !important;
+            background: linear-gradient(145deg, #142b49, #0d1e35);
+            border: 1px solid #294563;
+            border-radius: 15px;
+            padding: 20px;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-4px);
+            border-color: #55b8ff;
+        }
+
+        .tool-icon {
+            font-size: 32px;
+            margin-bottom: 12px;
+        }
+
+        .tool-card h3 {
+            color: #edf4ff;
+            margin: 5px 0 10px;
+        }
+
+        .tool-card p {
+            color: #a9bdd5;
+            line-height: 1.6;
+            font-size: 14px;
+        }
+
+        .tool-card .formula {
+            margin-top: 15px;
+            font-size: 15px;
+        }
+
+        .tool-label {
+            display: inline-block;
+            font-size: 11px;
+            color: #75d9ff;
+            background: rgba(85, 184, 255, 0.12);
+            padding: 5px 9px;
+            border-radius: 20px;
+            margin-bottom: 8px;
+        }
+
+        .tool-card .open-text {
+            display: block;
+            color: #67c9ff;
+            margin-top: 18px;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .intro-panel {
+            line-height: 1.7;
+        }
+
+        .tool-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 16px;
+            margin-top: 20px;
+        }
+
+        @media(max-width: 600px) {
+            .tool-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">MECHANICS FORMULA HUB</div>
+    <p class="tagline">Learn • Calculate • Understand</p>
+</header>
+
+<main>
+
+    <h1>3D Equilibrium Workspace</h1>
+
+    <p class="subtitle">
+        Explore three-dimensional force systems,
+        equilibrium and moments.
+    </p>
+
+    <a class="back" href="../index.html">
+        ← Back to Equilibrium
+    </a>
+
+    <!-- INTRODUCTION -->
+
+    <section class="panel intro-panel">
+
+        <h2>Three-Dimensional Mechanics</h2>
+
+        <p>
+            In three-dimensional mechanics, forces can act
+            along the X, Y and Z directions.
+        </p>
+
+        <p>
+            Use the interactive tools below to understand
+            force components, resultant forces and moment
+            equilibrium in three dimensions.
+        </p>
+
+    </section>
+
+    <!-- TOOL CARDS -->
+
+    <h2>Select a Tool</h2>
+
+    <div class="tool-grid">
+
+        <!-- 3D FORCE SYSTEM -->
+
+        <a class="tool-card"
+           href="3D-Force-System/index.html">
+
+            <div class="tool-icon">🌐</div>
+
+            <span class="tool-label">
+                Interactive 3D Model
+            </span>
+
+            <h3>3D Force System</h3>
+
+            <p>
+                Visualize a force in three dimensions
+                using its X, Y and Z components.
+            </p>
+
+            <div class="formula">
+                F = Fx i + Fy j + Fz k
+            </div>
+
+            <p>
+                • Editable force components<br>
+                • Resultant magnitude<br>
+                • Direction angles<br>
+                • Rotate and zoom
+            </p>
+
+            <span class="open-text">
+                OPEN MODEL →
+            </span>
+
+        </a>
+
+        <!-- 3D FORCE EQUILIBRIUM -->
+
+        <a class="tool-card"
+           href="3D-Force-Equilibrium/index.html">
+
+            <div class="tool-icon">⚖️</div>
+
+            <span class="tool-label">
+                Force Calculator
+            </span>
+
+            <h3>3D Force Equilibrium</h3>
+
+            <p>
+                Calculate the resultant of multiple
+                forces acting in three dimensions.
+            </p>
+
+            <div class="formula">
+                ΣFx = 0<br>
+                ΣFy = 0<br>
+                ΣFz = 0
+            </div>
+
+            <p>
+                • Multiple forces<br>
+                • Resultant force<br>
+                • Balancing force<br>
+                • 3D force diagram
+            </p>
+
+            <span class="open-text">
+                OPEN CALCULATOR →
+            </span>
+
+        </a>
+
+        <!-- 3D MOMENT EQUILIBRIUM -->
+
+        <a class="tool-card"
+           href="3D-Moment-Equilibrium/index.html">
+
+            <div class="tool-icon">🔄</div>
+
+            <span class="tool-label">
+                Moment Calculator
+            </span>
+
+            <h3>3D Moment Equilibrium</h3>
+
+            <p>
+                Calculate the moment produced by
+                forces about a reference point.
+            </p>
+
+            <div class="formula">
+                M = r × F
+            </div>
+
+            <p>
+                • Position vector<br>
+                • Force components<br>
+                • Moment components<br>
+                • 3D moment diagram
+            </p>
+
+            <span class="open-text">
+                OPEN CALCULATOR →
+            </span>
+
+        </a>
+
+    </div>
+
+    <!-- EQUILIBRIUM CONDITIONS -->
+
+    <section class="panel">
+
+        <h2>General Equilibrium Conditions</h2>
+
+        <p>
+            For a rigid body to be in complete
+            three-dimensional equilibrium:
+        </p>
+
+        <div class="formula">
+            ΣFx = 0 &nbsp; ΣFy = 0 &nbsp; ΣFz = 0
+            <br><br>
+            ΣMx = 0 &nbsp; ΣMy = 0 &nbsp; ΣMz = 0
+        </div>
+
+        <p class="small">
+            Three force equations and three moment
+            equations must be satisfied.
+        </p>
+
+    </section>
+
+</main>
+
+<footer>
+    Mechanics Formula Hub
+</footer>
+
+</body>
+  </html>
