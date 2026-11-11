@@ -202,7 +202,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
             const x = 300 + c.fx * scale;
             const y = 210 - c.fy * scale;
-
             const color = `hsl(${(i * 65 + 15) % 360}, 85%, 65%)`;
 
             const line = document.createElementNS(
@@ -284,7 +283,7 @@ document.addEventListener("DOMContentLoaded", function () {
         addForce();
         addForce();
     }
-
+alert("Calculator JavaScript initialized!");
     // Button event listeners
 
     // Button event listeners
