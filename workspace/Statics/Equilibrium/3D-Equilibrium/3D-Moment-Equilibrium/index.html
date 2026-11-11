@@ -1,0 +1,829 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3D Moment Equilibrium | Mechanics Formula Hub</title>
+<link rel="stylesheet" href="../../../../../assets/style.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#081426;color:#edf4ff;font-family:Arial,sans-serif}
+.page{max-width:1200px;margin:auto;padding:20px}
+header{margin-bottom:22px}
+.logo{font-size:1.7rem;font-weight:700;margin:8px 0}
+.tagline{color:#a9bdd8}
+.back{display:inline-block;margin:8px 0 16px;color:#9cc8ff;text-decoration:none}
+h1,h2{color:#f2f7ff}
+h1{font-size:1.65rem}
+h2{font-size:1.2rem;margin-top:0}
+p{line-height:1.55;color:#c5d3e5}
+.panel{background:#10213a;border:1px solid #263d5d;border-radius:14px;padding:18px;margin:16px 0}
+.formula{background:#0a192d;border-left:4px solid #55a6ff;padding:12px;border-radius:8px;line-height:1.8;overflow-wrap:anywhere}
+.force-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;padding:12px;background:#0b1a2e;border:1px solid #263d5d;border-radius:10px;margin:10px 0}
+.force-title{grid-column:1/-1;font-weight:bold;color:#8fc7ff}
+label{display:block;font-size:.85rem;color:#bfd0e5;margin-bottom:5px}
+input{width:100%;min-width:0;padding:11px;border-radius:8px;border:1px solid #47617f;background:#071426;color:#fff;font-size:1rem}
+button{border:0;border-radius:9px;padding:11px 15px;font-weight:700;cursor:pointer}
+.add{background:#245b91;color:white}
+.calculate{background:#36a276;color:white}
+.reset{background:#334963;color:white}
+.remove{background:#873e4a;color:white;grid-column:1/-1}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+#scene-wrap{height:380px;position:relative;background:#071426;border:1px solid #263d5d;border-radius:12px;overflow:hidden;touch-action:none}
+#scene{width:100%;height:100%;display:block;touch-action:none}
+.scene-help{font-size:.82rem;color:#9eb2cb;margin-top:8px}
+.results{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.result-card{background:#0a192d;padding:13px;border-radius:10px;border:1px solid #263d5d}
+.result-card strong{display:block;color:#8fc7ff;font-size:.83rem;margin-bottom:7px}
+.result-card span{font-size:1.05rem;font-weight:700;overflow-wrap:anywhere}
+.status{padding:13px;border-radius:10px;background:#0a192d;margin-top:12px;font-weight:700;line-height:1.5}
+.good{border:1px solid #2b9b70;color:#8df0bd}
+.notgood{border:1px solid #c58b43;color:#ffd18d}
+table{width:100%;border-collapse:collapse;margin-top:10px;font-size:.9rem}
+th,td{padding:10px;border-bottom:1px solid #2b405d;text-align:right;white-space:nowrap}
+th:first-child,td:first-child{text-align:left}
+th{color:#a9c9ef}
+.step{padding:10px 12px;border-left:3px solid #55a6ff;background:#0a192d;margin:9px 0;border-radius:5px;line-height:1.5;overflow-wrap:anywhere}
+.small{font-size:.85rem;color:#9fb3cc}
+footer{text-align:center;color:#8298b4;padding:20px}
+
+@media(max-width:700px){
+ .page{padding:13px}
+ #scene-wrap{height:310px}
+ .results{grid-template-columns:1fr 1fr}
+}
+@media(max-width:390px){
+ .results{grid-template-columns:1fr}
+}
+</style>
+</head>
+
+<body>
+<div class="page">
+
+<header>
+<a class="back" href="../index.html">← Back to 3D Equilibrium</a>
+<div class="logo">Mechanics Formula Hub</div>
+<div class="tagline">Understand moments. Verify rotational equilibrium.</div>
+</header>
+
+<h1>3D Moment Equilibrium</h1>
+
+<p>
+Enter the position coordinates of each force and its X, Y and Z components.
+The calculator finds the moment of every force about the origin O.
+</p>
+
+<section class="panel">
+<h2>1. Moment equations</h2>
+
+<div class="formula">
+M = r × F<br><br>
+
+Mx = yFz − zFy<br>
+My = zFx − xFz<br>
+Mz = xFy − yFx<br><br>
+
+ΣMx = 0<br>
+ΣMy = 0<br>
+ΣMz = 0
+</div>
+
+<p class="small">
+Position coordinates are in metres (m), forces in newtons (N),
+and moments in newton-metres (N·m).
+</p>
+</section>
+
+<section class="panel">
+<h2>2. Enter forces</h2>
+
+<div id="force-list"></div>
+
+<div class="actions">
+<button class="add" id="add-force">＋ Add Force</button>
+<button class="calculate" id="calculate">Calculate Moments</button>
+<button class="reset" id="reset">Reset</button>
+</div>
+
+<p class="small">
+Enter the position coordinates (x, y, z) and force components (Fx, Fy, Fz).
+You can add unlimited forces.
+</p>
+</section>
+
+<section class="panel">
+<h2>3. Interactive 3D diagram</h2>
+
+<div id="scene-wrap">
+<canvas id="scene"></canvas>
+</div>
+
+<div class="scene-help">
+Drag to rotate smoothly • Scroll to zoom.
+Position vectors are blue, force vectors have different colours,
+and the resultant moment is white.
+</div>
+</section>
+
+<section class="panel">
+<h2>4. Resultant moment</h2>
+
+<div class="results">
+
+<div class="result-card">
+<strong>ΣMx</strong>
+<span id="sum-mx">—</span>
+</div>
+
+<div class="result-card">
+<strong>ΣMy</strong>
+<span id="sum-my">—</span>
+</div>
+
+<div class="result-card">
+<strong>ΣMz</strong>
+<span id="sum-mz">—</span>
+</div>
+
+<div class="result-card">
+<strong>Resultant moment</strong>
+<span id="resultant">—</span>
+</div>
+
+<div class="result-card">
+<strong>Balancing Mx</strong>
+<span id="bal-x">—</span>
+</div>
+
+<div class="result-card">
+<strong>Balancing My</strong>
+<span id="bal-y">—</span>
+</div>
+
+<div class="result-card">
+<strong>Balancing Mz</strong>
+<span id="bal-z">—</span>
+</div>
+
+</div>
+
+<div id="status" class="status">
+Enter forces and select Calculate Moments.
+</div>
+
+<p class="small">
+This checks rotational equilibrium about O.
+Complete static equilibrium also requires ΣFx = 0, ΣFy = 0 and ΣFz = 0.
+</p>
+</section>
+
+<section class="panel">
+<h2>5. Moment component table</h2>
+
+<div style="overflow-x:auto">
+<table>
+<thead>
+<tr>
+<th>Force</th>
+<th>Mx (N·m)</th>
+<th>My (N·m)</th>
+<th>Mz (N·m)</th>
+</tr>
+</thead>
+
+<tbody id="moment-table">
+<tr><td colspan="4">Calculate to see the moments.</td></tr>
+</tbody>
+</table>
+</div>
+</section>
+
+<section class="panel">
+<h2>6. Step-by-step solution</h2>
+<div id="steps">
+<p class="small">Your calculation steps will appear here.</p>
+</div>
+</section>
+
+<footer>Mechanics Formula Hub • 3D Moment Equilibrium</footer>
+</div>
+
+<script>
+(() => {
+"use strict";
+
+const list = document.getElementById("force-list");
+
+const palette = [
+0x45b7ff,0xffb454,0x9b8cff,0x55d6a2,
+0xff7f9f,0xe6dc65,0x6ed5d9,0xd28cff
+];
+
+let forceCount = 0;
+let scene,camera,renderer,vectorGroup;
+let lastForces = [];
+let lastResult = null;
+
+function addForce(x=1,y=0,z=0,fx=0,fy=10,fz=0){
+
+forceCount++;
+
+const row = document.createElement("div");
+row.className = "force-row";
+
+row.innerHTML = `
+<div class="force-title">Force ${forceCount}</div>
+
+<div>
+<label>x (m)</label>
+<input type="number" step="any" value="${x}" class="px">
+</div>
+
+<div>
+<label>y (m)</label>
+<input type="number" step="any" value="${y}" class="py">
+</div>
+
+<div>
+<label>z (m)</label>
+<input type="number" step="any" value="${z}" class="pz">
+</div>
+
+<div>
+<label>Fx (N)</label>
+<input type="number" step="any" value="${fx}" class="fx">
+</div>
+
+<div>
+<label>Fy (N)</label>
+<input type="number" step="any" value="${fy}" class="fy">
+</div>
+
+<div>
+<label>Fz (N)</label>
+<input type="number" step="any" value="${fz}" class="fz">
+</div>
+
+<button class="remove" type="button">Remove Force</button>
+`;
+
+row.querySelector(".remove").addEventListener("click",()=>{
+row.remove();
+renumber();
+});
+
+list.appendChild(row);
+}
+
+function renumber(){
+
+[...list.children].forEach((row,i)=>{
+row.querySelector(".force-title").textContent =
+`Force ${i+1}`;
+});
+
+forceCount = list.children.length;
+}
+
+function readForces(){
+
+const rows = [...list.children];
+
+if(!rows.length){
+throw Error("Add at least one force.");
+}
+
+return rows.map((row,i)=>{
+
+const values = ["px","py","pz","fx","fy","fz"].map(c=>{
+const raw = row.querySelector("."+c).value.trim();
+return raw === "" ? NaN : Number(raw);
+});
+
+if(values.some(n=>!Number.isFinite(n))){
+throw Error(`Enter valid numbers for Force ${i+1}.`);
+}
+
+return {
+name:`F${i+1}`,
+x:values[0],
+y:values[1],
+z:values[2],
+fx:values[3],
+fy:values[4],
+fz:values[5]
+};
+
+});
+}
+
+const fmt = n =>
+(Math.abs(n)<1e-10 ? 0 : n).toFixed(3);
+
+function calculate(){
+
+let forces;
+
+try{
+forces = readForces();
+}catch(error){
+alert(error.message);
+return;
+}
+
+/* Calculate r × F for every force. */
+
+const moments = forces.map(f=>({
+
+name:f.name,
+
+mx:f.y*f.fz - f.z*f.fy,
+
+my:f.z*f.fx - f.x*f.fz,
+
+mz:f.x*f.fy - f.y*f.fx
+
+}));
+
+const sx = moments.reduce((s,m)=>s+m.mx,0);
+const sy = moments.reduce((s,m)=>s+m.my,0);
+const sz = moments.reduce((s,m)=>s+m.mz,0);
+
+const R = Math.hypot(sx,sy,sz);
+
+const balancing = {
+x:-sx,
+y:-sy,
+z:-sz
+};
+
+const equilibrium = R <= 0.01;
+
+/* Display results. */
+
+[
+["sum-mx",sx],
+["sum-my",sy],
+["sum-mz",sz],
+["resultant",R],
+["bal-x",balancing.x],
+["bal-y",balancing.y],
+["bal-z",balancing.z]
+].forEach(([id,value])=>{
+
+document.getElementById(id).textContent =
+fmt(value)+" N·m";
+
+});
+
+/* Equilibrium status. */
+
+const status = document.getElementById("status");
+
+status.className =
+"status "+(equilibrium?"good":"notgood");
+
+status.textContent = equilibrium
+? "✓ Rotational equilibrium is satisfied about O."
+: "Rotational equilibrium is not satisfied. Add the balancing moment shown above.";
+
+/* Component table. */
+
+document.getElementById("moment-table").innerHTML =
+
+moments.map(m=>`
+<tr>
+<td>${m.name}</td>
+<td>${fmt(m.mx)}</td>
+<td>${fmt(m.my)}</td>
+<td>${fmt(m.mz)}</td>
+</tr>
+`).join("")+
+
+`<tr>
+<th>ΣM</th>
+<th>${fmt(sx)}</th>
+<th>${fmt(sy)}</th>
+<th>${fmt(sz)}</th>
+</tr>`;
+
+/* Step-by-step solution. */
+
+const steps = [];
+
+steps.push("Use the cross product M = r × F.");
+
+forces.forEach((f,i)=>{
+
+const m = moments[i];
+
+steps.push(
+`${f.name}: r = (${fmt(f.x)}, ${fmt(f.y)}, ${fmt(f.z)}) m and F = (${fmt(f.fx)}, ${fmt(f.fy)}, ${fmt(f.fz)}) N.`
+);
+
+steps.push(
+`Mx = yFz − zFy = (${fmt(f.y)} × ${fmt(f.fz)}) − (${fmt(f.z)} × ${fmt(f.fy)}) = ${fmt(m.mx)} N·m.`
+);
+
+steps.push(
+`My = zFx − xFz = (${fmt(f.z)} × ${fmt(f.fx)}) − (${fmt(f.x)} × ${fmt(f.fz)}) = ${fmt(m.my)} N·m.`
+);
+
+steps.push(
+`Mz = xFy − yFx = (${fmt(f.x)} × ${fmt(f.fy)}) − (${fmt(f.y)} × ${fmt(f.fx)}) = ${fmt(m.mz)} N·m.`
+);
+
+});
+
+steps.push(`ΣMx = ${fmt(sx)} N·m.`);
+steps.push(`ΣMy = ${fmt(sy)} N·m.`);
+steps.push(`ΣMz = ${fmt(sz)} N·m.`);
+
+steps.push(
+`Resultant moment = √[(${fmt(sx)})² + (${fmt(sy)})² + (${fmt(sz)})²] = ${fmt(R)} N·m.`
+);
+
+steps.push(
+`Balancing moment = (${fmt(balancing.x)}, ${fmt(balancing.y)}, ${fmt(balancing.z)}) N·m.`
+);
+
+steps.push(
+equilibrium
+? "The resultant moment is within the 0.01 N·m tolerance."
+: "The resultant moment is greater than 0.01 N·m."
+);
+
+document.getElementById("steps").innerHTML =
+steps.map((s,i)=>`
+<div class="step"><b>Step ${i+1}.</b> ${s}</div>
+`).join("");
+
+lastForces = forces;
+lastResult = {x:sx,y:sy,z:sz};
+
+drawDiagram();
+}
+
+function reset(){
+
+list.innerHTML="";
+forceCount=0;
+
+addForce(1,0,0,0,10,0);
+
+[
+"sum-mx","sum-my","sum-mz",
+"resultant","bal-x","bal-y","bal-z"
+].forEach(id=>{
+document.getElementById(id).textContent="—";
+});
+
+const status = document.getElementById("status");
+status.className="status";
+status.textContent="Enter forces and select Calculate Moments.";
+
+document.getElementById("moment-table").innerHTML =
+'<tr><td colspan="4">Calculate to see the moments.</td></tr>';
+
+document.getElementById("steps").innerHTML =
+'<p class="small">Your calculation steps will appear here.</p>';
+
+lastForces=[];
+lastResult=null;
+
+drawDiagram();
+}
+
+/* ---------------- 3D SCENE ---------------- */
+
+function initScene(){
+
+const canvas = document.getElementById("scene");
+const wrap = document.getElementById("scene-wrap");
+
+if(!window.THREE){
+wrap.innerHTML="3D preview unavailable. Check your internet connection.";
+return;
+}
+
+scene = new THREE.Scene();
+scene.background = new THREE.Color(0x071426);
+
+camera = new THREE.PerspectiveCamera(45,1,0.1,1000);
+
+renderer = new THREE.WebGLRenderer({
+canvas,
+antialias:true,
+powerPreference:"high-performance"
+});
+
+renderer.setPixelRatio(
+Math.min(window.devicePixelRatio||1,1.5)
+);
+
+scene.add(new THREE.AmbientLight(0xffffff,0.85));
+
+const light = new THREE.DirectionalLight(0xffffff,0.65);
+light.position.set(5,8,6);
+scene.add(light);
+
+scene.add(new THREE.AxesHelper(4));
+
+const grid = new THREE.GridHelper(
+8,16,0x294b70,0x1b3049
+);
+
+grid.position.y=-0.01;
+scene.add(grid);
+
+vectorGroup = new THREE.Group();
+scene.add(vectorGroup);
+
+/* Smooth camera rotation. */
+
+let dragging=false;
+let pointerId=null;
+
+let previousX=0;
+let previousY=0;
+
+let rotationX=-0.35;
+let rotationY=0.65;
+
+let targetX=rotationX;
+let targetY=rotationY;
+
+let distance=12;
+let targetDistance=distance;
+
+const damping=0.14;
+
+function updateCamera(){
+
+rotationX += (targetX-rotationX)*damping;
+rotationY += (targetY-rotationY)*damping;
+
+distance += (targetDistance-distance)*damping;
+
+camera.position.set(
+distance*Math.sin(rotationY)*Math.cos(rotationX),
+distance*Math.sin(rotationX),
+distance*Math.cos(rotationY)*Math.cos(rotationX)
+);
+
+camera.lookAt(0,0,0);
+}
+
+canvas.addEventListener("pointerdown",e=>{
+
+dragging=true;
+pointerId=e.pointerId;
+
+previousX=e.clientX;
+previousY=e.clientY;
+
+canvas.setPointerCapture(pointerId);
+
+});
+
+canvas.addEventListener("pointermove",e=>{
+
+if(!dragging || e.pointerId!==pointerId)return;
+
+const dx=e.clientX-previousX;
+const dy=e.clientY-previousY;
+
+previousX=e.clientX;
+previousY=e.clientY;
+
+targetY -= dx*0.008;
+
+targetX=Math.max(
+-1.45,
+Math.min(1.45,targetX+dy*0.008)
+);
+
+});
+
+function stopDrag(e){
+
+if(pointerId!==null && e.pointerId!==pointerId)return;
+
+dragging=false;
+pointerId=null;
+
+}
+
+canvas.addEventListener("pointerup",stopDrag);
+canvas.addEventListener("pointercancel",stopDrag);
+
+canvas.addEventListener("lostpointercapture",()=>{
+dragging=false;
+pointerId=null;
+});
+
+canvas.addEventListener("wheel",e=>{
+
+e.preventDefault();
+
+targetDistance=Math.max(
+5,
+Math.min(26,targetDistance+e.deltaY*0.01)
+);
+
+},{passive:false});
+
+function resize(){
+
+const w=wrap.clientWidth;
+const h=wrap.clientHeight;
+
+if(!w||!h)return;
+
+renderer.setSize(w,h,false);
+
+camera.aspect=w/h;
+camera.updateProjectionMatrix();
+
+}
+
+if("ResizeObserver" in window){
+
+const observer=new ResizeObserver(resize);
+observer.observe(wrap);
+
+}else{
+
+window.addEventListener("resize",resize);
+
+}
+
+resize();
+
+function animate(){
+
+requestAnimationFrame(animate);
+
+updateCamera();
+
+renderer.render(scene,camera);
+
+}
+
+animate();
+
+}
+
+/* ---------------- VECTOR DRAWING ---------------- */
+
+function disposeVectors(){
+
+if(!vectorGroup)return;
+
+vectorGroup.traverse(object=>{
+
+if(object.geometry)object.geometry.dispose();
+
+if(object.material){
+
+if(Array.isArray(object.material)){
+object.material.forEach(m=>m.dispose());
+}else{
+object.material.dispose();
+}
+
+}
+
+});
+
+vectorGroup.clear();
+
+}
+
+function addArrow(start,end,color){
+
+const direction = new THREE.Vector3().subVectors(end,start);
+
+const length=direction.length();
+
+if(length<1e-7)return;
+
+const arrow = new THREE.ArrowHelper(
+direction.normalize(),
+start,
+length,
+color,
+Math.min(0.25,length*0.25),
+Math.min(0.16,length*0.15)
+);
+
+vectorGroup.add(arrow);
+
+}
+
+function drawDiagram(){
+
+if(!scene||!vectorGroup)return;
+
+disposeVectors();
+
+if(!lastForces.length)return;
+
+const maxPosition=Math.max(
+1,...lastForces.map(f=>Math.hypot(f.x,f.y,f.z))
+);
+
+const maxForce=Math.max(
+1,...lastForces.map(f=>Math.hypot(f.fx,f.fy,f.fz))
+);
+
+const positionScale=2.4/maxPosition;
+const forceScale=1.5/maxForce;
+
+lastForces.forEach((f,i)=>{
+
+const point=new THREE.Vector3(
+f.x*positionScale,
+f.y*positionScale,
+f.z*positionScale
+);
+
+const origin=new THREE.Vector3(0,0,0);
+
+const forceEnd=point.clone().add(
+new THREE.Vector3(
+f.fx*forceScale,
+f.fy*forceScale,
+f.fz*forceScale
+)
+);
+
+/* Position vector. */
+
+addArrow(origin,point,0x45b7ff);
+
+/* Force vector. */
+
+addArrow(point,forceEnd,palette[i%palette.length]);
+
+const dot=new THREE.Mesh(
+new THREE.SphereGeometry(0.055,10,10),
+new THREE.MeshBasicMaterial({
+color:palette[i%palette.length]
+})
+);
+
+dot.position.copy(point);
+vectorGroup.add(dot);
+
+});
+
+/* Resultant moment vector. */
+
+if(lastResult){
+
+const maxMoment=Math.max(
+1,
+Math.hypot(lastResult.x,lastResult.y,lastResult.z)
+);
+
+const scale=2.2/maxMoment;
+
+const end=new THREE.Vector3(
+lastResult.x*scale,
+lastResult.y*scale,
+lastResult.z*scale
+);
+
+addArrow(new THREE.Vector3(0,0,0),end,0xffffff);
+
+}
+
+}
+
+/* BUTTONS */
+
+document.getElementById("add-force")
+.addEventListener("click",()=>addForce(0,0,0,0,0,0));
+
+document.getElementById("calculate")
+.addEventListener("click",calculate);
+
+document.getElementById("reset")
+.addEventListener("click",reset);
+
+/* START */
+
+addForce(1,0,0,0,10,0);
+
+initScene();
+
+})();
+</script>
+</body>
+</html>
+```
