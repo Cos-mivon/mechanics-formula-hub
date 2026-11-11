@@ -31,8 +31,8 @@
 
         const SVG_NS = "http://www.w3.org/2000/svg";
 
-        const CENTER_X = 300;
-        const CENTER_Y = 210;
+        const CENTER_X = 350;
+        const CENTER_Y = 260;
 
         const COLORS = [
             "#ff7979",
