@@ -287,9 +287,19 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Button event listeners
 
-    addButton.addEventListener("click", addForce);
-    calculateButton.addEventListener("click", calculate);
-    resetButton.addEventListener("click", reset);
+    // Button event listeners
+
+addButton.addEventListener("click", function () {
+    addForce();
+});
+
+calculateButton.addEventListener("click", function () {
+    calculate();
+});
+
+resetButton.addEventListener("click", function () {
+    reset();
+});
 
     forceInputs.addEventListener("click", function(event) {
 
