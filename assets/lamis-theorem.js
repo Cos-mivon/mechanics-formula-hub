@@ -829,7 +829,7 @@
         );
 
         const offsetX = (600 - width * scale) / 2;
-        const offsetY = (370 - height * scale) / 2 + 25;
+        const offsetY = (430 + height * scale) / 2;
 
         function transform(point) {
             return {
