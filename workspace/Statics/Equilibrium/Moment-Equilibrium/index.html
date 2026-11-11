@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Moment Equilibrium | Mechanics Formula Hub</title>
+
+    <link rel="stylesheet" href="../../../../assets/style.css">
+
+    <script src="../../../../assets/moment-equilibrium.js?v=1" defer></script>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">MECHANICS FORMULA HUB</div>
+    <p class="tagline">Learn • Calculate • Understand</p>
+</header>
+
+<main>
+
+    <h1>Moment Equilibrium</h1>
+
+    <p class="subtitle">
+        Calculate the turning effect of forces about a reference point.
+    </p>
+
+    <a class="back" href="../index.html">← Back to Equilibrium</a>
+
+    <!-- FORMULA SECTION -->
+
+    <section class="panel">
+
+        <h2>Moment Formulas</h2>
+
+        <div class="formula">
+            M = F × d
+        </div>
+
+        <p>
+            Moment = Force × Perpendicular distance
+        </p>
+
+        <div class="formula">
+            M<sub>O</sub> = xF<sub>y</sub> − yF<sub>x</sub>
+        </div>
+
+        <p>Where:</p>
+
+        <ul>
+            <li>x, y = Coordinates of the force application point.</li>
+            <li>Fx, Fy = Horizontal and vertical force components.</li>
+            <li>M = Moment about reference point O.</li>
+        </ul>
+
+        <div class="formula">
+            ΣM<sub>O</sub> = 0
+        </div>
+
+        <p>
+            Anticlockwise moment = Positive (+)
+            <br>
+            Clockwise moment = Negative (−)
+        </p>
+
+        <p class="small">
+            All coordinates are measured from the fixed origin O.
+            Angles are measured anticlockwise from the positive X-axis.
+        </p>
+
+    </section>
+
+
+    <!-- INPUT SECTION -->
+
+    <section class="panel">
+
+        <h2>Force Inputs</h2>
+
+        <p class="small">
+            Enter the force magnitude, direction and its application point.
+        </p>
+
+        <div id="force-inputs"></div>
+
+        <button type="button" class="primary" id="add-force">
+            + Add Force
+        </button>
+
+        <br><br>
+
+        <button type="button" class="primary" id="calculate">
+            CALCULATE
+        </button>
+
+        <button type="button" class="back" id="reset">
+            RESET
+        </button>
+
+    </section>
+
+
+    <!-- DIAGRAM SECTION -->
+
+    <section class="panel">
+
+        <h2>Force Diagram</h2>
+
+        <p class="small">
+            The diagram shows force application points, force directions
+            and their moment directions about O.
+        </p>
+
+        <div style="width:100%; overflow:hidden;">
+
+            <svg id="moment-diagram"
+                 viewBox="0 0 700 500"
+                 width="100%"
+                 role="img"
+                 aria-label="Moment equilibrium force diagram">
+
+                <g id="diagram-group"></g>
+
+            </svg>
+
+        </div>
+
+        <p class="small">
+            Diagram is illustrative and not drawn to a common physical scale.
+        </p>
+
+        <p>
+            <span style="color:#67dba0;">↺ Anticlockwise (+)</span>
+            <br>
+            <span style="color:#ff7979;">↻ Clockwise (−)</span>
+        </p>
+
+    </section>
+
+
+    <!-- COMPONENT TABLE -->
+
+    <section class="panel">
+
+        <h2>Force Components and Moments</h2>
+
+        <div style="overflow-x:auto;">
+
+            <table style="width:100%; border-collapse:collapse; text-align:center;">
+
+                <thead>
+                    <tr>
+                        <th>Force</th>
+                        <th>Fx (N)</th>
+                        <th>Fy (N)</th>
+                        <th>Moment (N·m)</th>
+                    </tr>
+                </thead>
+
+                <tbody id="component-output">
+
+                    <tr>
+                        <td colspan="4">
+                            Enter forces and calculate.
+                        </td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+
+    <!-- RESULTS -->
+
+    <section class="panel">
+
+        <h2>Calculation Results</h2>
+
+        <div id="result-output">
+
+            <p>Total moment: —</p>
+            <p>Rotational equilibrium: —</p>
+
+        </div>
+
+    </section>
+
+
+    <!-- SOLUTION -->
+
+    <section class="panel">
+
+        <h2>Step-by-Step Solution</h2>
+
+        <div id="steps-output">
+
+            Enter forces to see the solution.
+
+        </div>
+
+    </section>
+
+</main>
+
+<footer>
+    Mechanics Formula Hub
+</footer>
+
+</body>
+  </html>
