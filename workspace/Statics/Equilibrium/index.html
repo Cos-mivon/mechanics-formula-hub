@@ -5,85 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>2D Force System | Mechanics Formula Hub</title>
+    <title>Equilibrium Workspace | Mechanics Formula Hub</title>
 
-    <link rel="stylesheet" href="../../../../assets/style.css">
-
-    <style>
-        .force-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr auto;
-            gap: 10px;
-            align-items: end;
-            margin: 15px 0;
-        }
-
-        .force-row button {
-            background: #a93636;
-            color: white;
-            border: none;
-            padding: 12px;
-            border-radius: 7px;
-        }
-
-        .action {
-            background: #1685d8;
-            color: white;
-            border: none;
-            padding: 12px 18px;
-            border-radius: 8px;
-            margin: 8px 5px 8px 0;
-            cursor: pointer;
-        }
-
-        #force-diagram {
-            width: 100%;
-            background: #091a2e;
-            border-radius: 12px;
-            margin-top: 15px;
-        }
-
-        .output-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 15px;
-            font-size: 14px;
-        }
-
-        .output-table th,
-        .output-table td {
-            padding: 10px 5px;
-            border-bottom: 1px solid #294968;
-            text-align: center;
-        }
-
-        .output-table th {
-            color: #70bdff;
-        }
-
-        .final-result {
-            background: #091a2e;
-            padding: 18px;
-            border-radius: 10px;
-            margin-top: 15px;
-        }
-
-        @media(max-width:500px) {
-            .force-row {
-                grid-template-columns: 1fr 1fr;
-            }
-
-            .force-row button {
-                grid-column: 1 / -1;
-            }
-
-            .output-table {
-                font-size: 11px;
-            }
-        }
-    </style>
-
-    <script src="../../../../assets/2d-equilibrium.js?v=4" defer></script>
+    <link rel="stylesheet" href="../../../assets/style.css">
 </head>
 
 <body>
@@ -96,163 +20,143 @@
 <main>
 
     <button class="back" onclick="location.href='../index.html'">
-        ← Back to Equilibrium
+        ← Back to Statics
     </button>
 
-    <h1>2D Force System</h1>
+    <h1>Equilibrium Workspace</h1>
 
     <p class="subtitle">
-        Calculate force components, resultant force and balancing force.
+        Understand the formulas. Enter values. Solve problems.
+        Visualise the results.
     </p>
 
-    <div class="panel">
+    <!-- 2D EQUILIBRIUM -->
 
-        <h2>Fundamental Formulas</h2>
+    <h2>1. Two-Dimensional Equilibrium</h2>
 
-        <div class="formula">
-            Fx = F cos θ<br><br>
-            Fy = F sin θ<br><br>
-            ΣFx = Σ(F cos θ)<br><br>
-            ΣFy = Σ(F sin θ)<br><br>
-            R = √[(ΣFx)² + (ΣFy)²]
-        </div>
+    <div class="grid">
 
-        <p class="small">
-            All angles are measured anticlockwise from the positive X-axis (+X).
-            Angles are displayed between 0° and 360°.
-        </p>
+        <a href="2D-Equilibrium/index.html" class="card">
 
-    </div>
+            <div class="card-icon">↗️</div>
 
-    <div class="panel">
+            <h3>2D Force System</h3>
 
-        <h2>Enter Forces</h2>
+            <div class="formula">
+                ΣFx = 0<br>
+                ΣFy = 0
+            </div>
 
-        <div id="force-inputs"></div>
+            <p>
+                Resolve forces, calculate components,
+                and check equilibrium in two dimensions.
+            </p>
 
-        <button class="action" id="add-force" type="button">
-            + Add Force
-        </button>
+            <p class="small">Explore Calculations →</p>
 
-        <button class="action" id="calculate" type="button">
-            Calculate
-        </button>
+        </a>
 
-        <button class="action" id="reset" type="button">
-            Reset
-        </button>
+        <a href="Moment-Equilibrium/index.html" class="card">
 
-    </div>
+            <div class="card-icon">🔄</div>
 
-    <div class="panel">
+            <h3>Moment Equilibrium</h3>
 
-        <h2>Force Components</h2>
+            <div class="formula">
+                ΣM = 0
+            </div>
 
-        <div style="overflow-x:auto;">
+            <p>
+                Calculate moments and understand
+                rotational equilibrium.
+            </p>
 
-            <table class="output-table">
+            <p class="small">Explore Calculations →</p>
 
-                <thead>
-                    <tr>
-                        <th>Force</th>
-                        <th>Magnitude</th>
-                        <th>Angle</th>
-                        <th>Fx</th>
-                        <th>Fy</th>
-                    </tr>
-                </thead>
+        </a>
 
-                <tbody id="component-output">
-                    <tr>
-                        <td colspan="5">Enter forces and calculate.</td>
-                    </tr>
-                </tbody>
+        <a href="Lamis-Theorem/index.html" class="card">
 
-            </table>
+            <div class="card-icon">⚖️</div>
 
-        </div>
+            <h3>Lami's Theorem</h3>
+
+            <div class="formula">
+                F₁/sin α = F₂/sin β = F₃/sin γ
+            </div>
+
+            <p>
+                Calculate unknown forces in a system
+                of three concurrent forces.
+            </p>
+
+            <p class="small">Explore Calculations →</p>
+
+        </a>
 
     </div>
 
-    <div class="panel">
+    <!-- 3D EQUILIBRIUM -->
 
-        <h2>Graphical Representation</h2>
+    <h2>2. Three-Dimensional Equilibrium</h2>
 
-        <svg id="force-diagram" viewBox="0 0 600 420">
+    <div class="grid">
 
-            <defs>
-                <marker id="axis-arrow"
-                    markerWidth="8"
-                    markerHeight="8"
-                    refX="5"
-                    refY="3"
-                    orient="auto">
+        <a href="3D-Equilibrium/index.html" class="card">
 
-                    <path d="M0,0 L0,6 L6,3 Z" fill="#91a8c2"/>
-                </marker>
-            </defs>
+            <div class="card-icon">🌐</div>
 
-            <!-- X-axis -->
-            <line x1="45" y1="210" x2="555" y2="210"
-                stroke="#91a8c2" stroke-width="2"
-                marker-end="url(#axis-arrow)"/>
+            <h3>3D Force System</h3>
 
-            <!-- Y-axis -->
-            <line x1="300" y1="390" x2="300" y2="25"
-                stroke="#91a8c2" stroke-width="2"
-                marker-end="url(#axis-arrow)"/>
+            <div class="formula">
+                ΣFx = 0<br>
+                ΣFy = 0<br>
+                ΣFz = 0
+            </div>
 
-            <text x="560" y="205" fill="white">+X</text>
-            <text x="310" y="25" fill="white">+Y</text>
+            <p>
+                Explore three-dimensional forces,
+                resultant magnitude and direction angles.
+            </p>
 
-            <text x="48" y="230" fill="#91a8c2">−X</text>
-            <text x="310" y="390" fill="#91a8c2">−Y</text>
+            <p class="small">Explore 3D Model →</p>
 
-            <circle cx="300" cy="210" r="4" fill="white"/>
-
-            <text x="308" y="225" fill="white" font-size="11">O</text>
-
-            <g id="vector-group"></g>
-
-        </svg>
-
-        <p class="small">
-            All force vectors originate from the same point.
-            Each angle is measured anticlockwise from +X.
-            The dashed green arrow represents the resultant.
-        </p>
+        </a>
 
     </div>
 
-    <div class="panel">
+    <!-- TYPES OF LOADS -->
 
-        <h2>Final Result</h2>
+    <h2>3. Loading Systems</h2>
 
-        <div class="final-result" id="result-output">
-            <p>Resultant force: —</p>
-            <p>Direction: —</p>
-            <p>Balancing force: —</p>
-            <p>Equilibrium: —</p>
-        </div>
+    <div class="grid">
 
-    </div>
+        <a href="Types-of-Loads/index.html" class="card">
 
-    <div class="panel">
+            <div class="card-icon">📊</div>
 
-        <h2>Step-by-Step Solution</h2>
+            <h3>Types of Loads</h3>
 
-        <div id="steps-output">
-            Enter forces to see the solution.
-        </div>
+            <div class="formula">
+                W = wL
+            </div>
+
+            <p>
+                Calculate equivalent loads and their
+                positions for different loading systems.
+            </p>
+
+            <p class="small">Explore Calculations →</p>
+
+        </a>
 
     </div>
 
 </main>
 
 <footer>
-    Mechanics Formula Hub | 2D Force System
+    Mechanics Formula Hub | Equilibrium Workspace
 </footer>
 
 </body>
-            </html>
-            
+</html>
