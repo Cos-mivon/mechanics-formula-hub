@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3D Force System | Mechanics Formula Hub</title>
+<link rel="stylesheet" href="../../../../../assets/style.css">
+<style>
+*{box-sizing:border-box}
+body{margin:0}
+.page{width:min(1180px,94%);margin:0 auto;padding:20px 0 36px}
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:18px}
+.back-link{display:inline-block;color:#9fc7ff;text-decoration:none;padding:9px 13px;border:1px solid #294365;border-radius:10px}
+h1{font-size:clamp(1.55rem,4vw,2.25rem);margin:12px 0 6px}
+.lead{color:#aebed3;line-height:1.55;margin:0 0 18px}
+.layout{display:grid;grid-template-columns:minmax(270px,350px) minmax(0,1fr);gap:18px;align-items:start}
+.panel{background:#10223a;border:1px solid #294365;border-radius:15px;padding:17px;margin-bottom:16px}
+.panel h2{font-size:1.12rem;margin:0 0 13px}
+.field-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:9px}
+.field label{display:block;font-size:.9rem;color:#c9d7e8;margin-bottom:6px}
+.field input{width:100%;min-width:0;padding:11px 9px;border-radius:9px;border:1px solid #3a5678;background:#081426;color:#edf4ff;font-size:1rem}
+.unit{font-size:.78rem;color:#91a8c3;margin-top:5px}
+.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:14px}
+.action-btn{border:0;border-radius:9px;padding:11px 15px;font-weight:700;cursor:pointer;background:#2674d9;color:white}
+.action-btn.secondary{background:#263d59;color:#edf4ff}
+.model-wrap{padding:10px;background:#081426;border:1px solid #294365;border-radius:12px;overflow:hidden}
+#scene{display:block;width:100%;height:440px;touch-action:none}
+.hint{font-size:.82rem;color:#91a8c3;margin:8px 3px 2px;line-height:1.45}
+.metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px}
+.metric{background:#0b192b;border:1px solid #294365;border-radius:10px;padding:11px;min-width:0}
+.metric small{display:block;color:#9fb2c9;margin-bottom:6px}
+.metric strong{font-size:1.05rem;overflow-wrap:anywhere}
+.resultant{color:#8ec5ff}
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:430px}
+th,td{text-align:center;padding:10px 8px;border-bottom:1px solid #294365}
+th{color:#a9c9ef;font-weight:600}
+.steps{line-height:1.75;color:#d5e2f1}
+.steps p{margin:7px 0}
+.formula-line{font-family:Arial,sans-serif;color:#9fc7ff;background:#0b192b;padding:10px;border-radius:8px;overflow-wrap:anywhere}
+.legend{display:flex;gap:13px;flex-wrap:wrap;color:#bdcde0;font-size:.82rem;margin-top:10px}
+.dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:5px}
+.error{color:#ffb4b4;min-height:1.2em;font-size:.86rem;margin-top:8px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}#scene{height:360px}.metrics{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:420px){.page{width:96%}.panel{padding:13px}.field-grid{gap:6px}.field input{padding:10px 6px;font-size:.95rem}#scene{height:300px}}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="topbar">
+    <a class="back-link" href="../index.html">← Back to 3D Equilibrium</a>
+    <span class="small">Mechanics Formula Hub</span>
+  </div>
+
+  <h1>3D Force System</h1>
+  <p class="lead">Enter the Cartesian components of a force to view its three-dimensional vector, resultant magnitude and coordinate direction angles.</p>
+
+  <div class="layout">
+    <div>
+      <section class="panel">
+        <h2>Force components</h2>
+        <div class="field-grid">
+          <div class="field">
+            <label for="fx">Fx (N)</label>
+            <input id="fx" type="number" step="any" value="30">
+            <div class="unit">X component</div>
+          </div>
+          <div class="field">
+            <label for="fy">Fy (N)</label>
+            <input id="fy" type="number" step="any" value="40">
+            <div class="unit">Y component</div>
+          </div>
+          <div class="field">
+            <label for="fz">Fz (N)</label>
+            <input id="fz" type="number" step="any" value="50">
+            <div class="unit">Z component</div>
+          </div>
+        </div>
+        <div class="actions">
+          <button class="action-btn" id="calculate" type="button">Calculate</button>
+          <button class="action-btn secondary" id="reset" type="button">Reset</button>
+        </div>
+        <div class="error" id="error" role="status"></div>
+      </section>
+
+      <section class="panel">
+        <h2>Resultant force</h2>
+        <div class="metrics">
+          <div class="metric"><small>Magnitude R</small><strong class="resultant" id="magnitude">70.71 N</strong></div>
+          <div class="metric"><small>Angle α (X)</small><strong id="alpha">64.90°</strong></div>
+          <div class="metric"><small>Angle β (Y)</small><strong id="beta">55.55°</strong></div>
+          <div class="metric"><small>Angle γ (Z)</small><strong id="gamma">45.00°</strong></div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>Vector components</h2>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Axis</th><th>Component</th><th>Value</th></tr></thead>
+            <tbody>
+              <tr><td>X</td><td>Fx</td><td id="out-fx">30.00 N</td></tr>
+              <tr><td>Y</td><td>Fy</td><td id="out-fy">40.00 N</td></tr>
+              <tr><td>Z</td><td>Fz</td><td id="out-fz">50.00 N</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+
+    <div>
+      <section class="panel">
+        <h2>Interactive 3D model</h2>
+        <div class="model-wrap">
+          <canvas id="scene" aria-label="Interactive three-dimensional force vector model"></canvas>
+        </div>
+        <div class="legend">
+          <span><i class="dot" style="background:#ff6464"></i>X axis</span>
+          <span><i class="dot" style="background:#61d58b"></i>Y axis</span>
+          <span><i class="dot" style="background:#65aaff"></i>Z axis</span>
+          <span><i class="dot" style="background:#ffd166"></i>Force vector</span>
+        </div>
+        <p class="hint">Drag to rotate the model. Use the mouse wheel or pinch gesture to zoom. The dashed lines show the component projections.</p>
+      </section>
+
+      <section class="panel">
+        <h2>Step-by-step solution</h2>
+        <div class="steps" id="steps">
+          <p><b>Step 1:</b> Identify the three force components.</p>
+          <p><b>Step 2:</b> Calculate the resultant magnitude.</p>
+          <p><b>Step 3:</b> Calculate the coordinate direction angles.</p>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(() => {
+  "use strict";
+
+  const $ = id => document.getElementById(id);
+  const inputs = { x: $("fx"), y: $("fy"), z: $("fz") };
+  const canvas = $("scene");
+  const errorBox = $("error");
+
+  let scene, camera, renderer, vectorGroup;
+  let dragging = false, lastX = 0, lastY = 0;
+  let rotationX = -0.48, rotationY = 0.72, cameraDistance = 8;
+  let current = { x: 30, y: 40, z: 50 };
+
+  function makeLine(points, color, dashed = false) {
+    const geometry = new THREE.BufferGeometry().setFromPoints(points);
+    const material = dashed
+      ? new THREE.LineDashedMaterial({ color, dashSize: 0.12, gapSize: 0.08 })
+      : new THREE.LineBasicMaterial({ color });
+    const line = new THREE.Line(geometry, material);
+    if (dashed) line.computeLineDistances();
+    return line;
+  }
+
+  function addAxis(direction, color, label) {
+    const length = 3.4;
+    const arrow = new THREE.ArrowHelper(direction, new THREE.Vector3(0,0,0), length, color, 0.18, 0.1);
+    scene.add(arrow);
+    const spriteCanvas = document.createElement("canvas");
+    spriteCanvas.width = 128; spriteCanvas.height = 64;
+    const ctx = spriteCanvas.getContext("2d");
+    ctx.fillStyle = color; ctx.font = "bold 34px Arial"; ctx.textAlign = "center";
+    ctx.fillText(label, 64, 43);
+    const texture = new THREE.CanvasTexture(spriteCanvas);
+    const sprite = new THREE.Sprite(new THREE.SpriteMaterial({ map: texture, transparent: true }));
+    sprite.position.copy(direction.clone().multiplyScalar(3.75));
+    sprite.scale.set(0.55, 0.28, 1);
+    scene.add(sprite);
+  }
+
+  function initScene() {
+    if (!window.THREE) {
+      errorBox.textContent = "The 3D library could not load. Check your internet connection and refresh the page.";
+      return;
+    }
+    scene = new THREE.Scene();
+    scene.background = new THREE.Color(0x081426);
+
+    camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
+    renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: false });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+
+    scene.add(new THREE.AmbientLight(0xffffff, 0.8));
+    const light = new THREE.DirectionalLight(0xffffff, 0.7);
+    light.position.set(5, 7, 6); scene.add(light);
+
+    const grid = new THREE.GridHelper(6, 12, 0x34516f, 0x1d3550);
+    grid.position.y = -0.015; scene.add(grid);
+
+    addAxis(new THREE.Vector3(1,0,0), 0xff6464, "X");
+    addAxis(new THREE.Vector3(0,1,0), 0x61d58b, "Y");
+    addAxis(new THREE.Vector3(0,0,1), 0x65aaff, "Z");
+
+    vectorGroup = new THREE.Group();
+    scene.add(vectorGroup);
+
+    updateCamera();
+    resize();
+    window.addEventListener("resize", resize);
+    canvas.addEventListener("pointerdown", onPointerDown);
+    window.addEventListener("pointermove", onPointerMove);
+    window.addEventListener("pointerup", onPointerUp);
+    canvas.addEventListener("wheel", onWheel, { passive: false });
+    animate();
+  }
+
+  function updateCamera() {
+    if (!camera) return;
+    const cx = cameraDistance * Math.cos(rotationX) * Math.sin(rotationY);
+    const cy = cameraDistance * Math.sin(rotationX);
+    const cz = cameraDistance * Math.cos(rotationX) * Math.cos(rotationY);
+    camera.position.set(cx, cy, cz);
+    camera.lookAt(0, 0, 0);
+  }
+
+  function resize() {
+    if (!renderer || !camera) return;
+    const width = Math.max(1, canvas.clientWidth);
+    const height = Math.max(1, canvas.clientHeight);
+    renderer.setSize(width, height, false);
+    camera.aspect = width / height;
+    camera.updateProjectionMatrix();
+  }
+
+  function animate() {
+    requestAnimationFrame(animate);
+    if (renderer && scene && camera) renderer.render(scene, camera);
+  }
+
+  function onPointerDown(event) {
+    dragging = true; lastX = event.clientX; lastY = event.clientY;
+    canvas.setPointerCapture?.(event.pointerId);
+  }
+  function onPointerMove(event) {
+    if (!dragging) return;
+    const dx = event.clientX - lastX, dy = event.clientY - lastY;
+    lastX = event.clientX; lastY = event.clientY;
+    rotationY += dx * 0.008;
+    rotationX = Math.max(-1.45, Math.min(1.45, rotationX + dy * 0.008));
+    updateCamera();
+  }
+  function onPointerUp() { dragging = false; }
+  function onWheel(event) {
+    event.preventDefault();
+    cameraDistance = Math.max(4.5, Math.min(15, cameraDistance + event.deltaY * 0.008));
+    updateCamera();
+  }
+
+  function drawVector(x, y, z) {
+    if (!vectorGroup) return;
+    while (vectorGroup.children.length) {
+      const child = vectorGroup.children.pop();
+      child.geometry?.dispose();
+      if (Array.isArray(child.material)) child.material.forEach(m => m.dispose());
+      else child.material?.dispose();
+    }
+
+    const maxComponent = Math.max(Math.abs(x), Math.abs(y), Math.abs(z), 1);
+    const scale = 2.45 / maxComponent;
+    const vx = x * scale, vy = y * scale, vz = z * scale;
+    const end = new THREE.Vector3(vx, vy, vz);
+    const magnitude = end.length();
+
+    if (magnitude > 0.000001) {
+      const direction = end.clone().normalize();
+      const resultant = new THREE.ArrowHelper(direction, new THREE.Vector3(0,0,0), magnitude, 0xffd166, 0.22, 0.13);
+      vectorGroup.add(resultant);
+    }
+
+    const componentVectors = [
+      { value: vx, dir: new THREE.Vector3(Math.sign(vx),0,0), color: 0xff6464 },
+      { value: vy, dir: new THREE.Vector3(0,Math.sign(vy),0), color: 0x61d58b },
+      { value: vz, dir: new THREE.Vector3(0,0,Math.sign(vz)), color: 0x65aaff }
+    ];
+    componentVectors.forEach(c => {
+      if (Math.abs(c.value) > 0.000001) {
+        vectorGroup.add(new THREE.ArrowHelper(c.dir, new THREE.Vector3(0,0,0), Math.abs(c.value), c.color, 0.15, 0.09));
+      }
+    });
+
+    const pX = new THREE.Vector3(vx,0,0);
+    const pXY = new THREE.Vector3(vx,vy,0);
+    vectorGroup.add(makeLine([end, pXY], 0x9bb0c8, true));
+    vectorGroup.add(makeLine([pXY, pX], 0x9bb0c8, true));
+    vectorGroup.add(makeLine([pX, new THREE.Vector3(0,0,0)], 0x9bb0c8, true));
+    vectorGroup.add(makeLine([end, new THREE.Vector3(0,vy,vz)], 0x9bb0c8, true));
+    vectorGroup.add(makeLine([new THREE.Vector3(0,vy,vz), new THREE.Vector3(0,vy,0)], 0x9bb0c8, true));
+    vectorGroup.add(makeLine([new THREE.Vector3(0,vy,0), new THREE.Vector3(0,0,0)], 0x9bb0c8, true));
+
+    const pointGeometry = new THREE.SphereGeometry(0.075, 16, 12);
+    const point = new THREE.Mesh(pointGeometry, new THREE.MeshStandardMaterial({ color: 0xffd166 }));
+    point.position.copy(end); vectorGroup.add(point);
+  }
+
+  function format(n) {
+    if (Math.abs(n) < 0.0000001) n = 0;
+    return n.toFixed(2);
+  }
+
+  function calculate() {
+    const x = Number(inputs.x.value), y = Number(inputs.y.value), z = Number(inputs.z.value);
+    if (![x,y,z].every(Number.isFinite)) {
+      errorBox.textContent = "Please enter a valid number for each component.";
+      return;
+    }
+    if ([x,y,z].some(v => Math.abs(v) > 100000)) {
+      errorBox.textContent = "Please keep each component within ±100,000 N for a clear model.";
+      return;
+    }
+    errorBox.textContent = "";
+    current = {x,y,z};
+
+    const R = Math.sqrt(x*x + y*y + z*z);
+    $("magnitude").textContent = format(R) + " N";
+    $("out-fx").textContent = format(x) + " N";
+    $("out-fy").textContent = format(y) + " N";
+    $("out-fz").textContent = format(z) + " N";
+
+    let alphaText = "Undefined", betaText = "Undefined", gammaText = "Undefined";
+    let alpha, beta, gamma;
+    if (R > 0) {
+      alpha = Math.acos(Math.max(-1, Math.min(1, x/R))) * 180 / Math.PI;
+      beta  = Math.acos(Math.max(-1, Math.min(1, y/R))) * 180 / Math.PI;
+      gamma = Math.acos(Math.max(-1, Math.min(1, z/R))) * 180 / Math.PI;
+      alphaText = format(alpha) + "°";
+      betaText = format(beta) + "°";
+      gammaText = format(gamma) + "°";
+    }
+    $("alpha").textContent = alphaText;
+    $("beta").textContent = betaText;
+    $("gamma").textContent = gammaText;
+
+    $("steps").innerHTML = `
+      <p><b>Step 1: Write the force vector.</b></p>
+      <p>F = (${format(x)}i ${y < 0 ? "−" : "+"} ${format(Math.abs(y))}j ${z < 0 ? "−" : "+"} ${format(Math.abs(z))}k) N</p>
+      <p><b>Step 2: Find the magnitude.</b></p>
+      <div class="formula-line">R = √(Fx² + Fy² + Fz²)</div>
+      <div class="formula-line">R = √((${format(x)})² + (${format(y)})² + (${format(z)})²) = ${format(R)} N</div>
+      <p><b>Step 3: Find the coordinate direction angles.</b></p>
+      ${R > 0 ? `
+        <div class="formula-line">cos α = Fx/R = ${format(x)}/${format(R)}; α = ${format(alpha)}°</div>
+        <div class="formula-line">cos β = Fy/R = ${format(y)}/${format(R)}; β = ${format(beta)}°</div>
+        <div class="formula-line">cos γ = Fz/R = ${format(z)}/${format(R)}; γ = ${format(gamma)}°</div>
+      ` : `<p>Since R = 0, the force vector is zero and its direction angles are undefined.</p>`}
+    `;
+    drawVector(x,y,z);
+  }
+
+  $("calculate").addEventListener("click", calculate);
+  Object.values(inputs).forEach(input => input.addEventListener("input", calculate));
+  $("reset").addEventListener("click", () => {
+    inputs.x.value = 30; inputs.y.value = 40; inputs.z.value = 50;
+    rotationX = -0.48; rotationY = 0.72; cameraDistance = 8;
+    updateCamera(); calculate();
+  });
+
+  initScene();
+  calculate();
+})();
+</script>
+</body>
+  </html>
+  
