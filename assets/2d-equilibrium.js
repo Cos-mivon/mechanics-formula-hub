@@ -1,3 +1,4 @@
+alert("Calculator JavaScript initialized!");
 ```javascript
 document.addEventListener("DOMContentLoaded", function () {
 
@@ -283,8 +284,7 @@ document.addEventListener("DOMContentLoaded", function () {
         addForce();
         addForce();
     }
-alert("Calculator JavaScript initialized!");
-    // Button event listeners
+
 
     // Button event listeners
 
