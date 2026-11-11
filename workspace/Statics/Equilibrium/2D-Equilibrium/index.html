@@ -1,0 +1,410 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>2D Force System | Mechanics Formula Hub</title>
+
+<link rel="stylesheet" href="../../../../assets/style.css">
+
+<style>
+.force-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr auto;
+    gap: 10px;
+    align-items: end;
+    margin: 15px 0;
+}
+
+.force-row button {
+    background: #a93636;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 7px;
+}
+
+.action {
+    background: #1685d8;
+    color: white;
+    border: none;
+    padding: 12px 18px;
+    border-radius: 8px;
+    margin: 8px 5px 8px 0;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+#force-diagram {
+    width: 100%;
+    background: #091a2e;
+    border-radius: 12px;
+    margin-top: 15px;
+}
+
+.output-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    font-size: 14px;
+}
+
+.output-table th,
+.output-table td {
+    padding: 10px 5px;
+    border-bottom: 1px solid #294968;
+    text-align: center;
+}
+
+.output-table th {
+    color: #70bdff;
+}
+
+.final-result {
+    background: #091a2e;
+    padding: 18px;
+    border-radius: 10px;
+    margin-top: 15px;
+}
+
+.final-result p {
+    margin: 10px 0;
+}
+
+@media(max-width:500px) {
+    .force-row {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .force-row button {
+        grid-column: 1 / -1;
+    }
+
+    .output-table {
+        font-size: 11px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">⚙ Mechanics Formula Hub</div>
+    <div class="tagline">Engineering Mechanics Learning Platform</div>
+</header>
+
+<main>
+
+<button class="back"
+onclick="location.href='../index.html'">
+← Back to Equilibrium
+</button>
+
+<h1>2D Force System</h1>
+
+<p class="subtitle">
+Calculate force components, resultant force and balancing force.
+</p>
+
+<!-- FORMULA -->
+
+<div class="panel">
+
+<h2>Fundamental Formulas</h2>
+
+<div class="formula">
+Fx = F cos θ
+<br><br>
+Fy = F sin θ
+<br><br>
+ΣFx = Σ(F cos θ)
+<br><br>
+ΣFy = Σ(F sin θ)
+<br><br>
+R = √[(ΣFx)² + (ΣFy)²]
+</div>
+
+<p class="small">
+Angles are measured anticlockwise from the positive X-axis.
+</p>
+
+</div>
+
+<!-- INPUT -->
+
+<div class="panel">
+
+<h2>Enter Forces</h2>
+
+<div id="force-inputs"></div>
+
+<button class="action" onclick="addForce()">
++ Add Force
+</button>
+
+<button class="action" onclick="calculate()">
+Calculate
+</button>
+
+<button class="action" onclick="resetAll()">
+Reset
+</button>
+
+</div>
+
+<!-- COMPONENTS -->
+
+<div class="panel">
+
+<h2>Force Components</h2>
+
+<div style="overflow-x:auto;">
+
+<table class="output-table">
+
+<thead>
+<tr>
+<th>Force</th>
+<th>Magnitude</th>
+<th>Angle</th>
+<th>Fx</th>
+<th>Fy</th>
+</tr>
+</thead>
+
+<tbody id="component-output">
+<tr>
+<td colspan="5">Enter forces and calculate.</td>
+</tr>
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+<!-- GRAPH -->
+
+<div class="panel">
+
+<h2>Graphical Representation</h2>
+
+<svg id="force-diagram"
+viewBox="0 0 600 420">
+
+<defs>
+
+<marker id="axis-arrow"
+markerWidth="8"
+markerHeight="8"
+refX="5"
+refY="3"
+orient="auto">
+
+<path d="M0,0 L0,6 L6,3 Z" fill="#91a8c2"/>
+
+</marker>
+
+</defs>
+
+<line x1="45" y1="210" x2="555" y2="210"
+stroke="#91a8c2" stroke-width="2"
+marker-end="url(#axis-arrow)"/>
+
+<line x1="300" y1="390" x2="300" y2="25"
+stroke="#91a8c2" stroke-width="2"
+marker-end="url(#axis-arrow)"/>
+
+<text x="560" y="205" fill="white">X</text>
+<text x="310" y="25" fill="white">Y</text>
+
+<circle cx="300" cy="210" r="4" fill="white"/>
+
+<g id="vector-group"></g>
+
+</svg>
+
+<p class="small">
+All force vectors originate from the same point.
+Diagram scale adjusts automatically.
+</p>
+
+</div>
+
+<!-- RESULT -->
+
+<div class="panel">
+
+<h2>Final Result</h2>
+
+<div class="final-result" id="result-output">
+
+<p>Resultant force: —</p>
+<p>Direction: —</p>
+<p>Balancing force: —</p>
+<p>Equilibrium: —</p>
+
+</div>
+
+</div>
+
+<!-- STEPS -->
+
+<div class="panel">
+
+<h2>Step-by-Step Solution</h2>
+
+<div id="steps-output">
+Enter forces to see the solution.
+</div>
+
+</div>
+
+</main>
+
+<footer>
+Mechanics Formula Hub | 2D Force System
+</footer>
+
+<script>
+
+let forceCount = 0;
+
+function addForce(magnitude = "", angle = "") {
+
+    forceCount++;
+
+    const container = document.getElementById("force-inputs");
+
+    const row = document.createElement("div");
+
+    row.className = "force-row";
+
+    row.innerHTML = `
+        <div>
+            <label>Force ${forceCount} (N)</label>
+            <input type="number" step="any"
+            class="force-magnitude"
+            placeholder="Magnitude"
+            value="${magnitude}">
+        </div>
+
+        <div>
+            <label>Angle (°)</label>
+            <input type="number" step="any"
+            class="force-angle"
+            placeholder="Angle"
+            value="${angle}">
+        </div>
+
+        <button type="button"
+        onclick="this.parentElement.remove()">
+        Remove
+        </button>
+    `;
+
+    container.appendChild(row);
+}
+
+function calculate() {
+
+    const rows = document.querySelectorAll(".force-row");
+
+    if (rows.length === 0) {
+        alert("Please add at least one force.");
+        return;
+    }
+
+    let sumX = 0;
+    let sumY = 0;
+
+    let components = [];
+    let steps = "";
+
+    for (let i = 0; i < rows.length; i++) {
+
+        const magnitude =
+        Number(rows[i].querySelector(".force-magnitude").value);
+
+        const angle =
+        Number(rows[i].querySelector(".force-angle").value);
+
+        if (
+            rows[i].querySelector(".force-magnitude").value === "" ||
+            rows[i].querySelector(".force-angle").value === "" ||
+            !Number.isFinite(magnitude) ||
+            !Number.isFinite(angle) ||
+            magnitude < 0
+        ) {
+            alert("Please enter valid non-negative magnitudes and angles for every force.");
+            return;
+        }
+
+        const rad = angle * Math.PI / 180;
+
+        const fx = magnitude * Math.cos(rad);
+        const fy = magnitude * Math.sin(rad);
+
+        sumX += fx;
+        sumY += fy;
+
+        components.push({
+            name: "F" + (i + 1),
+            magnitude,
+            angle,
+            fx,
+            fy
+        });
+
+        steps += `
+        <p><b>Force ${i + 1}</b></p>
+        <p>Fx = ${magnitude} × cos(${angle}°) = ${fx.toFixed(2)} N</p>
+        <p>Fy = ${magnitude} × sin(${angle}°) = ${fy.toFixed(2)} N</p>
+        <hr>
+        `;
+    }
+
+    const resultant = Math.hypot(sumX, sumY);
+
+    let direction = Math.atan2(sumY, sumX) * 180 / Math.PI;
+
+    if (direction < 0) direction += 360;
+
+    const balancingDirection = (direction + 180) % 360;
+
+    const precision = 0.000001;
+    const equilibrium = resultant < precision;
+
+    const componentRows = components.map(c => `
+        <tr>
+            <td>${c.name}</td>
+            <td>${c.magnitude.toFixed(2)}</td>
+            <td>${c.angle}°</td>
+            <td>${c.fx.toFixed(2)}</td>
+            <td>${c.fy.toFixed(2)}</td>
+        </tr>
+    `).join("");
+
+    document.getElementById("component-output").innerHTML =
+    componentRows + `
+        <tr>
+            <th>Σ</th>
+            <th>—</th>
+            <th>—</th>
+            <th>${sumX.toFixed(2)}</th>
+            <th>${sumY.toFixed(2)}</th>
+        </tr>
+    `;
+
+    document.getElementById("result-output").innerHTML = `
+        <p>ΣFx = <b>${sumX.toFixed(2)} N</b></p>
+        <p>ΣFy = <b>${sumY.toFixed(2)} N</b></p>
+        <p>Resultant = <b>${resultant.toFixed(2)} N</b></p>
+        <p>Direction = <b>${resultant < precision ? "Undefined (zero resultant)" : direction.toFixed(2) + "°"}</b></p>
+        <p>Balancing force = <b>${resultant.toFixed(2)} N</b></p>
+        <p>Balancing direction = <b>${resultant < precision ?
