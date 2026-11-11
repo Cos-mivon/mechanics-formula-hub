@@ -1,0 +1,182 @@
+<!DOCTYPE html>  
+<html lang="en">  
+<head>  
+<meta charset="UTF-8">  
+<meta name="viewport" content="width=device-width, initial-scale=1.0">  
+<title>3D Force Equilibrium | Mechanics Formula Hub</title>  
+<link rel="stylesheet" href="../../../../../assets/style.css">  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>  
+<style>  
+*{box-sizing:border-box}body{margin:0;background:#081426;color:#edf4ff;font-family:Arial,sans-serif}  
+.page{max-width:1200px;margin:auto;padding:20px}header{margin-bottom:22px}  
+.logo{font-size:1.7rem;font-weight:700;margin:8px 0}.tagline{color:#a9bdd8}  
+.back{display:inline-block;margin:8px 0 16px;color:#9cc8ff;text-decoration:none}  
+h1,h2,h3{color:#f2f7ff}h1{font-size:1.65rem;margin:8px 0}h2{font-size:1.2rem;margin-top:0}  
+p{line-height:1.55;color:#c5d3e5}.panel{background:#10213a;border:1px solid #263d5d;border-radius:14px;padding:18px;margin:16px 0}  
+.formula{background:#0a192d;border-left:4px solid #55a6ff;padding:12px;border-radius:8px;font-size:1.05rem;line-height:1.8;overflow-wrap:anywhere}  
+.force-row{display:grid;grid-template-columns:1.1fr 1fr 1fr 1fr auto;gap:9px;align-items:end;padding:12px;background:#0b1a2e;border:1px solid #263d5d;border-radius:10px;margin:10px 0}  
+label{display:block;font-size:.86rem;color:#bfd0e5;margin-bottom:5px}  
+input{width:100%;min-width:0;padding:11px;border-radius:8px;border:1px solid #47617f;background:#071426;color:#fff;font-size:1rem}  
+button{border:0;border-radius:9px;padding:11px 15px;font-weight:700;cursor:pointer}  
+.add{background:#245b91;color:white}.calculate{background:#36a276;color:#fff}.reset{background:#334963;color:#fff}  
+.remove{background:#873e4a;color:#fff;padding:10px 12px}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}  
+#scene-wrap{height:390px;position:relative;background:#071426;border:1px solid #263d5d;border-radius:12px;overflow:hidden;touch-action:none}  
+#scene{width:100%;height:100%;display:block;cursor:grab}  
+#scene:active{cursor:grabbing}  
+.scene-help{font-size:.82rem;color:#9eb2cb;margin-top:8px}  
+.results{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}  
+.result-card{background:#0a192d;padding:13px;border-radius:10px;border:1px solid #263d5d}  
+.result-card strong{display:block;color:#8fc7ff;font-size:.83rem;margin-bottom:7px}  
+.result-card span{font-size:1.08rem;font-weight:700;overflow-wrap:anywhere}  
+.status{padding:13px;border-radius:10px;background:#0a192d;margin-top:12px;font-weight:700}  
+.good{border:1px solid #2b9b70;color:#8df0bd}.notgood{border:1px solid #c58b43;color:#ffd18d}  
+table{width:100%;border-collapse:collapse;margin-top:10px;font-size:.9rem}  
+th,td{padding:10px;border-bottom:1px solid #2b405d;text-align:right}th:first-child,td:first-child{text-align:left}  
+th{color:#a9c9ef}.step{padding:10px 12px;border-left:3px solid #55a6ff;background:#0a192d;margin:9px 0;border-radius:5px;line-height:1.5}  
+.small{font-size:.85rem;color:#9fb3cc}footer{text-align:center;color:#8298b4;padding:20px}  
+@media(max-width:700px){.page{padding:13px}.force-row{grid-template-columns:1fr 1fr}.force-row .force-name{grid-column:1/-1}.force-row .remove{grid-column:1/-1}#scene-wrap{height:310px}.results{grid-template-columns:1fr 1fr}}  
+@media(max-width:390px){.results{grid-template-columns:1fr}}  
+</style>  
+</head>  
+<body><div class="page">  
+<header><a class="back" href="../index.html">← Back to 3D Equilibrium</a><div class="logo">Mechanics Formula Hub</div><div class="tagline">Understand the force system. Verify equilibrium.</div></header>  
+<h1>3D Force Equilibrium</h1>  
+<p>Enter the X, Y and Z components of each force. The calculator adds all components, finds the resultant and gives the force required to balance the system.</p>  
+<section class="panel"><h2>1. Equilibrium condition</h2>  
+<div class="formula">ΣF<sub>x</sub> = 0 &nbsp; ΣF<sub>y</sub> = 0 &nbsp; ΣF<sub>z</sub> = 0<br>  
+R = √[(ΣF<sub>x</sub>)² + (ΣF<sub>y</sub>)² + (ΣF<sub>z</sub>)²]</div>  
+<p class="small">A force is entered by its Cartesian components. Positive and negative signs indicate direction along each axis.</p></section>  
+<section class="panel"><h2>2. Enter forces</h2><div id="force-list"></div>  
+<div class="actions"><button class="add" id="add-force" type="button">＋ Add Force</button><button class="calculate" id="calculate" type="button">Calculate Equilibrium</button><button class="reset" id="reset" type="button">Reset</button></div>  
+<p class="small">Example: a force of 10 N along +X is entered as Fx = 10, Fy = 0, Fz = 0. Use negative values for the opposite direction.</p></section>  
+<section class="panel"><h2>3. 3D force diagram</h2><div id="scene-wrap"><canvas id="scene"></canvas></div>  
+<div class="scene-help">Drag to rotate • Right-click/Shift+Drag to pan • Scroll to zoom • Each force has its own colour; the resultant is shown in white.</div></section>  
+<section class="panel"><h2>4. Component totals</h2><div class="results">  
+<div class="result-card"><strong>ΣFx</strong><span id="sum-x">—</span></div><div class="result-card"><strong>ΣFy</strong><span id="sum-y">—</span></div><div class="result-card"><strong>ΣFz</strong><span id="sum-z">—</span></div>  
+<div class="result-card"><strong>Resultant R</strong><span id="resultant">—</span></div><div class="result-card"><strong>Direction angle α</strong><span id="alpha">—</span></div><div class="result-card"><strong>Direction angle β</strong><span id="beta">—</span></div><div class="result-card"><strong>Direction angle γ</strong><span id="gamma">—</span></div>  
+<div class="result-card"><strong>Balancing force X</strong><span id="bal-x">—</span></div><div class="result-card"><strong>Balancing force Y</strong><span id="bal-y">—</span></div><div class="result-card"><strong>Balancing force Z</strong><span id="bal-z">—</span></div></div>  
+<div id="status" class="status">Enter forces and select Calculate Equilibrium.</div></section>  
+<section class="panel"><h2>5. Force component table</h2><div style="overflow-x:auto"><table><thead><tr><th>Force</th><th>Fx (N)</th><th>Fy (N)</th><th>Fz (N)</th></tr></thead><tbody id="component-table"><tr><td colspan="4">Calculate to see the components.</td></tr></tbody></table></div></section>  
+<section class="panel"><h2>6. Step-by-step solution</h2><div id="steps"><p class="small">Your calculation steps will appear here.</p></div></section>  
+<footer>Mechanics Formula Hub • 3D Force Equilibrium</footer></div>  
+<script>  
+(() => {  
+"use strict";  
+const list=document.getElementById("force-list"),palette=[0x45b7ff,0xffb454,0x9b8cff,0x55d6a2,0xff7f9f,0xe6dc65,0x6ed5d9,0xd28cff];  
+let forceCount=0,scene,camera,renderer,vectorGroup,resizeObserver,lastForces=[],lastResult=null;  
+
+function addForce(x=0,y=0,z=0){  
+ forceCount++;const row=document.createElement("div");row.className="force-row";  
+ row.innerHTML=`<div class="force-name"><label>Force ${forceCount}</label><div class="small">F${forceCount}</div></div>  
+ <div><label>Fx (N)</label><input type="number" step="any" value="${x}" class="fx" aria-label="Force ${forceCount} X component"></div>  
+ <div><label>Fy (N)</label><input type="number" step="any" value="${y}" class="fy" aria-label="Force ${forceCount} Y component"></div>  
+ <div><label>Fz (N)</label><input type="number" step="any" value="${z}" class="fz" aria-label="Force ${forceCount} Z component"></div>  
+ <button type="button" class="remove">Remove</button>`;  
+ row.querySelector(".remove").addEventListener("click",()=>{row.remove();renumber();});list.appendChild(row);  
+}  
+function renumber(){[...list.children].forEach((row,i)=>{row.querySelector(".force-name label").textContent=`Force ${i+1}`;row.querySelector(".force-name .small").textContent=`F${i+1}`;["fx","fy","fz"].forEach(c=>row.querySelector("."+c).setAttribute("aria-label",`Force ${i+1} ${c.toUpperCase()} component`));});forceCount=list.children.length;}  
+function readForces(){const rows=[...list.children];if(!rows.length)throw Error("Add at least one force.");return rows.map((row,i)=>{const v=["fx","fy","fz"].map(c=>Number(row.querySelector("."+c).value));if(v.some(n=>!Number.isFinite(n)))throw Error(`Enter valid numbers for Force ${i+1}.`);return{name:`F${i+1}`,x:v[0],y:v[1],z:v[2]};});}  
+const fmt=n=>(Math.abs(n)<1e-10?0:n).toFixed(3);  
+function calculate(){  
+ let forces;try{forces=readForces();}catch(e){alert(e.message);return;}  
+ const sx=forces.reduce((s,f)=>s+f.x,0),sy=forces.reduce((s,f)=>s+f.y,0),sz=forces.reduce((s,f)=>s+f.z,0),R=Math.hypot(sx,sy,sz),tol=.01,equilibrium=R<=tol;  
+ const bal={x:-sx,y:-sy,z:-sz},angle=c=>R<=1e-12?"—":`${fmt(Math.acos(Math.max(-1,Math.min(1,c/R)))*180/Math.PI)}°`;  
+ [["sum-x",sx],["sum-y",sy],["sum-z",sz],["resultant",R],["bal-x",bal.x],["bal-y",bal.y],["bal-z",bal.z]].forEach(([id,v])=>document.getElementById(id).textContent=fmt(v)+" N");  
+ document.getElementById("alpha").textContent=angle(sx);document.getElementById("beta").textContent=angle(sy);document.getElementById("gamma").textContent=angle(sz);  
+ const status=document.getElementById("status");status.className="status "+(equilibrium?"good":"notgood");  
+ status.textContent=equilibrium?"✓ The force system is in translational equilibrium (resultant is within ±0.01 N).":"The force system is not in equilibrium. Add the balancing force shown above to make the resultant zero.";  
+ document.getElementById("component-table").innerHTML=forces.map(f=>`<tr><td>${f.name}</td><td>${fmt(f.x)}</td><td>${fmt(f.y)}</td><td>${fmt(f.z)}</td></tr>`).join("")+`<tr><th>ΣF</th><th>${fmt(sx)}</th><th>${fmt(sy)}</th><th>${fmt(sz)}</th></tr>`;  
+ const steps=[`The entered forces are resolved along the X, Y and Z axes.`,`ΣFx = ${forces.map(f=>fmt(f.x)).join(" + ")} = ${fmt(sx)} N.`,`ΣFy = ${forces.map(f=>fmt(f.y)).join(" + ")} = ${fmt(sy)} N.`,`ΣFz = ${forces.map(f=>fmt(f.z)).join(" + ")} = ${fmt(sz)} N.`,`R = √[(${fmt(sx)})² + (${fmt(sy)})² + (${fmt(sz)})²] = ${fmt(R)} N.`,`Balancing force Fb = (−ΣFx, −ΣFy, −ΣFz) = (${fmt(bal.x)}, ${fmt(bal.y)}, ${fmt(bal.z)}) N.`,equilibrium?`R = ${fmt(R)} N is within the 0.01 N tolerance, so the force system is in equilibrium.`:`R = ${fmt(R)} N is greater than 0.01 N, so the entered forces alone are not in equilibrium.`];  
+ document.getElementById("steps").innerHTML=steps.map((s,i)=>`<div class="step"><b>Step ${i+1}.</b> ${s}</div>`).join("");  
+ lastForces=forces;lastResult={sx,sy,sz,R};drawVectors();  
+}  
+function reset(){list.innerHTML="";forceCount=0;addForce(10,0,0);addForce(-10,0,0);["sum-x","sum-y","sum-z","resultant","alpha","beta","gamma","bal-x","bal-y","bal-z"].forEach(id=>document.getElementById(id).textContent="—");const s=document.getElementById("status");s.className="status";s.textContent="Enter forces and select Calculate Equilibrium.";document.getElementById("component-table").innerHTML='<tr><td colspan="4">Calculate to see the components.</td></tr>';document.getElementById("steps").innerHTML='<p class="small">Your calculation steps will appear here.</p>';lastForces=[];lastResult=null;drawVectors();}  
+
+function initScene(){  
+ const canvas=document.getElementById("scene"),wrap=document.getElementById("scene-wrap");if(!window.THREE){wrap.innerHTML="3D preview unavailable. Check your internet connection to load the 3D library.";return;}  
+ scene=new THREE.Scene();scene.background=new THREE.Color(0x071426);camera=new THREE.PerspectiveCamera(45,1,.1,1000);renderer=new THREE.WebGLRenderer({canvas,antialias:true});renderer.setPixelRatio(Math.min(devicePixelRatio||1,2));  
+ scene.add(new THREE.AmbientLight(0xffffff,.8));const light=new THREE.DirectionalLight(0xffffff,.7);light.position.set(5,8,6);scene.add(light);scene.add(new THREE.AxesHelper(3.5));const grid=new THREE.GridHelper(8,16,0x294b70,0x1b3049);grid.position.y=-.01;scene.add(grid);vectorGroup=new THREE.Group();scene.add(vectorGroup);  
+
+ // Camera Controls with Inertia/Damping
+ let targetRx=-.35, targetRy=.65, targetDistance=11;
+ let currentRx=-.35, currentRy=.65, currentDistance=11;
+ const targetCenter = new THREE.Vector3(0, 0, 0);
+ const currentCenter = new THREE.Vector3(0, 0, 0);
+ const damping = 0.08; // Smoothness factor (lower = smoother/slower)
+
+ let dragging=false, isPan=false, px=0, py=0;
+
+ canvas.addEventListener("contextmenu", e => e.preventDefault());
+
+ canvas.addEventListener("pointerdown", e => {
+   dragging = true;
+   isPan = e.button === 2 || e.shiftKey;
+   px = e.clientX;
+   py = e.clientY;
+   canvas.setPointerCapture(e.pointerId);
+ });  
+
+ canvas.addEventListener("pointermove", e => {
+   if(!dragging) return;
+   const dx = e.clientX - px;
+   const dy = e.clientY - py;
+   px = e.clientX;
+   py = e.clientY;
+
+   if (isPan) {
+     const panSpeed = targetDistance * 0.0012;
+     const right = new THREE.Vector3().crossVectors(camera.up, camera.position.clone().sub(currentCenter)).normalize();
+     const up = new THREE.Vector3().crossVectors(camera.position.clone().sub(currentCenter), right).normalize();
+     targetCenter.add(right.multiplyScalar(-dx * panSpeed));
+     targetCenter.add(up.multiplyScalar(dy * panSpeed));
+   } else {
+     targetRy -= dx * 0.006;
+     targetRx = Math.max(-1.45, Math.min(1.45, targetRx + dy * 0.006));
+   }
+ });  
+
+ canvas.addEventListener("pointerup", () => dragging = false);
+ canvas.addEventListener("pointercancel", () => dragging = false);  
+
+ canvas.addEventListener("wheel", e => {
+   e.preventDefault();
+   targetDistance = Math.max(3, Math.min(30, targetDistance + e.deltaY * 0.008));
+ }, {passive: false});  
+
+ resizeObserver = new ResizeObserver(() => {
+   const w = wrap.clientWidth, h = wrap.clientHeight;
+   if(!w || !h) return;
+   renderer.setSize(w, h, false);
+   camera.aspect = w / h;
+   camera.updateProjectionMatrix();
+ });
+ resizeObserver.observe(wrap);  
+
+ function animate(){
+   requestAnimationFrame(animate);
+
+   // Lerp values for smooth motion interpolation
+   currentRx += (targetRx - currentRx) * damping;
+   currentRy += (targetRy - currentRy) * damping;
+   currentDistance += (targetDistance - currentDistance) * damping;
+   currentCenter.lerp(targetCenter, damping);
+
+   camera.position.set(
+     currentCenter.x + currentDistance * Math.sin(currentRy) * Math.cos(currentRx),
+     currentCenter.y + currentDistance * Math.sin(currentRx),
+     currentCenter.z + currentDistance * Math.cos(currentRy) * Math.cos(currentRx)
+   );
+   camera.lookAt(currentCenter);
+
+   renderer.render(scene, camera);
+ }
+ animate();  
+}  
+
+function addArrow(start,end,color){const d=new THREE.Vector3().subVectors(end,start),len=d.length();if(len<1e-7)return;const arrow=new THREE.ArrowHelper(d.normalize(),start,len,color,Math.min(.35,len*.22),Math.min(.2,len*.12));vectorGroup.add(arrow);}  
+function drawVectors(){if(!scene||!vectorGroup)return;vectorGroup.clear();const all=lastForces.slice();if(lastResult)all.push({name:"R",x:lastResult.sx,y:lastResult.sy,z:lastResult.sz,result:true});const max=Math.max(1,...all.map(f=>Math.hypot(f.x,f.y,f.z))),scale=3.1/max;all.forEach((f,i)=>{const v=new THREE.Vector3(f.x*scale,f.y*scale,f.z*scale),color=f.result?0xffffff:palette[i%palette.length];addArrow(new THREE.Vector3(),v,color);const dot=new THREE.Mesh(new THREE.SphereGeometry(.055,12,12),new THREE.MeshBasicMaterial({color}));dot.position.copy(v);vectorGroup.add(dot);});}  
+
+document.getElementById("add-force").addEventListener("click",()=>addForce());document.getElementById("calculate").addEventListener("click",calculate);document.getElementById("reset").addEventListener("click",reset);  
+addForce(10,0,0);addForce(-10,0,0);initScene();  
+})();  
+</script></body></html>
