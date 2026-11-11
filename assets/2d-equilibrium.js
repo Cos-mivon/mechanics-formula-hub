@@ -13,8 +13,6 @@
         const stepsOutput = document.getElementById("steps-output");
         const vectorGroup = document.getElementById("vector-group");
 
-        // Check whether all required HTML elements exist.
-
         if (
             !forceInputs ||
             !addButton ||
@@ -30,6 +28,47 @@
         }
 
         let forceCount = 0;
+
+        const SVG_NS = "http://www.w3.org/2000/svg";
+
+        const CENTER_X = 300;
+        const CENTER_Y = 210;
+
+        const COLORS = [
+            "#ff7979",
+            "#70bdff",
+            "#ffd166",
+            "#c792ea",
+            "#67dba0",
+            "#ff9f68",
+            "#f28ab2",
+            "#8ce0d0"
+        ];
+
+        // NORMALIZE ANGLE TO 0-360 DEGREES
+
+        function normalizeAngle(angle) {
+            let normalized = ((angle % 360) + 360) % 360;
+
+            if (Math.abs(normalized - 360) < 0.000001) {
+                normalized = 0;
+            }
+
+            return normalized;
+        }
+
+        // CREATE SVG ELEMENT
+
+        function createSVG(tag, attributes) {
+
+            const element = document.createElementNS(SVG_NS, tag);
+
+            Object.keys(attributes).forEach(function (key) {
+                element.setAttribute(key, attributes[key]);
+            });
+
+            return element;
+        }
 
         // ADD FORCE
 
@@ -64,7 +103,6 @@
             `;
 
             forceInputs.appendChild(row);
-
         }
 
         // RENUMBER FORCES
@@ -81,7 +119,6 @@
             });
 
             forceCount = rows.length;
-
         }
 
         // REMOVE FORCE
@@ -93,7 +130,6 @@
                 event.target.closest(".force-row").remove();
 
                 renumberForces();
-
             }
 
         });
@@ -124,20 +160,23 @@
                     rows[i].querySelector(".force-angle");
 
                 const magnitude = Number(magnitudeInput.value);
-                const angle = Number(angleInput.value);
+                const enteredAngle = Number(angleInput.value);
 
                 if (
                     magnitudeInput.value.trim() === "" ||
                     angleInput.value.trim() === "" ||
                     !Number.isFinite(magnitude) ||
-                    !Number.isFinite(angle) ||
+                    !Number.isFinite(enteredAngle) ||
                     magnitude < 0
                 ) {
 
                     alert("Please enter valid values for every force.");
                     return;
-
                 }
+
+                // All displayed angles use the 0-360 degree convention.
+
+                const angle = normalizeAngle(enteredAngle);
 
                 const radians = angle * Math.PI / 180;
 
@@ -158,17 +197,19 @@
                 steps += `
                     <h4>Force ${i + 1}</h4>
 
+                    <p>Given angle = ${enteredAngle}°</p>
+                    <p>Standard angle from +X = ${angle.toFixed(2)}°</p>
+
                     <p>Fx = F cos θ</p>
-                    <p>Fx = ${magnitude} × cos(${angle}°)</p>
+                    <p>Fx = ${magnitude} × cos(${angle.toFixed(2)}°)</p>
                     <p>Fx = ${fx.toFixed(2)} N</p>
 
                     <p>Fy = F sin θ</p>
-                    <p>Fy = ${magnitude} × sin(${angle}°)</p>
+                    <p>Fy = ${magnitude} × sin(${angle.toFixed(2)}°)</p>
                     <p>Fy = ${fy.toFixed(2)} N</p>
 
                     <hr>
                 `;
-
             }
 
             // RESULTANT
@@ -181,11 +222,9 @@
 
             let direction = Math.atan2(sumY, sumX) * 180 / Math.PI;
 
-            if (direction < 0) {
-                direction += 360;
-            }
+            direction = normalizeAngle(direction);
 
-            const balancingDirection = (direction + 180) % 360;
+            const balancingDirection = normalizeAngle(direction + 180);
 
             // COMPONENT TABLE
 
@@ -195,7 +234,7 @@
                     <tr>
                         <td>${c.name}</td>
                         <td>${c.magnitude.toFixed(2)}</td>
-                        <td>${c.angle}°</td>
+                        <td>${c.angle.toFixed(2)}°</td>
                         <td>${c.fx.toFixed(2)}</td>
                         <td>${c.fy.toFixed(2)}</td>
                     </tr>
@@ -222,7 +261,7 @@
                 <p>Resultant = <b>${resultant.toFixed(2)} N</b></p>
 
                 <p>Direction =
-                    <b>${equilibrium ? "Undefined" : direction.toFixed(2) + "°"}</b>
+                    <b>${equilibrium ? "Undefined" : direction.toFixed(2) + "° from +X"}</b>
                 </p>
 
                 <p>Balancing force =
@@ -230,7 +269,7 @@
                 </p>
 
                 <p>Balancing direction =
-                    <b>${equilibrium ? "Not required" : balancingDirection.toFixed(2) + "°"}</b>
+                    <b>${equilibrium ? "Not required" : balancingDirection.toFixed(2) + "° from +X"}</b>
                 </p>
 
                 <p>Equilibrium =
@@ -264,7 +303,7 @@
 
                 <p>
                     <b>
-                    ${equilibrium ? "Undefined" : direction.toFixed(2) + "°"}
+                    ${equilibrium ? "Undefined" : direction.toFixed(2) + "° anticlockwise from +X"}
                     </b>
                 </p>
 
@@ -272,100 +311,221 @@
 
             stepsOutput.innerHTML = steps;
 
-            drawDiagram(components, sumX, sumY);
+            drawDiagram(components, sumX, sumY, resultant, direction, equilibrium);
+        }
 
+        // CREATE AN ARROWHEAD MARKER
+
+        function addArrowMarker(defs, id, color) {
+
+            const marker = createSVG("marker", {
+                id: id,
+                markerWidth: 10,
+                markerHeight: 10,
+                refX: 8,
+                refY: 4,
+                orient: "auto",
+                markerUnits: "userSpaceOnUse"
+            });
+
+            const arrow = createSVG("path", {
+                d: "M0,0 L0,8 L8,4 Z",
+                fill: color
+            });
+
+            marker.appendChild(arrow);
+            defs.appendChild(marker);
+        }
+
+        // DRAW ANGLE ARC FROM POSITIVE X-AXIS
+
+        function drawAngleArc(radius, angle, color, label, index) {
+
+            const radians = angle * Math.PI / 180;
+
+            const endX = CENTER_X + radius * Math.cos(radians);
+            const endY = CENTER_Y - radius * Math.sin(radians);
+
+            const middleAngle = angle / 2;
+            const middleRadians = middleAngle * Math.PI / 180;
+
+            const labelRadius = radius + 13;
+
+            const labelX =
+                CENTER_X + labelRadius * Math.cos(middleRadians);
+
+            const labelY =
+                CENTER_Y - labelRadius * Math.sin(middleRadians);
+
+            // A zero-degree angle has no visible arc.
+
+            if (angle > 0.001) {
+
+                const largeArc = angle > 180 ? 1 : 0;
+
+                const arc = createSVG("path", {
+                    d: `
+                        M ${CENTER_X + radius} ${CENTER_Y}
+                        A ${radius} ${radius} 0 ${largeArc} 0 ${endX} ${endY}
+                    `,
+                    fill: "none",
+                    stroke: color,
+                    "stroke-width": 1.8,
+                    opacity: 0.9
+                });
+
+                vectorGroup.appendChild(arc);
+            }
+
+            const angleLabel = createSVG("text", {
+                x: labelX,
+                y: labelY,
+                fill: color,
+                "font-size": 11,
+                "font-weight": "bold",
+                "text-anchor": "middle"
+            });
+
+            angleLabel.textContent =
+                label + " " + angle.toFixed(1) + "°";
+
+            vectorGroup.appendChild(angleLabel);
         }
 
         // DRAW FORCE DIAGRAM
 
-        function drawDiagram(components, sumX, sumY) {
+        function drawDiagram(
+            components,
+            sumX,
+            sumY,
+            resultant,
+            direction,
+            equilibrium
+        ) {
 
             vectorGroup.innerHTML = "";
+
+            const defs = createSVG("defs", {});
+            vectorGroup.appendChild(defs);
 
             const maxValue = Math.max(
                 1,
                 ...components.map(function (c) {
                     return Math.hypot(c.fx, c.fy);
                 }),
-                Math.hypot(sumX, sumY)
+                resultant
             );
 
             const scale = 145 / maxValue;
 
+            // DRAW ANGLE ARCS FIRST
+
             components.forEach(function (c, index) {
 
-                const x = 300 + c.fx * scale;
-                const y = 210 - c.fy * scale;
+                const color = COLORS[index % COLORS.length];
 
-                const color =
-                    `hsl(${(index * 65 + 15) % 360}, 85%, 65%)`;
+                const radius = 28 + (index % 5) * 9;
 
-                const line = document.createElementNS(
-                    "http://www.w3.org/2000/svg",
-                    "line"
+                drawAngleArc(
+                    radius,
+                    c.angle,
+                    color,
+                    c.name,
+                    index
                 );
+            });
 
-                line.setAttribute("x1", 300);
-                line.setAttribute("y1", 210);
-                line.setAttribute("x2", x);
-                line.setAttribute("y2", y);
-                line.setAttribute("stroke", color);
-                line.setAttribute("stroke-width", 3);
+            // DRAW FORCE VECTORS
+
+            components.forEach(function (c, index) {
+
+                const color = COLORS[index % COLORS.length];
+
+                const x = CENTER_X + c.fx * scale;
+                const y = CENTER_Y - c.fy * scale;
+
+                const markerId = "force-arrow-" + index;
+
+                addArrowMarker(defs, markerId, color);
+
+                const line = createSVG("line", {
+                    x1: CENTER_X,
+                    y1: CENTER_Y,
+                    x2: x,
+                    y2: y,
+                    stroke: color,
+                    "stroke-width": 3,
+                    "stroke-linecap": "round",
+                    "marker-end": "url(#" + markerId + ")"
+                });
 
                 vectorGroup.appendChild(line);
 
-                const label = document.createElementNS(
-                    "http://www.w3.org/2000/svg",
-                    "text"
-                );
+                // FORCE LABEL
 
-                label.setAttribute("x", x + 7);
-                label.setAttribute("y", y - 7);
-                label.setAttribute("fill", "white");
-                label.setAttribute("font-size", "13");
+                const labelX = x + (c.fx >= 0 ? 9 : -9);
+                const labelY = y + (c.fy >= 0 ? -9 : 15);
+
+                const label = createSVG("text", {
+                    x: labelX,
+                    y: labelY,
+                    fill: color,
+                    "font-size": 13,
+                    "font-weight": "bold",
+                    "text-anchor": c.fx >= 0 ? "start" : "end"
+                });
 
                 label.textContent = c.name;
 
                 vectorGroup.appendChild(label);
-
             });
 
-            // RESULTANT VECTOR
+            // DRAW RESULTANT VECTOR
 
-            if (Math.hypot(sumX, sumY) > 0.000001) {
+            if (!equilibrium) {
 
-                const line = document.createElementNS(
-                    "http://www.w3.org/2000/svg",
-                    "line"
+                const resultX = CENTER_X + sumX * scale;
+                const resultY = CENTER_Y - sumY * scale;
+
+                addArrowMarker(defs, "resultant-arrow", "#67dba0");
+
+                const resultantLine = createSVG("line", {
+                    x1: CENTER_X,
+                    y1: CENTER_Y,
+                    x2: resultX,
+                    y2: resultY,
+                    stroke: "#67dba0",
+                    "stroke-width": 4,
+                    "stroke-dasharray": "7,4",
+                    "stroke-linecap": "round",
+                    "marker-end": "url(#resultant-arrow)"
+                });
+
+                vectorGroup.appendChild(resultantLine);
+
+                const resultantLabel = createSVG("text", {
+                    x: resultX + (sumX >= 0 ? 10 : -10),
+                    y: resultY + (sumY >= 0 ? -10 : 16),
+                    fill: "#67dba0",
+                    "font-size": 15,
+                    "font-weight": "bold",
+                    "text-anchor": sumX >= 0 ? "start" : "end"
+                });
+
+                resultantLabel.textContent = "R";
+
+                vectorGroup.appendChild(resultantLabel);
+
+                // RESULTANT ANGLE ARC
+
+                drawAngleArc(
+                    88,
+                    direction,
+                    "#67dba0",
+                    "R",
+                    0
                 );
-
-                line.setAttribute("x1", 300);
-                line.setAttribute("y1", 210);
-
-                line.setAttribute("x2", 300 + sumX * scale);
-                line.setAttribute("y2", 210 - sumY * scale);
-
-                line.setAttribute("stroke", "#67dba0");
-                line.setAttribute("stroke-width", 4);
-                line.setAttribute("stroke-dasharray", "7,4");
-
-                vectorGroup.appendChild(line);
-
-                const label = document.createElementNS(
-                    "http://www.w3.org/2000/svg",
-                    "text"
-                );
-
-                label.setAttribute("x", 300 + sumX * scale + 8);
-                label.setAttribute("y", 210 - sumY * scale - 8);
-                label.setAttribute("fill", "#67dba0");
-
-                label.textContent = "R";
-
-                vectorGroup.appendChild(label);
-
             }
-
         }
 
         // RESET
@@ -396,7 +556,6 @@
 
             addForce();
             addForce();
-
         }
 
         // BUTTON EVENTS
@@ -418,7 +577,6 @@
         reset();
 
         console.log("2D Equilibrium Calculator initialized successfully.");
-
     }
 
     if (document.readyState === "loading") {
@@ -428,7 +586,7 @@
     } else {
 
         initializeCalculator();
-
     }
 
 })();
+
