@@ -1,0 +1,705 @@
+HTML
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Force System | Mechanics Formula Hub</title>
+<link rel="stylesheet" href="../../../assets/style.css">
+
+<style>
+* { box-sizing: border-box; }
+
+body { line-height: 1.65; }
+
+.container {
+    width: 92%;
+    max-width: 950px;
+    margin: 24px auto;
+}
+
+.section {
+    background: #10223a;
+    border: 1px solid #263e5c;
+    border-radius: 12px;
+    padding: 20px;
+    margin: 20px 0;
+}
+
+.section h2 {
+    color: #55b5ff;
+    margin-top: 0;
+    border-bottom: 1px solid #314963;
+    padding-bottom: 8px;
+}
+
+.section h3 { color: #9bd5ff; }
+
+.section p, .section li { color: #d6e3f2; }
+
+.formula-box {
+    background: #07182b;
+    border-left: 4px solid #55b5ff;
+    padding: 14px;
+    border-radius: 7px;
+    margin: 14px 0;
+    overflow-x: auto;
+    text-align: center;
+    font-size: 17px;
+}
+
+.diagram {
+    background: #f4f8fc;
+    border-radius: 10px;
+    padding: 12px;
+    margin: 16px 0;
+    overflow: hidden;
+}
+
+.diagram svg {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.diagram-note {
+    color: #526477 !important;
+    text-align: center;
+    font-size: 13px;
+    margin-bottom: 0;
+}
+
+.example {
+    background: #0a1b30;
+    border: 1px solid #34516f;
+    border-radius: 9px;
+    padding: 15px;
+    margin-top: 14px;
+}
+
+.example h3 { margin-top: 0; }
+
+.note {
+    background: #172d43;
+    border-left: 4px solid #f0b44d;
+    padding: 12px;
+    border-radius: 6px;
+    margin: 14px 0;
+    color: #e5edf6;
+}
+
+.tag {
+    display: inline-block;
+    background: #173c5c;
+    color: #9bd5ff;
+    padding: 3px 9px;
+    border-radius: 20px;
+    font-size: 12px;
+    margin-bottom: 8px;
+}
+
+.back-link {
+    display: inline-block;
+    color: #8bcfff;
+    text-decoration: none;
+    margin: 8px 0 18px;
+}
+
+@media(max-width:600px) {
+    .container { width: 94%; }
+    .section { padding: 15px; }
+    .formula-box { font-size: 15px; }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">Mechanics Formula Hub</div>
+    <div class="tagline">Understand the concept. Visualise the force. Solve the problem.</div>
+</header>
+
+<div class="container">
+
+<a class="back-link" href="../../index.html">← Back to Formula Sheet</a>
+
+<h1>Unit 1: Force System</h1>
+<p class="subtitle">Fundamentals, classification and laws of forces</p>
+
+<!-- INTRODUCTION -->
+<div class="section">
+    <span class="tag">01 · Fundamentals</span>
+    <h2>1. Introduction to Force</h2>
+
+    <p>
+        A force is a push or pull acting on a body, or an action that
+        tends to change the state of rest or uniform motion of a body.
+    </p>
+
+    <p>
+        Force is a <b>vector quantity</b>. Therefore, it requires both
+        magnitude and direction for its complete representation.
+    </p>
+
+    <div class="formula-box">
+        SI Unit of Force = Newton (N)
+    </div>
+
+    <h3>Characteristics of Force</h3>
+
+    <ol>
+        <li>
+            <b>Magnitude:</b> The quantitative strength of a force.
+            Example: 90 N.
+        </li>
+        <li>
+            <b>Direction:</b> The orientation in which the force acts.
+        </li>
+        <li>
+            <b>Point of Application:</b> The exact point at which the
+            force acts on a body.
+        </li>
+        <li>
+            <b>Line of Action:</b> An imaginary infinite straight line
+            passing through the point of application in the direction
+            of the force.
+        </li>
+    </ol>
+
+    <div class="diagram">
+        <svg viewBox="0 0 600 230">
+            <defs>
+                <marker id="forceArrow" markerWidth="9" markerHeight="9"
+                    refX="7" refY="3" orient="auto">
+                    <path d="M0,0 L0,6 L8,3 z" fill="#e34b4b"/>
+                </marker>
+            </defs>
+            <rect x="55" y="92" width="180" height="75" rx="8"
+                fill="#cbd9e8" stroke="#334b63" stroke-width="2"/>
+            <line x1="90" y1="130" x2="480" y2="130"
+                stroke="#64748b" stroke-width="2" stroke-dasharray="8 6"/>
+            <line x1="145" y1="130" x2="420" y2="35"
+                stroke="#e34b4b" stroke-width="4"
+                marker-end="url(#forceArrow)"/>
+            <circle cx="145" cy="130" r="6" fill="#142d48"/>
+            <text x="65" y="188" font-size="14" fill="#243b53">Body</text>
+            <text x="150" y="151" font-size="13" fill="#243b53">Point of application</text>
+            <text x="320" y="48" font-size="15" fill="#c83232">Force F</text>
+            <text x="335" y="151" font-size="13" fill="#475569">Line of action</text>
+        </svg>
+        <p class="diagram-note">Illustration of a force acting on a body.</p>
+    </div>
+</div>
+
+<!-- FORCE SYSTEM -->
+<div class="section">
+    <span class="tag">02 · Classification</span>
+    <h2>2. Force System</h2>
+
+    <p>
+        When two or more forces act simultaneously on a body, they form
+        a <b>force system</b>.
+    </p>
+
+    <h3>Classification Based on Spatial Orientation</h3>
+
+    <h3>A. Coplanar Force System</h3>
+    <p>
+        A force system in which all the force vectors lie in the same
+        two-dimensional plane is called a coplanar force system.
+    </p>
+
+    <ul>
+        <li>Example: Forces acting on a ladder resting against a wall.</li>
+        <li>Example: Forces acting on a beam in a plane.</li>
+    </ul>
+
+    <h3>B. Non-Coplanar Force System</h3>
+    <p>
+        A force system in which the forces do not all lie in one common
+        plane is called a non-coplanar or spatial force system.
+    </p>
+
+    <ul>
+        <li>Example: Forces acting on a three-dimensional structure.</li>
+        <li>Example: Forces acting on a body in different spatial directions.</li>
+    </ul>
+
+    <h3>Subcategories of Coplanar Force Systems</h3>
+
+    <ol>
+        <li>
+            <b>Collinear Forces:</b> Forces whose lines of action lie
+            along the same straight line.
+        </li>
+        <li>
+            <b>Concurrent Force System:</b> A system in which the lines
+            of action of all forces pass through one common point.
+        </li>
+        <li>
+            <b>Parallel Force System:</b> A system in which the lines
+            of action of all forces are parallel to one another.
+        </li>
+    </ol>
+
+    <h3>General Force System</h3>
+    <p>
+        As described in the supplied notes, a non-concurrent,
+        non-coplanar force system is also referred to as a general
+        force system.
+    </p>
+
+    <div class="note">
+        <b>Important distinction:</b> Non-collinear means that forces
+        do not share the same line of action. Non-coplanar means that
+        forces do not all lie in the same plane. These terms are not
+        interchangeable.
+    </div>
+</div>
+
+<!-- TRANSMISSIBILITY -->
+<div class="section">
+    <span class="tag">03 · Important Principle</span>
+    <h2>3. Principle of Transmissibility of Force</h2>
+
+    <h3>Statement</h3>
+    <p>
+        The external effect of a force on a rigid body remains unchanged
+        if the force is moved to any other point along its line of action,
+        provided its magnitude and direction remain the same.
+    </p>
+
+    <div class="diagram">
+        <svg viewBox="0 0 600 210">
+            <defs>
+                <marker id="transArrow" markerWidth="9" markerHeight="9"
+                    refX="7" refY="3" orient="auto">
+                    <path d="M0,0 L0,6 L8,3 z" fill="#e34b4b"/>
+                </marker>
+            </defs>
+            <rect x="65" y="80" width="470" height="65" rx="8"
+                fill="#cbd9e8" stroke="#334b63" stroke-width="2"/>
+            <line x1="95" y1="112" x2="505" y2="112"
+                stroke="#64748b" stroke-dasharray="7 5" stroke-width="2"/>
+            <line x1="175" y1="112" x2="175" y2="28"
+                stroke="#e34b4b" stroke-width="4" marker-end="url(#transArrow)"/>
+            <line x1="395" y1="112" x2="395" y2="28"
+                stroke="#e34b4b" stroke-width="4" marker-end="url(#transArrow)"/>
+            <circle cx="175" cy="112" r="5" fill="#172d43"/>
+            <circle cx="395" cy="112" r="5" fill="#172d43"/>
+            <text x="150" y="20" font-size="15" fill="#c83232">F</text>
+            <text x="370" y="20" font-size="15" fill="#c83232">F</text>
+            <text x="145" y="165" font-size="13" fill="#243b53">Point A</text>
+            <text x="365" y="165" font-size="13" fill="#243b53">Point B</text>
+            <text x="205" y="195" font-size="13" fill="#475569">Same line of action</text>
+        </svg>
+        <p class="diagram-note">
+            The force may be shifted along its line of action on a rigid body.
+        </p>
+    </div>
+
+    <h3>Explanation</h3>
+    <p>
+        A force acting on a rigid body can be transferred to another
+        point on the same line of action without changing its external
+        effect on the body.
+    </p>
+
+    <h3>Applications</h3>
+    <ul>
+        <li>Simplifying force systems in engineering mechanics.</li>
+        <li>Drawing and analysing free-body diagrams.</li>
+        <li>Structural design and mechanical assemblies.</li>
+        <li>Analysing forces in robotics and gear mechanisms.</li>
+    </ul>
+
+    <h3>Limitations</h3>
+    <ul>
+        <li>The principle applies to rigid-body external effects.</li>
+        <li>It does not mean that internal stresses or deformation
+            remain unchanged when the force is shifted.</li>
+        <li>It should not be applied directly to deformable-body
+            stress analysis.</li>
+    </ul>
+</div>
+
+<!-- PARALLELOGRAM LAW -->
+<div class="section">
+    <span class="tag">04 · Law of Forces</span>
+    <h2>4. Parallelogram Law of Forces</h2>
+
+    <h3>Statement</h3>
+    <p>
+        If two forces acting simultaneously on a particle are represented
+        in magnitude and direction by two adjacent sides of a parallelogram
+        drawn from a common point, their resultant is represented in
+        magnitude and direction by the diagonal passing through that point.
+    </p>
+
+    <div class="diagram">
+        <svg viewBox="0 0 600 330">
+            <defs>
+                <marker id="paraArrow" markerWidth="9" markerHeight="9"
+                    refX="7" refY="3" orient="auto">
+                    <path d="M0,0 L0,6 L8,3 z" fill="#1769aa"/>
+                </marker>
+                <marker id="resultArrow" markerWidth="9" markerHeight="9"
+                    refX="7" refY="3" orient="auto">
+                    <path d="M0,0 L0,6 L8,3 z" fill="#d43c3c"/>
+                </marker>
+            </defs>
+            <line x1="100" y1="260" x2="410" y2="260"
+                stroke="#a0aec0" stroke-dasharray="5 5"/>
+            <line x1="100" y1="260" x2="400" y2="260"
+                stroke="#1769aa" stroke-width="4" marker-end="url(#paraArrow)"/>
+            <line x1="100" y1="260" x2="220" y2="65"
+                stroke="#1769aa" stroke-width="4" marker-end="url(#paraArrow)"/>
+            <line x1="220" y1="65" x2="520" y2="65"
+                stroke="#64748b" stroke-width="2" stroke-dasharray="6 5"/>
+            <line x1="400" y1="260" x2="520" y2="65"
+                stroke="#64748b" stroke-width="2" stroke-dasharray="6 5"/>
+            <line x1="100" y1="260" x2="520" y2="65"
+                stroke="#d43c3c" stroke-width="4" marker-end="url(#resultArrow)"/>
+            <path d="M155 260 A55 55 0 0 0 130 213"
+                fill="none" stroke="#333" stroke-width="2"/>
+            <text x="180" y="280" font-size="17" fill="#1769aa">P</text>
+            <text x="105" y="145" font-size="17" fill="#1769aa">Q</text>
+            <text x="310" y="145" font-size="18" fill="#c83232">R</text>
+            <text x="165" y="235" font-size="14" fill="#243b53">θ</text>
+            <text x="78" y="280" font-size="14" fill="#243b53">O</text>
+        </svg>
+        <p class="diagram-note">
+            Two forces P and Q act at a common point. Their diagonal
+            represents the resultant R.
+        </p>
+    </div>
+
+    <h3>Formula for Resultant Magnitude</h3>
+    <p>
+        Let P and Q be two forces acting at an angle θ to each other.
+        The magnitude of their resultant is:
+    </p>
+
+    <div class="formula-box">
+        R = √(P² + Q² + 2PQ cos θ)
+    </div>
+
+    <h3>Direction of Resultant</h3>
+    <p>
+        If α is the angle made by the resultant with force P:
+    </p>
+
+    <div class="formula-box">
+        tan α = (Q sin θ) / (P + Q cos θ)
+    </div>
+
+    <h3>Special Cases</h3>
+    <ul>
+        <li>
+            When θ = 0°:
+            <b>R = P + Q</b>
+        </li>
+        <li>
+            When θ = 90°:
+            <b>R = √(P² + Q²)</b>
+        </li>
+        <li>
+            When θ = 180°:
+            <b>R = |P − Q|</b>
+        </li>
+    </ul>
+
+    <h3>Derivation</h3>
+    <p>
+        Resolve force Q into components along and perpendicular to P:
+    </p>
+    <div class="formula-box">
+        R<sub>x</sub> = P + Q cos θ
+        <br><br>
+        R<sub>y</sub> = Q sin θ
+    </div>
+    <p>
+        Using the Pythagorean theorem:
+    </p>
+    <div class="formula-box">
+        R = √(R<sub>x</sub>² + R<sub>y</sub>²)
+        <br><br>
+        R = √[(P + Q cos θ)² + (Q sin θ)²]
+        <br><br>
+        R = √(P² + Q² + 2PQ cos θ)
+    </div>
+
+    <div class="example">
+        <h3>Solved Example</h3>
+        <p><b>Given:</b> P = 30 N, Q = 40 N, θ = 90°.</p>
+        <p><b>Step 1: Apply the formula.</b></p>
+        <p>R = √(P² + Q² + 2PQ cos θ)</p>
+        <p>R = √(30² + 40² + 2 × 30 × 40 × cos 90°)</p>
+        <p>R = √(900 + 1600)</p>
+        <p><b>Resultant, R = 50 N</b></p>
+
+        <p><b>Step 2: Find direction.</b></p>
+        <p>tan α = (40 × sin 90°) / (30 + 40 × cos 90°)</p>
+        <p>tan α = 40/30</p>
+        <p><b>α = 53.13°</b></p>
+    </div>
+
+    <h3>Applications</h3>
+    <ul>
+        <li>Navigation and aviation for combining velocity vectors.</li>
+        <li>Robotics and computer graphics for combining vector movements.</li>
+        <li>Engineering analysis of two forces acting at a point.</li>
+    </ul>
+</div>
+
+<!-- TRIANGLE LAW -->
+<div class="section">
+    <span class="tag">05 · Law of Forces</span>
+    <h2>5. Triangle Law of Forces</h2>
+
+    <h3>Statement</h3>
+    <p>
+        If two forces acting on a particle are represented in magnitude
+        and direction by two sides of a triangle taken in order, their
+        resultant is represented by the third side of the triangle taken
+        in the opposite order.
+    </p>
+
+    <div class="diagram">
+        <svg viewBox="0 0 600 300">
+            <defs>
+                <marker id="triBlue" markerWidth="9" markerHeight="9"
+                    refX="7" refY="3" orient="auto">
+                    <path d="M0,0 L0,6 L8,3 z" fill="#1769aa"/>
+                </marker>
+                <marker id="triRed" markerWidth="9" markerHeight="9"
+                    refX="7" refY="3" orient="auto">
+                    <path d="M0,0 L0,6 L8,3 z" fill="#d43c3c"/>
+                </marker>
+            </defs>
+            <line x1="90" y1="240" x2="310" y2="240"
+                stroke="#1769aa" stroke-width="4" marker-end="url(#triBlue)"/>
+            <line x1="310" y1="240" x2="440" y2="65"
+                stroke="#1769aa" stroke-width="4" marker-end="url(#triBlue)"/>
+            <line x1="90" y1="240" x2="440" y2="65"
+                stroke="#d43c3c" stroke-width="4" marker-end="url(#triRed)"/>
+            <text x="185" y="265" font-size="17" fill="#1769aa">P</text>
+            <text x="365" y="145" font-size="17" fill="#1769aa">Q</text>
+            <text x="230" y="125" font-size="18" fill="#c83232">R</text>
+            <text x="72" y="260" font-size="14" fill="#243b53">A</text>
+            <text x="305" y="260" font-size="14" fill="#243b53">B</text>
+            <text x="445" y="65" font-size="14" fill="#243b53">C</text>
+        </svg>
+        <p class="diagram-note">
+            Force P is followed by force Q. The closing side represents
+            the resultant R.
+        </p>
+    </div>
+
+    <h3>Formula</h3>
+    <p>
+        If P and Q are the two forces and θ is the angle between them:
+    </p>
+    <div class="formula-box">
+        R = √(P² + Q² + 2PQ cos θ)
+    </div>
+    <p>
+        The direction can be found using:
+    </p>
+    <div class="formula-box">
+        tan α = (Q sin θ) / (P + Q cos θ)
+    </div>
+
+    <h3>Explanation</h3>
+    <p>
+        Draw the first force to scale. From the head of the first vector,
+        draw the second force in its given direction. The vector joining
+        the tail of the first force to the head of the second force gives
+        the resultant.
+    </p>
+
+    <div class="note">
+        The Triangle Law and Parallelogram Law are two graphical ways
+        of representing the addition of two force vectors. They give
+        the same resultant.
+    </div>
+
+    <div class="example">
+        <h3>Solved Example</h3>
+        <p><b>Given:</b> P = 6 N, Q = 8 N, angle between them = 90°.</p>
+        <p>R = √(6² + 8² + 2 × 6 × 8 × cos 90°)</p>
+        <p>R = √(36 + 64)</p>
+        <p><b>Resultant, R = 10 N</b></p>
+        <p>tan α = 8/6</p>
+        <p><b>α = 53.13°</b> measured from P towards Q.</p>
+    </div>
+
+    <h3>Applications</h3>
+    <ul>
+        <li>Finding the resultant of two forces acting at a point.</li>
+        <li>Combining displacement and velocity vectors.</li>
+        <li>Graphical analysis of forces in engineering problems.</li>
+    </ul>
+</div>
+
+<!-- POLYGON LAW -->
+<div class="section">
+    <span class="tag">06 · Law of Forces</span>
+    <h2>6. Polygon Law of Forces</h2>
+
+    <h3>Statement</h3>
+    <p>
+        If several forces acting simultaneously on a particle are
+        represented in magnitude and direction by the sides of a polygon
+        taken in order, their resultant is represented by the closing
+        side of the polygon taken in the opposite order.
+    </p>
+
+    <div class="diagram">
+        <svg viewBox="0 0 600 330">
+            <defs>
+                <marker id="polyArrow" markerWidth="9" markerHeight="9"
+                    refX="7" refY="3" orient="auto">
+                    <path d="M0,0 L0,6 L8,3 z" fill="#1769aa"/>
+                </marker>
+                <marker id="polyResult" markerWidth="9" markerHeight="9"
+                    refX="7" refY="3" orient="auto">
+                    <path d="M0,0 L0,6 L8,3 z" fill="#d43c3c"/>
+                </marker>
+            </defs>
+            <polyline points="90,250 240,250 340,145 260,55 90,250"
+                fill="none" stroke="#1769aa" stroke-width="3"
+                stroke-dasharray="7 5"/>
+            <line x1="90" y1="250" x2="240" y2="250"
+                stroke="#1769aa" stroke-width="4" marker-end="url(#polyArrow)"/>
+            <line x1="240" y1="250" x2="340" y2="145"
+                stroke="#1769aa" stroke-width="4" marker-end="url(#polyArrow)"/>
+            <line x1="340" y1="145" x2="260" y2="55"
+                stroke="#1769aa" stroke-width="4" marker-end="url(#polyArrow)"/>
+            <line x1="90" y1="250" x2="260" y2="55"
+                stroke="#d43c3c" stroke-width="4" marker-end="url(#polyResult)"/>
+            <text x="160" y="275" font-size="16" fill="#1769aa">F₁</text>
+            <text x="300" y="220" font-size="16" fill="#1769aa">F₂</text>
+            <text x="300" y="90" font-size="16" fill="#1769aa">F₃</text>
+            <text x="145" y="130" font-size="18" fill="#c83232">R</text>
+        </svg>
+        <p class="diagram-note">
+            Multiple forces are drawn head-to-tail. The closing vector
+            gives their resultant.
+        </p>
+    </div>
+
+    <h3>Formula Using Components</h3>
+    <p>
+        For several forces acting in a plane, resolve every force into
+        horizontal and vertical components.
+    </p>
+
+    <div class="formula-box">
+        ΣF<sub>x</sub> = F<sub>1x</sub> + F<sub>2x</sub> + ... + F<sub>nx</sub>
+        <br><br>
+        ΣF<sub>y</sub> = F<sub>1y</sub> + F<sub>2y</sub> + ... + F<sub>ny</sub>
+    </div>
+
+    <p>The resultant magnitude is:</p>
+    <div class="formula-box">
+        R = √[(ΣF<sub>x</sub>)² + (ΣF<sub>y</sub>)²]
+    </div>
+
+    <p>The direction measured from the positive X-axis is:</p>
+    <div class="formula-box">
+        θ = tan⁻¹[(ΣF<sub>y</sub>) / (ΣF<sub>x</sub>)]
+    </div>
+
+    <p>
+        The correct quadrant must be considered when determining the
+        direction from the component signs.
+    </p>
+
+    <h3>Condition for Equilibrium</h3>
+    <p>
+        If the force polygon closes, the resultant is zero and the
+        particle is in equilibrium.
+    </p>
+    <div class="formula-box">
+        ΣF<sub>x</sub> = 0
+        <br><br>
+        ΣF<sub>y</sub> = 0
+    </div>
+
+    <div class="example">
+        <h3>Solved Example</h3>
+        <p>Three forces act on a particle:</p>
+        <ul>
+            <li>F₁ = 10 N along the positive X-axis.</li>
+            <li>F₂ = 10 N along the positive Y-axis.</li>
+            <li>F₃ = 10 N along the negative X-axis.</li>
+        </ul>
+        <p><b>Step 1: Horizontal components</b></p>
+        <p>ΣFₓ = 10 + 0 − 10 = 0 N</p>
+        <p><b>Step 2: Vertical components</b></p>
+        <p>ΣFᵧ = 0 + 10 + 0 = 10 N</p>
+        <p><b>Step 3: Resultant</b></p>
+        <p>R = √(0² + 10²)</p>
+        <p><b>Resultant, R = 10 N upward.</b></p>
+    </div>
+
+    <h3>Applications</h3>
+    <ul>
+        <li>Finding the resultant of three or more forces.</li>
+        <li>Analysing forces acting on structures and joints.</li>
+        <li>Solving engineering problems involving multiple forces.</li>
+        <li>Checking equilibrium of a particle.</li>
+    </ul>
+</div>
+
+<!-- SUMMARY -->
+<div class="section">
+    <span class="tag">07 · Revision</span>
+    <h2>7. Quick Revision</h2>
+
+    <h3>Important Concepts</h3>
+    <ul>
+        <li>Force is a vector quantity.</li>
+        <li>A force system consists of two or more forces acting on a body.</li>
+        <li>Coplanar forces lie in the same plane.</li>
+        <li>Concurrent forces have lines of action passing through a common point.</li>
+        <li>The principle of transmissibility applies to rigid-body external effects.</li>
+    </ul>
+
+    <h3>Important Formulae</h3>
+    <div class="formula-box">
+        Parallelogram / Triangle Law:
+        <br>
+        R = √(P² + Q² + 2PQ cos θ)
+    </div>
+
+    <div class="formula-box">
+        Direction:
+        <br>
+        tan α = (Q sin θ) / (P + Q cos θ)
+    </div>
+
+    <div class="formula-box">
+        Polygon Law:
+        <br>
+        R = √[(ΣFₓ)² + (ΣFᵧ)²]
+    </div>
+
+    <div class="formula-box">
+        Equilibrium of a particle:
+        <br>
+        ΣFₓ = 0, &nbsp; ΣFᵧ = 0
+    </div>
+</div>
+
+<footer>
+    Mechanics Formula Hub · Unit 1: Force System
+</footer>
+
+</div>
+</body>
+</html>
+
