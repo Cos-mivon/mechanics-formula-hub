@@ -1,0 +1,782 @@
+HTML
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Types of Loads - Mechanics Formula Hub</title>
+
+<link rel="stylesheet" href="../../../../assets/style.css">
+
+<style>
+.load-page {
+    max-width: 950px;
+    margin: auto;
+    padding: 22px 16px;
+}
+
+.load-panel {
+    background: #142944;
+    border: 1px solid #294968;
+    border-radius: 13px;
+    padding: 20px;
+    margin: 18px 0;
+}
+
+.load-panel h2 {
+    color: #70bdff;
+    margin-bottom: 14px;
+}
+
+.load-types {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin: 15px 0;
+}
+
+.load-option {
+    background: #10233c;
+    border: 1px solid #365574;
+    color: #edf4ff;
+    border-radius: 10px;
+    padding: 15px;
+    cursor: pointer;
+    font-size: 15px;
+    text-align: left;
+}
+
+.load-option.active {
+    border: 2px solid #55b5ff;
+    background: #1b3b5d;
+}
+
+.load-option span {
+    display: block;
+    font-size: 25px;
+    margin-bottom: 7px;
+}
+
+.input-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+}
+
+.input-field {
+    min-width: 0;
+}
+
+.input-field input,
+.input-field select {
+    width: 100%;
+    min-width: 0;
+    padding: 12px;
+    margin-top: 6px;
+    background: #091a2e;
+    color: white;
+    border: 1px solid #45617f;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+.input-field label {
+    margin: 0;
+}
+
+.load-diagram {
+    background: #f3f7fc;
+    border-radius: 12px;
+    padding: 10px;
+    overflow: hidden;
+    margin-top: 15px;
+}
+
+.load-diagram svg {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.diagram-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    color: #bdcde0;
+    font-size: 13px;
+    margin-top: 12px;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.legend-dot {
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+}
+
+.load-result-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-top: 15px;
+}
+
+.load-result-card {
+    background: #0c3150;
+    border: 1px solid #2386c8;
+    border-radius: 10px;
+    padding: 15px;
+}
+
+.load-result-card small {
+    color: #a9c6df;
+    display: block;
+    margin-bottom: 8px;
+}
+
+.load-result-card strong {
+    color: #70d8ff;
+    font-size: 21px;
+    overflow-wrap: anywhere;
+}
+
+.load-formula {
+    background: #09203c;
+    border-left: 4px solid #35a5ff;
+    color: #80c6ff;
+    padding: 14px;
+    border-radius: 7px;
+    margin: 12px 0;
+    overflow-wrap: anywhere;
+}
+
+.solution-step {
+    background: #091a2e;
+    padding: 13px;
+    border-radius: 8px;
+    margin: 10px 0;
+    color: #bdcde0;
+    line-height: 1.7;
+}
+
+.solution-step strong {
+    color: #70bdff;
+}
+
+.load-note {
+    color: #91a8c2;
+    font-size: 13px;
+    margin-top: 12px;
+}
+
+.error-message {
+    color: #ff9999;
+    margin-top: 12px;
+    display: none;
+}
+
+@media(max-width:550px) {
+    .input-grid,
+    .load-result-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .load-panel {
+        padding: 15px;
+    }
+
+    .load-types {
+        gap: 8px;
+    }
+
+    .load-option {
+        padding: 11px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">Mechanics Formula Hub</div>
+    <div class="tagline">Workspace / Statics / Types of Loads</div>
+</header>
+
+<main class="load-page">
+
+    <button class="back" onclick="location.href='../index.html'">
+        ← Back to Equilibrium
+    </button>
+
+    <h1>Types of Loads</h1>
+    <p class="subtitle">
+        Calculate equivalent loads and their positions on a beam.
+    </p>
+
+    <!-- LOAD SELECTION -->
+
+    <section class="load-panel">
+
+        <h2>1. Select Loading System</h2>
+
+        <div class="load-types">
+
+            <button class="load-option" data-type="point">
+                <span>↓</span>
+                Point Load
+            </button>
+
+            <button class="load-option active" data-type="udl">
+                <span>↓↓↓</span>
+                Uniformly Distributed Load
+            </button>
+
+            <button class="load-option" data-type="uvl">
+                <span>◢</span>
+                Triangular UVL
+            </button>
+
+            <button class="load-option" data-type="trap">
+                <span>▱</span>
+                Trapezoidal Load
+            </button>
+
+        </div>
+
+    </section>
+
+    <!-- INPUTS -->
+
+    <section class="load-panel">
+
+        <h2>2. Enter Given Values</h2>
+
+        <div class="input-grid">
+
+            <div class="input-field">
+                <label for="length">Beam Length (m)</label>
+                <input type="number" id="length"
+                       value="6" min="0.001" step="any">
+            </div>
+
+            <div class="input-field" id="w1-field">
+                <label id="w1-label" for="w1">
+                    Load Intensity (kN/m)
+                </label>
+                <input type="number" id="w1"
+                       value="10" min="0" step="any">
+            </div>
+
+            <div class="input-field" id="w2-field" style="display:none">
+                <label for="w2">Right-End Intensity w₂ (kN/m)</label>
+                <input type="number" id="w2"
+                       value="20" min="0" step="any">
+            </div>
+
+            <div class="input-field" id="position-field" style="display:none">
+                <label for="position">Point Load Position from A (m)</label>
+                <input type="number" id="position"
+                       value="3" min="0" step="any">
+            </div>
+
+        </div>
+
+        <p class="load-note" id="input-note">
+            Enter the constant load intensity acting over the entire beam.
+        </p>
+
+        <p class="error-message" id="error-message"></p>
+
+        <button class="primary" id="calculate">
+            Calculate Load
+        </button>
+
+        <button class="back" id="reset">
+            Reset
+        </button>
+
+    </section>
+
+    <!-- DIAGRAM -->
+
+    <section class="load-panel">
+
+        <h2>3. Loading System Diagram</h2>
+
+        <div class="load-diagram">
+            <svg id="load-svg" viewBox="0 0 700 260"
+                 xmlns="http://www.w3.org/2000/svg">
+            </svg>
+        </div>
+
+        <div class="diagram-legend">
+            <div class="legend-item">
+                <span class="legend-dot" style="background:#e05252"></span>
+                Applied load
+            </div>
+
+            <div class="legend-item">
+                <span class="legend-dot" style="background:#1684e8"></span>
+                Equivalent resultant
+            </div>
+        </div>
+
+        <p class="load-note">
+            Diagram is schematic. Arrow heights represent relative load
+            intensity, and the resultant is positioned using the calculated
+            centroid.
+        </p>
+
+    </section>
+
+    <!-- RESULTS -->
+
+    <section class="load-panel">
+
+        <h2>4. Calculated Results</h2>
+
+        <div class="load-result-grid">
+
+            <div class="load-result-card">
+                <small>Equivalent Resultant Load</small>
+                <strong id="result-load">60.00 kN</strong>
+            </div>
+
+            <div class="load-result-card">
+                <small>Position from A</small>
+                <strong id="result-position">3.00 m</strong>
+            </div>
+
+        </div>
+
+        <div class="load-formula" id="result-formula">
+            W = w × L
+        </div>
+
+    </section>
+
+    <!-- SOLUTION -->
+
+    <section class="load-panel">
+
+        <h2>5. Step-by-Step Solution</h2>
+
+        <div id="solution-output">
+            <p class="solution-step">
+                Select a loading system and calculate to see the solution.
+            </p>
+        </div>
+
+    </section>
+
+    <footer>
+        Mechanics Formula Hub | Engineering Mechanics
+    </footer>
+
+</main>
+
+<script>
+(function () {
+
+    let currentType = "udl";
+
+    const lengthInput = document.getElementById("length");
+    const w1Input = document.getElementById("w1");
+    const w2Input = document.getElementById("w2");
+    const positionInput = document.getElementById("position");
+
+    const w1Field = document.getElementById("w1-field");
+    const w2Field = document.getElementById("w2-field");
+    const positionField = document.getElementById("position-field");
+
+    const w1Label = document.getElementById("w1-label");
+    const inputNote = document.getElementById("input-note");
+    const errorMessage = document.getElementById("error-message");
+
+    const resultLoad = document.getElementById("result-load");
+    const resultPosition = document.getElementById("result-position");
+    const resultFormula = document.getElementById("result-formula");
+    const solutionOutput = document.getElementById("solution-output");
+    const svg = document.getElementById("load-svg");
+
+    function format(value) {
+        return Number(value).toFixed(2);
+    }
+
+    function selectType(type) {
+
+        currentType = type;
+
+        document.querySelectorAll(".load-option").forEach(button => {
+            button.classList.toggle(
+                "active",
+                button.dataset.type === type
+            );
+        });
+
+        w1Field.style.display = "block";
+        w2Field.style.display = "none";
+        positionField.style.display = "none";
+
+        if (type === "point") {
+
+            w1Label.textContent = "Point Load (kN)";
+            positionField.style.display = "block";
+
+            inputNote.textContent =
+                "Enter the point load and its distance from the left end A.";
+
+        } else if (type === "udl") {
+
+            w1Label.textContent = "Uniform Load Intensity (kN/m)";
+
+            inputNote.textContent =
+                "The load intensity is constant over the entire beam.";
+
+        } else if (type === "uvl") {
+
+            w1Label.textContent = "Maximum Load Intensity (kN/m)";
+
+            inputNote.textContent =
+                "Triangular UVL increases linearly from zero at A to its maximum at B.";
+
+        } else if (type === "trap") {
+
+            w1Label.textContent = "Left-End Intensity w₁ (kN/m)";
+            w2Field.style.display = "block";
+
+            inputNote.textContent =
+                "Enter the load intensities at the left and right ends.";
+        }
+
+        calculate();
+    }
+
+    function showError(message) {
+        errorMessage.textContent = message;
+        errorMessage.style.display = "block";
+    }
+
+    function calculate() {
+
+        errorMessage.style.display = "none";
+
+        const L = Number(lengthInput.value);
+        const w1 = Number(w1Input.value);
+        const w2 = Number(w2Input.value);
+        const pointX = Number(positionInput.value);
+
+        if (!Number.isFinite(L) || L <= 0) {
+            showError("Beam length must be greater than zero.");
+            return;
+        }
+
+        if (!Number.isFinite(w1) || w1 < 0) {
+            showError("Enter a valid non-negative load value.");
+            return;
+        }
+
+        if (currentType === "trap" &&
+            (!Number.isFinite(w2) || w2 < 0)) {
+            showError("Enter a valid right-end load intensity.");
+            return;
+        }
+
+        if (currentType === "point" &&
+            (!Number.isFinite(pointX) || pointX < 0 || pointX > L)) {
+            showError("Point load position must be between 0 and beam length.");
+            return;
+        }
+
+        let W = 0;
+        let x = 0;
+        let formula = "";
+        let steps = [];
+
+        if (currentType === "point") {
+
+            W = w1;
+            x = pointX;
+
+            formula = "Equivalent load: W = P";
+
+            steps = [
+                ["Given", "P = " + format(w1) + " kN"],
+                ["Resultant load", "W = P = " + format(W) + " kN"],
+                ["Position", "x = " + format(x) + " m from A"]
+            ];
+
+        } else if (currentType === "udl") {
+
+            W = w1 * L;
+            x = L / 2;
+
+            formula = "W = wL  |  x = L/2";
+
+            steps = [
+                ["Given", "w = " + format(w1) + " kN/m, L = " + format(L) + " m"],
+                ["Resultant load", "W = w × L"],
+                ["Substitution", "W = " + format(w1) + " × " + format(L)],
+                ["Result", "W = " + format(W) + " kN"],
+                ["Position", "x = L/2 = " + format(x) + " m from A"]
+            ];
+
+        } else if (currentType === "uvl") {
+
+            W = w1 * L / 2;
+            x = 2 * L / 3;
+
+            formula = "W = wL/2  |  x = 2L/3 from A";
+
+            steps = [
+                ["Given", "Maximum intensity = " + format(w1) + " kN/m"],
+                ["Resultant load", "W = ½ × w × L"],
+                ["Substitution", "W = ½ × " + format(w1) + " × " + format(L)],
+                ["Result", "W = " + format(W) + " kN"],
+                ["Position", "x = 2L/3 = " + format(x) + " m from A"],
+                ["Note", "The resultant acts L/3 from the maximum-intensity end B."]
+            ];
+
+        } else if (currentType === "trap") {
+
+            W = (w1 + w2) * L / 2;
+
+            x = (w1 + w2) === 0
+                ? 0
+                : L * (w1 + 2 * w2) / (3 * (w1 + w2));
+
+            formula = "W = (w₁ + w₂)L/2";
+
+            steps = [
+                ["Given", "w₁ = " + format(w1) + " kN/m, w₂ = " + format(w2) + " kN/m"],
+                ["Resultant load", "W = (w₁ + w₂)L/2"],
+                ["Substitution", "W = (" + format(w1) + " + " + format(w2) + ") × " + format(L) + " / 2"],
+                ["Result", "W = " + format(W) + " kN"],
+                ["Position", "x = L(w₁ + 2w₂) / [3(w₁ + w₂)]"],
+                ["Substitution", "x = " + format(x) + " m from A"]
+            ];
+        }
+
+        if (!Number.isFinite(W) || !Number.isFinite(x)) {
+            showError("Unable to calculate. Please check the entered values.");
+            return;
+        }
+
+        resultLoad.textContent = format(W) + " kN";
+        resultPosition.textContent = format(x) + " m";
+        resultFormula.textContent = formula;
+
+        solutionOutput.innerHTML = "";
+
+        steps.forEach((step, index) => {
+
+            const div = document.createElement("div");
+            div.className = "solution-step";
+
+            const heading = document.createElement("strong");
+            heading.textContent = (index + 1) + ". " + step[0];
+
+            const detail = document.createElement("div");
+            detail.textContent = step[1];
+
+            div.appendChild(heading);
+            div.appendChild(detail);
+
+            solutionOutput.appendChild(div);
+        });
+
+        drawDiagram(L, w1, w2, x, W, pointX);
+    }
+
+    function drawDiagram(L, w1, w2, x, W, pointX) {
+
+        const left = 65;
+        const right = 635;
+        const beamY = 175;
+        const beamLength = right - left;
+
+        const px = value => left + (value / L) * beamLength;
+
+        let drawing = `
+        <defs>
+            <marker id="redArrow" markerWidth="7" markerHeight="7"
+                refX="3" refY="3" orient="auto">
+                <path d="M0 0 L6 3 L0 6 Z" fill="#e05252"/>
+            </marker>
+            <marker id="blueArrow" markerWidth="8" markerHeight="8"
+                refX="3" refY="3" orient="auto">
+                <path d="M0 0 L6 3 L0 6 Z" fill="#1684e8"/>
+            </marker>
+        </defs>
+
+        <line x1="${left}" y1="${beamY}" x2="${right}"
+            y2="${beamY}" stroke="#263b54" stroke-width="5"/>
+
+        <path d="M${left-13} ${beamY+17} L${left} ${beamY} L${left+13} ${beamY+17} Z"
+            fill="#526d89"/>
+        <path d="M${right-13} ${beamY+17} L${right} ${beamY} L${right+13} ${beamY+17} Z"
+            fill="#526d89"/>
+
+        <text x="${left}" y="222" font-size="13" text-anchor="middle"
+            fill="#263b54">A</text>
+        <text x="${right}" y="222" font-size="13" text-anchor="middle"
+            fill="#263b54">B</text>
+
+        <line x1="${left}" y1="239" x2="${right}" y2="239"
+            stroke="#526d89" stroke-width="1.5"/>
+        <line x1="${left}" y1="233" x2="${left}" y2="245"
+            stroke="#526d89"/>
+        <line x1="${right}" y1="233" x2="${right}" y2="245"
+            stroke="#526d89"/>
+
+        <text x="350" y="255" text-anchor="middle"
+            font-size="12" fill="#263b54">Beam length L = ${format(L)} m</text>
+        `;
+
+        const arrow = (ax, top, color) => `
+            <line x1="${ax}" y1="${top}" x2="${ax}" y2="${beamY-5}"
+                stroke="${color}" stroke-width="2"
+                marker-end="url(#${color === "#1684e8" ? "blueArrow" : "redArrow"})"/>
+        `;
+
+        if (currentType === "point") {
+
+            drawing += arrow(px(pointX), 75, "#e05252");
+
+            drawing += `
+                <text x="${px(pointX)}" y="60" text-anchor="middle"
+                    font-size="13" fill="#e05252">P = ${format(w1)} kN</text>
+            `;
+
+        } else {
+
+            const top = 75;
+            const count = 17;
+
+            if (currentType === "udl") {
+
+                drawing += `
+                    <line x1="${left}" y1="${top}" x2="${right}"
+                        y2="${top}" stroke="#e05252" stroke-width="2"/>
+                `;
+
+                for (let i = 0; i <= count; i++) {
+                    const ax = left + i * beamLength / count;
+                    drawing += arrow(ax, top, "#e05252");
+                }
+
+                drawing += `
+                    <text x="350" y="57" text-anchor="middle"
+                        font-size="13" fill="#e05252">w = ${format(w1)} kN/m</text>
+                `;
+
+            } else if (currentType === "uvl") {
+
+                drawing += `
+                    <path d="M${left} ${beamY} L${right} ${top}
+                        L${right} ${beamY} Z"
+                        fill="rgba(224,82,82,0.12)"
+                        stroke="#e05252" stroke-width="2"/>
+                `;
+
+                for (let i = 0; i <= count; i++) {
+                    const fraction = i / count;
+                    const ax = left + fraction * beamLength;
+                    const ay = beamY - 5 - fraction * (beamY - 5 - top);
+                    drawing += arrow(ax, ay, "#e05252");
+                }
+
+                drawing += `
+                    <text x="${right}" y="57" text-anchor="end"
+                        font-size="13" fill="#e05252">w = ${format(w1)} kN/m</text>
+                `;
+
+            } else if (currentType === "trap") {
+
+                const leftTop = 125;
+                const rightTop = 75;
+
+                drawing += `
+                    <path d="M${left} ${beamY} L${left} ${leftTop}
+                        L${right} ${rightTop} L${right} ${beamY} Z"
+                        fill="rgba(224,82,82,0.12)"
+                        stroke="#e05252" stroke-width="2"/>
+                `;
+
+                for (let i = 0; i <= count; i++) {
+                    const fraction = i / count;
+                    const ax = left + fraction * beamLength;
+                    const ay = leftTop + fraction * (rightTop - leftTop);
+                    drawing += arrow(ax, ay, "#e05252");
+                }
+
+                drawing += `
+                    <text x="${left}" y="111" text-anchor="start"
+                        font-size="12" fill="#e05252">${format(w1)} kN/m</text>
+                    <text x="${right}" y="61" text-anchor="end"
+                        font-size="12" fill="#e05252">${format(w2)} kN/m</text>
+                `;
+            }
+        }
+
+        // Equivalent resultant
+        const resultantX = px(x);
+
+        drawing += `
+            <line x1="${resultantX}" y1="35" x2="${resultantX}"
+                y2="${beamY-5}" stroke="#1684e8" stroke-width="3"
+                marker-end="url(#blueArrow)"/>
+
+            <text x="${resultantX}" y="23" text-anchor="middle"
+                font-size="13" font-weight="bold" fill="#1684e8">
+                R = ${format(W)} kN
+            </text>
+
+            <line x1="${left}" y1="207" x2="${resultantX}"
+                y2="207" stroke="#1684e8" stroke-width="1.5"
+                stroke-dasharray="4 3"/>
+
+            <text x="${(left+resultantX)/2}" y="199"
+                text-anchor="middle" font-size="11" fill="#1684e8">
+                x = ${format(x)} m
+            </text>
+        `;
+
+        svg.innerHTML = drawing;
+    }
+
+    document.querySelectorAll(".load-option").forEach(button => {
+        button.addEventListener("click", function () {
+            selectType(this.dataset.type);
+        });
+    });
+
+    document.getElementById("calculate")
+        .addEventListener("click", calculate);
+
+    document.getElementById("reset")
+        .addEventListener("click", function () {
+
+            lengthInput.value = 6;
+            w1Input.value = 10;
+            w2Input.value = 20;
+            positionInput.value = 3;
+
+            selectType("udl");
+        });
+
+    // Initial calculation
+    calculate();
+
+})();
+</script>
+
+</body>
+</html>
